@@ -1,0 +1,46 @@
+// Rolster Technology Radiobutton Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 15/Ago/2022
+
+.rls-radiobutton {
+  --component-transform: scale(0);
+
+  position: relative;
+  float: left;
+  display: flex;
+  outline: none;
+  width: var(--sizing-24);
+  height: var(--sizing-24);
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: var(--border-1-theme-300);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &--checked {
+    --component-transform: scale(1);
+
+    border: var(--border-1-xofttion-500);
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__component {
+    border-radius: 50%;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin: auto;
+    background: var(--gradient-rolster-500);
+    transform: var(--component-transform);
+    transform-origin: 50% 50%;
+    transition: all 160ms 0ms var(--standard-curve);
+  }
+}

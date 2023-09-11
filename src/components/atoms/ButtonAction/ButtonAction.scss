@@ -1,0 +1,111 @@
+// Rolster Technology ButtonAction Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 15/Abr/2023
+
+.rls-button-action {
+  --tooltip-transition-delay: 0ms;
+  --tooltip-opacity: 0;
+
+  position: relative;
+  width: var(--sizing-32);
+  height: var(--sizing-32);
+  border: none;
+  outline: none;
+  padding: var(--sizing-4);
+  box-sizing: border-box;
+  user-select: none;
+  cursor: default;
+  background: transparent;
+  color: var(--color-theme-300);
+
+  &::before {
+    position: absolute;
+    display: block;
+    content: '';
+    top: 50%;
+    left: 50%;
+    opacity: 0.32;
+    visibility: hidden;
+    border-radius: 50%;
+    transform: scale(0);
+    background: var(--color-theme-300);
+    padding-top: calc(120% - var(--sizing-8));
+    padding-left: calc(120% - var(--sizing-8));
+    margin-top: calc(-60% + var(--sizing-4));
+    margin-left: calc(-60% + var(--sizing-4));
+  }
+
+  &:not(:active)::before {
+    animation: ripple-button-action 1000ms var(--standard-curve);
+  }
+
+  &:focus::before {
+    visibility: visible;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 50%;
+    width: var(--sizing-36);
+    height: var(--sizing-36);
+    opacity: 0.24;
+    margin-top: -1.125rem;
+    margin-left: -1.125rem;
+    border-radius: 50%;
+    background: var(--color-theme-300);
+    transform: scale(0);
+    transition: transform 160ms 0ms var(--sharp-curve);
+  }
+
+  &:not(:disabled):hover {
+    --tooltip-opacity: 1;
+    --tooltip-transition-delay: 480ms;
+
+    &::after {
+      transform: scale(1);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__tooltip {
+    position: absolute;
+    top: calc(100% + var(--sizing-12));
+    left: 50%;
+    width: auto;
+    float: initial;
+    padding: var(--sizing-8);
+    border-radius: var(--sizing-4);
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translateX(-50%);
+    background: var(--color-dark-500);
+    color: var(--color-light-500);
+    transition: opacity 200ms 0ms var(--deceleration-curve);
+    opacity: var(--tooltip-opacity);
+    transition-delay: var(--tooltip-transition-delay);
+  }
+}
+
+@keyframes ripple-button-action {
+  0% {
+    transform: scale(0);
+  }
+
+  20% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

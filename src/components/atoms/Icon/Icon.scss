@@ -1,0 +1,34 @@
+// Rolster Technology Icon Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 02/May/2023
+
+.rls-icon {
+  --icon-display: block;
+
+  position: relative;
+  float: left;
+  font-size: var(--icon-font-size);
+  width: var(--icon-width);
+  height: var(--icon-height);
+  line-height: var(--icon-height);
+
+  &--skeleton {
+    --icon-display: none;
+
+    background: var(--theme-rolster-300);
+    border-radius: var(--sizing-4);
+  }
+
+  & > i {
+    display: var(--icon-display);
+    color: inherit;
+    float: left;
+    width: 100%;
+    height: 100%;
+    line-height: inherit;
+    font-size: inherit;
+  }
+}

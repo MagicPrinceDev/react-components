@@ -1,0 +1,79 @@
+// Rolster Technology ProgressBar Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 15/Abr/2023
+
+.rls-progress-bar {
+  --component-display: block;
+
+  position: relative;
+  float: left;
+  width: 100%;
+  height: var(--sizing-4);
+  overflow: hidden;
+  background: var(--color-rolster-100);
+
+  &--indeterminate {
+    --component-display: none;
+
+    &::after,
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0rem;
+      width: 0%;
+      height: var(--sizing-4);
+      background: var(--gradient-rolster-500);
+    }
+
+    &::after {
+      animation: progress-bar-indeterminate-after 2000ms infinite;
+    }
+
+    &::before {
+      animation: progress-bar-indeterminate-before 2000ms infinite;
+    }
+  }
+
+  &__component {
+    position: absolute;
+    top: 0rem;
+    width: 0%;
+    height: var(--sizing-8);
+    display: var(--component-display);
+    background: var(--gradient-rolster-500);
+    transition: width 320ms 0ms var(--standard-curve);
+  }
+}
+
+@keyframes progress-bar-indeterminate-before {
+  0% {
+    width: 100%;
+    left: -125%;
+  }
+  20% {
+    width: 100%;
+    left: -125%;
+  }
+  100% {
+    width: 12.5%;
+    left: 100%;
+  }
+}
+
+@keyframes progress-bar-indeterminate-after {
+  0% {
+    width: 12.5%;
+    left: -12.5%;
+  }
+  80% {
+    width: 100%;
+    left: 125%;
+  }
+  100% {
+    width: 100%;
+    left: 125%;
+  }
+}

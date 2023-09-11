@@ -1,0 +1,79 @@
+// Rolster Technology Input Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 14/Abr/2022
+
+.rls-input {
+  --value-font-color: var(--input-font-color);
+  --value-opacity: 1;
+  --component-font-color: transparent;
+
+  position: relative;
+  float: left;
+  width: 100%;
+
+  &--active {
+    --component-font-color: var(--input-font-color);
+    --value-font-color: transparent;
+  }
+
+  &--disabled {
+    --value-opacity: 0.5;
+  }
+
+  &__component {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: var(--input-height);
+    line-height: var(--input-height);
+    padding: 0rem;
+    cursor: text;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--component-font-color);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--input-font-size);
+    letter-spacing: var(--input-letter-spacing);
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      margin: 0rem;
+      -webkit-appearance: none;
+    }
+
+    &::placeholder {
+      color: var(--color-theme-100);
+    }
+
+    &::selection {
+      background: var(--color-rolster-700);
+      color: var(--color-light-500);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__value {
+    position: absolute;
+    top: 0rem;
+    left: 0rem;
+    width: 100%;
+    height: var(--input-height);
+    line-height: var(--input-height);
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: var(--value-opacity);
+    color: var(--value-font-color);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--input-font-size);
+    letter-spacing: var(--input-letter-spacing);
+  }
+}

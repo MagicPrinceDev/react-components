@@ -1,0 +1,74 @@
+// Rolster Technology Breadcrumb Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 15/Abr/2023
+
+.rls-breadcrumb {
+  --label-link-font-color: var(--color-theme-300);
+
+  display: -webkit-box;
+  width: 100%;
+  height: var(--breadcrumb-height);
+  line-height: var(--breadcrumb-height);
+  padding: 0rem var(--sizing-16);
+  box-sizing: border-box;
+  user-select: none;
+  overflow: auto;
+  overflow-y: hidden;
+  color: var(--color-theme-300);
+  font-weight: var(--font-weight-medium);
+
+  &::-webkit-scrollbar {
+    width: 0rem;
+    height: 0rem;
+  }
+
+  &__label {
+    display: block;
+    height: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    font-weight: inherit;
+    color: inherit;
+    font-size: var(--body-size);
+    letter-spacing: var(--body-letter-spacing);
+
+    &:first-child {
+      &::before {
+        display: none;
+      }
+    }
+
+    &::before {
+      font-family: -rolster-icons;
+      display: inline-block;
+      content: '\e911';
+      margin: 0rem var(--sizing-4);
+      cursor: default;
+      color: inherit;
+      font-size: var(--sizing-24);
+      font-weight: normal;
+      font-style: normal;
+      letter-spacing: normal;
+      vertical-align: top;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    &--active {
+      --label-link-font-color: var(--color-rolster-500);
+    }
+
+    &__a {
+      display: inline-block;
+      cursor: pointer;
+      color: var(--label-link-font-color);
+
+      &:hover {
+        color: var(--color-rolster-500);
+        text-decoration: underline;
+      }
+    }
+  }
+}

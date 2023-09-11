@@ -1,0 +1,72 @@
+// Rolster Technology SkeletonText Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 17/Jun/2022
+// Updated: 03/May/2023
+
+.rls-skeleton-text {
+  --value-visibility: visible;
+
+  position: relative;
+  float: left;
+  width: 100%;
+  max-height: inherit;
+  min-height: inherit;
+  height: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  overflow: hidden;
+
+  &--active {
+    --value-visibility: hidden;
+
+    background: var(--color-rolster-100);
+    border-radius: var(--sizing-4);
+
+    &::after {
+      animation: skeleton-text-animation 1600ms infinite;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: 0rem;
+    right: 0rem;
+    bottom: 0rem;
+    left: 0rem;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      var(--skeleton-rolster-100) 0%,
+      var(--skeleton-rolster-100) 20%,
+      var(--skeleton-rolster-300) 60%,
+      var(--skeleton-rolster-100)
+    );
+  }
+
+  &__value {
+    position: relative;
+    display: block;
+    float: left;
+    width: 100%;
+    height: inherit;
+    max-height: inherit;
+    min-height: inherit;
+    line-height: inherit;
+    color: inherit;
+    text-align: inherit;
+    letter-spacing: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    visibility: var(--value-visibility);
+  }
+}
+
+@keyframes skeleton-text-animation {
+  100% {
+    transform: translateX(100%);
+  }
+}

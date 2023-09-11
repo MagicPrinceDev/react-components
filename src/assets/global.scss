@@ -1,0 +1,31 @@
+// Rolster Technology Global Style
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 11/Sep/2023
+// Updated: 11/Sep/2023
+
+:root {
+  --avatar-font-size: var(--title-size);
+  --avatar-width: var(--sizing-48);
+  --avatar-height: var(--sizing-48);
+
+  --breadcrumb-height: var(--sizing-36);
+
+  --button-label-text-transform: uppercase;
+
+  --icon-font-size: var(--sizing-24);
+  --icon-width: var(--sizing-24);
+  --icon-height: var(--sizing-24);
+
+  --input-font-color: var(--color-theme-500);
+  --input-font-size: var(--sizing-16);
+  --input-letter-spacing: var(--body-letter-spacing);
+  --input-height: var(--sizing-24);
+
+  --poster-height: var(--sizing-36);
+  --poster-padding: var(--sizing-8);
+
+  --tabular-text-char-width: 0.625rem;
+  --tabular-text-pointer-width: 0.25rem;
+}

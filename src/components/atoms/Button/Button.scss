@@ -1,0 +1,147 @@
+// Rolster Technology Button Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 16/Abr/2023
+
+.rls-button {
+  --button-content-background: none;
+  --button-content-border: none;
+  --button-content-font-color: var(--color-rolster-500);
+  --button-content-animation: none;
+  --button-content-visibility: hidden;
+  --button-hover-background: var(--color-rolster-100);
+  --button-hover-color: var(--color-rolster-100);
+  --button-hover-border: none;
+  --button-ripple-background: var(--color-rolster-700);
+
+  position: relative;
+  float: left;
+  padding: 0rem;
+  overflow: hidden;
+  outline: none;
+  background: transparent;
+
+  &:not(:disabled):not(:active) {
+    --button-content-animation: ripple-squarecenter 1000ms var(--standard-curve);
+  }
+
+  &:not(:disabled):focus {
+    --button-content-visibility: visible;
+  }
+
+  &:not(:disabled):hover {
+    --button-content-background: var(--button-hover-background);
+    --button-content-border: var(--button-hover-border);
+    --button-content-font-color: var(--button-hover-color);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__content {
+    line-height: var(--sizing-40);
+    height: var(--sizing-40);
+    padding: 0rem var(--sizing-8);
+    box-sizing: border-box;
+    border-radius: var(--sizing-4);
+    display: flex;
+    justify-content: center;
+    color: var(--button-content-font-color);
+    border: var(--button-content-border);
+    background: var(--button-content-background);
+
+    &::before {
+      position: absolute;
+      display: block;
+      content: '';
+      top: 50%;
+      left: 50%;
+      padding-top: calc(100% - var(--sizing-16));
+      padding-left: calc(100% - var(--sizing-16));
+      margin-top: calc(-50% + var(--sizing-8));
+      margin-left: calc(-50% + var(--sizing-8));
+      border-radius: 50%;
+      opacity: 0.26;
+      transform: scale(0);
+      z-index: var(--z-index-2);
+      background: var(--button-ripple-background);
+      animation: var(--button-content-animation);
+      visibility: var(--button-content-visibility);
+    }
+
+    &--ghost {
+      --button-content-font-color: var(--color-rolster-500);
+      --button-content-background: none;
+      --button-hover-border: none;
+      --button-hover-background: var(--color-rolster-100);
+      --button-hover-color: var(--color-rolster-500);
+    }
+
+    &--flat {
+      --button-content-background: var(--color-rolster-100);
+      --button-content-font-color: var(--color-rolster-500);
+      --button-hover-background: var(--color-rolster-100);
+      --button-hover-border: none;
+      --button-hover-color: var(--color-rolster-700);
+      --button-ripple-background: var(--color-rolster-500);
+    }
+
+    &--outline {
+      --button-content-background: transparent;
+      --button-content-font-color: var(--color-theme-300);
+      --button-content-border: var(--border-1-theme-300);
+      --button-hover-background: transparent;
+      --button-hover-color: var(--color-rolster-500);
+      --button-hover-border: var(--border-1-rolster-500);
+    }
+
+    &--raised {
+      --button-content-background: var(--color-rolster-500);
+      --button-content-font-color: var(--color-light-500);
+      --button-hover-background: var(--color-rolster-700);
+      --button-hover-color: var(--color-light-500);
+      --button-hover-border: none;
+      --button-ripple-background: var(--color-light-500);
+    }
+  }
+
+  .rls-icon {
+    margin: auto var(--sizing-4);
+  }
+
+  &__label {
+    position: relative;
+    display: block;
+    line-height: initial;
+    padding: 0rem var(--sizing-4);
+    margin: auto 0rem;
+    font-size: 0.825rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.825px;
+    text-transform: var(--button-label-text-transform);
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+}
+
+@keyframes ripple-squarecenter {
+  0% {
+    transform: scale(0);
+  }
+
+  20% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,58 @@
+import { useState } from 'react';
+import { ReactControl } from '../../../hooks';
+import { renderClassStatus } from '../../../utils/css';
+import { RlsComponent } from '../../definitions';
+import './InputPassword.css';
+
+type InputPasswordType = 'password' | 'text';
+
+interface InputPassword extends RlsComponent {
+  disabled?: boolean;
+  formControl?: ReactControl<HTMLInputElement, string>;
+  placeholder?: string;
+  type?: InputPasswordType;
+}
+
+export function RlsInputPassword({
+  disabled,
+  formControl,
+  placeholder,
+  type
+}: InputPassword) {
+  const [active, setActive] = useState(false);
+
+  function onChange(event: any): void {
+    formControl?.setState(event.target.value);
+  }
+
+  function onFocus() {
+    setActive(true);
+    formControl?.setActive(true);
+  }
+
+  function onBlur() {
+    setActive(false);
+    formControl?.setActive(false);
+    formControl?.setDirty(true);
+  }
+
+  return (
+    <div
+      className={renderClassStatus('rls-input-password', {
+        active: formControl?.active || active,
+        disabled
+      })}
+    >
+      <input
+        className="rls-input-password__component"
+        autoComplete="off"
+        type={type || 'password'}
+        placeholder={placeholder}
+        disabled={disabled}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onChange={onChange}
+      />
+    </div>
+  );
+}
