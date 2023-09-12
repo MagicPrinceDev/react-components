@@ -1,0 +1,71 @@
+// Rolster Technology Modal Component
+// v1.0.1
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 12/Sep/2023
+
+.rls-modal {
+  --pvt-component-transform: translateY(10rem) scale(0.6);
+  --pvt-component-height: 0rem;
+  --pvt-component-opacity: 0;
+  --pvt-component-visibility: hidden;
+  --pvt-backdrop-opacity: 0;
+  --pvt-backdrop-bottom: initial;
+
+  position: fixed;
+  display: flex;
+  top: 0rem;
+  left: 0rem;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-index-24);
+  visibility: hidden;
+  align-items: center;
+  justify-content: center;
+
+  &--visible {
+    --pvt-component-visibility: visible;
+    --pvt-component-height: auto;
+    --pvt-component-opacity: 1;
+    --pvt-component-transform: translateY(0) scale(1);
+    --pvt-backdrop-bottom: 0rem;
+    --pvt-backdrop-opacity: 1;
+
+    visibility: visible;
+  }
+
+  &__component {
+    position: absolute;
+    width: auto;
+    max-width: calc(100% - var(--sizing-16));
+    height: var(--pvt-component-height);
+    opacity: var(--pvt-component-opacity);
+    visibility: var(--pvt-component-visibility);
+    z-index: var(--z-index-2);
+    overflow: hidden;
+    border-radius: var(--sizing-8);
+    background: var(--background-theme-500);
+    will-change: transform;
+    transform: var(--pvt-component-transform);
+    transition: opacity 125ms 0ms var(--deceleration-curve),
+      transform 125ms 0ms var(--deceleration-curve),
+      visibility 125ms 0ms var(--deceleration-curve);
+  }
+
+  &__backdrop {
+    position: absolute;
+    display: block;
+    top: 0rem;
+    left: 0rem;
+    right: 0rem;
+    bottom: var(--pvt-backdrop-bottom);
+    opacity: var(--pvt-backdrop-opacity);
+    z-index: 1;
+    will-change: opacity;
+    background: var(--backdrop-rolster-500);
+    backdrop-filter: blur(2px);
+    transition: opacity 120ms 0ms var(--deceleration-curve),
+      bottom 120ms 0ms var(--deceleration-curve);
+  }
+}

@@ -1,0 +1,145 @@
+// Rolster Technology Confirmation Component
+// v1.0.1
+// @license MIT
+// Author: Rolster Developers
+// Created: 04/Abr/2018
+// Updated: 12/Sep/2023
+
+.rls-confirmation {
+  --pvt-component-transform: translateY(150px) scale(0.6);
+  --pvt-component-height: 0rem;
+  --pvt-component-opacity: 0;
+  --pvt-component-visibility: hidden;
+  --pvt-backdrop-opacity: 0;
+  --pvt-backdrop-bottom: initial;
+
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0rem;
+  left: 0rem;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-index-24);
+  visibility: hidden;
+
+  &--visible {
+    --pvt-component-visibility: visible;
+    --pvt-component-height: auto;
+    --pvt-component-opacity: 1;
+    --pvt-component-transform: translateY(0) scale(1);
+    --pvt-backdrop-bottom: 0rem;
+    --pvt-backdrop-opacity: 1;
+
+    visibility: visible;
+  }
+
+  &__component {
+    position: absolute;
+    width: calc(100% - var(--sizing-32));
+    max-width: 20rem;
+    height: var(--pvt-component-height);
+    opacity: var(--pvt-component-opacity);
+    visibility: var(--pvt-component-visibility);
+    padding: var(--sizing-8) 0rem;
+    box-sizing: border-box;
+    z-index: var(--z-index-2);
+    border-radius: var(--sizing-8);
+    background: var(--background-theme-500);
+    box-shadow: var(--shadow-4);
+    will-change: transform;
+    transform: var(--pvt-component-transform);
+    transition: opacity 125ms 0ms var(--deceleration-curve),
+      transform 125ms 0ms var(--deceleration-curve),
+      visibility 125ms 0ms var(--deceleration-curve);
+  }
+
+  &__header {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: var(--sizing-8) var(--sizing-16);
+    box-sizing: border-box;
+
+    &__title {
+      text-align: center;
+      width: 100%;
+      color: var(--color-theme-500);
+      font-size: 0.85rem;
+      line-height: 0.85rem;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.875px;
+      text-transform: uppercase;
+    }
+
+    &__subtitle {
+      text-align: center;
+      margin-top: var(--sizing-8);
+      width: 100%;
+      color: var(--color-theme-100);
+      font-size: 0.675rem;
+      line-height: 0.675rem;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.875px;
+      text-transform: uppercase;
+    }
+  }
+
+  &__body {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: var(--sizing-8) var(--sizing-16);
+    box-sizing: border-box;
+
+    &__content {
+      color: var(--color-theme-300);
+      margin: 0rem;
+      text-align: center;
+      font-size: 0.925rem;
+      line-height: 1.325rem;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &__footer {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: var(--sizing-16) var(--sizing-16) var(--sizing-8) var(--sizing-16);
+    box-sizing: border-box;
+    margin-top: var(--sizing-16);
+    border-top: var(--border-1-theme-100);
+
+    &__actions {
+      position: relative;
+      display: flex;
+      flex-direction: column-reverse;
+      float: left;
+      width: 100%;
+      margin: auto;
+
+      button + button {
+        margin-bottom: var(--sizing-12);
+      }
+    }
+  }
+
+  &__backdrop {
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: var(--pvt-backdrop-bottom);
+    opacity: var(--pvt-backdrop-opacity);
+    z-index: 1;
+    will-change: opacity;
+    background: var(--backdrop-rolster-500);
+    backdrop-filter: blur(2px);
+    transition: opacity 120ms 0ms var(--deceleration-curve),
+      bottom 120ms 0ms var(--deceleration-curve);
+  }
+}

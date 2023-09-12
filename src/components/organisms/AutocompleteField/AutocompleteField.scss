@@ -1,0 +1,94 @@
+// Rolster Technology AutocompleteField Component
+// v1.0.1
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 12/Sep/2023
+
+.rls-autocomplete-field {
+  &.rls-box-field--selected {
+    .rls-list-field__control {
+      width: calc(100% - var(--sizing-28));
+    }
+  }
+
+  .rls-list-field__control {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rls-list-field__ul {
+    &__search {
+      display: flex;
+      width: calc(100% - var(--sizing-24));
+      margin: var(--sizing-4) var(--sizing-12) var(--sizing-12) var(--sizing-12);
+      overflow: hidden;
+      background: var(--background-theme-300);
+      border-radius: var(--sizing-8);
+      padding: var(--sizing-8);
+      box-sizing: border-box;
+
+      button {
+        color: var(--color-theme-300);
+        background: transparent;
+
+        &:not(:disabled):hover {
+          color: var(--color-xofttion-300);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    &__control {
+      position: relative;
+      float: left;
+      width: 100%;
+      height: var(--sizing-24);
+      line-height: var(--sizing-24);
+      padding: 0rem;
+      cursor: text;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--color-theme-input);
+      font-size: var(--input-size);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--input-letter-spacing);
+
+      &::placeholder {
+        color: var(--color-theme-100);
+      }
+
+      &::selection {
+        background: var(--color-xofttion-700);
+        color: var(--color-light-500);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+
+    .rls-progress-bar {
+      margin-bottom: var(--sizing-16);
+    }
+  }
+
+  .rls-list-field__element {
+    .rls-ballot {
+      &__title {
+        label {
+          background: var(--color-xofttion-100);
+          color: var(--color-xofttion-500);
+          padding: 0rem var(--sizing-4);
+          border-radius: var(--sizing-4);
+        }
+      }
+    }
+  }
+}

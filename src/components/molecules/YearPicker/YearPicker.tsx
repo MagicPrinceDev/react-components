@@ -14,7 +14,7 @@ interface YearPicker extends RlsComponent {
   minDate?: Date;
 }
 
-export function XftYearPicker({
+export function RlsYearPicker({
   formControl,
   date: date,
   disabled: disabledPicker,

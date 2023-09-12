@@ -37,7 +37,7 @@ export interface PaginationState {
   next?: PaginationState;
 }
 
-export function XftPagination<T>({
+export function Pagination<T>({
   elements,
   count: defaultCount,
   filter,

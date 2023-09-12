@@ -1,5 +1,5 @@
 // Rolster Technology Datatable Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
@@ -63,13 +63,13 @@
     margin-bottom: var(--sizing-4);
   }
 
-  &__title {
+  &__header {
     padding: 0rem var(--sizing-12);
     display: flex;
     box-sizing: border-box;
   }
 
-  &__th {
+  &__title {
     position: relative;
     display: block;
     float: left;
@@ -98,7 +98,7 @@
     display: block;
   }
 
-  &__row {
+  &__data {
     position: relative;
     display: flex;
     padding: 0rem var(--sizing-12);
@@ -111,12 +111,12 @@
       border: var(--border-1-danger-100);
     }
 
-    & + .rls-datatable__row {
+    & + .rls-datatable__data {
       margin-top: var(--sizing-12);
     }
   }
 
-  &__td {
+  &__cell {
     position: relative;
     display: block;
     float: left;
@@ -252,7 +252,7 @@
     }
   }
 
-  &__footer {
+  &__tfooter {
     position: relative;
     float: left;
     width: 100%;

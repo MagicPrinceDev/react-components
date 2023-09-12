@@ -1,0 +1,39 @@
+// Rolster Technology FormNavigation Component
+// v1.0.1
+// @license MIT
+// Author: Rolster Developers
+// Created: 31/May/2023
+// Updated: 12/Sep/2023
+
+.rls-form-navigation {
+  position: fixed;
+  top: var(--sizing-16);
+  right: var(--sizing-16);
+  width: calc(100% - var(--sizing-32));
+  max-width: 20rem;
+  height: auto;
+  max-height: calc(100vh - var(--sizing-32));
+  z-index: var(--z-index-12);
+  padding: var(--sizing-16) var(--sizing-16) var(--sizing-24) var(--sizing-16);
+  box-sizing: border-box;
+  background: var(--background-theme-500);
+  border-radius: var(--sizing-8);
+  box-shadow: var(--shadow-center-dark-8);
+  transform: translateX(calc(100% + var(--sizing-32)));
+  transition: transform 240ms 0ms var(--standard-curve);
+
+  &--visible {
+    transform: translateX(0%);
+  }
+
+  &__header {
+    margin-bottom: var(--sizing-16);
+
+    .rls-button-action {
+      width: var(--sizing-24);
+      height: var(--sizing-24);
+      padding: 0rem;
+      float: right;
+    }
+  }
+}
