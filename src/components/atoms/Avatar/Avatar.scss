@@ -16,7 +16,7 @@
   height: var(--rls-avatar-height);
   background: var(--gradient-rolster-500);
   color: var(--color-light-500);
-  border-radius: var(--sizing-8);
+  border-radius: var(--rls-avatar-border-radius);
 
   &--skeleton {
     background: var(--color-rolster-100);
