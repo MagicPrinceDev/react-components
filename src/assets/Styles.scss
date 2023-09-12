@@ -1,39 +1,52 @@
 // Rolster Technology Global Style
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 11/Sep/2023
-// Updated: 11/Sep/2023
+// Updated: 12/Sep/2023
 
 :root {
-  --avatar-font-size: var(--title-size);
-  --avatar-width: var(--sizing-48);
-  --avatar-height: var(--sizing-48);
+  --rls-avatar-font-size: var(--title-size);
+  --rls-avatar-width: var(--sizing-48);
+  --rls-avatar-height: var(--sizing-48);
 
-  --breadcrumb-height: var(--sizing-36);
+  --rls-ballot-subtitle-overflow: initial;
+  --rls-ballot-subtitle-text-overflow: initial;
+  --rls-ballot-subtitle-white-space: initial;
 
-  --button-label-text-transform: uppercase;
-  --button-content-padding: 0rem var(--sizing-8);
-  --button-content-radius: var(--sizing-4);
+  --rls-boxfield-body-padding: 0rem;
+  --rls-boxfield-body-border: var(--border-1-theme-100);
+  --rls-boxfield-body-shadow: none;
+  --rls-boxfield-label-font-color: var(--color-theme-100);
 
-  --button-action-ripple-dimension: var(--sizing-36);
-  --button-action-ripple-position: -1.125rem;
+  --rls-breadcrumb-height: var(--sizing-36);
 
-  --icon-font-size: var(--sizing-24);
-  --icon-width: var(--sizing-24);
-  --icon-height: var(--sizing-24);
+  --rls-button-label-text-transform: uppercase;
+  --rls-button-content-padding: 0rem var(--sizing-8);
+  --rls-button-content-radius: var(--sizing-4);
 
-  --input-font-color: var(--color-theme-500);
-  --input-font-size: var(--sizing-16);
-  --input-letter-spacing: var(--body-letter-spacing);
-  --input-height: var(--sizing-24);
-  --input-parent-padding: 0rem;
+  --rls-buttonaction-ripple-dimension: var(--sizing-36);
+  --rls-buttonaction-ripple-position: -1.125rem;
 
-  --poster-height: var(--sizing-36);
-  --poster-padding: var(--sizing-8);
+  --rls-form-footer-justify-content: end;
 
-  --tabular-text-char-width: 0.625rem;
-  --tabular-text-pointer-width: 0.25rem;
+  --rls-icon-font-size: var(--sizing-24);
+  --rls-icon-width: var(--sizing-24);
+  --rls-icon-height: var(--sizing-24);
 
-  --toolbar-height: var(--sizing-56);
+  --rls-input-font-color: var(--color-theme-500);
+  --rls-input-font-size: var(--sizing-16);
+  --rls-input-letter-spacing: var(--body-letter-spacing);
+  --rls-input-height: var(--sizing-24);
+  --rls-input-parent-padding: 0rem;
+
+  --rls-poster-height: var(--sizing-36);
+  --rls-poster-padding: var(--sizing-8);
+
+  --rls-snackbar-left: calc(50% + 10rem);
+
+  --rls-tabulartext-char-width: 0.625rem;
+  --rls-tabulartext-pointer-width: 0.25rem;
+
+  --rls-toolbar-height: var(--sizing-56);
 }

@@ -52,10 +52,10 @@
     top: 50%;
     left: 50%;
     opacity: 0.24;
-    width: var(--button-action-ripple-dimension);
-    height: var(--button-action-ripple-dimension);
-    margin-top: var(--button-action-ripple-position);
-    margin-left: var(--button-action-ripple-position);
+    width: var(--rls-buttonaction-ripple-dimension);
+    height: var(--rls-buttonaction-ripple-dimension);
+    margin-top: var(--rls-buttonaction-ripple-position);
+    margin-left: var(--rls-buttonaction-ripple-position);
     border-radius: 50%;
     background: var(--color-theme-300);
     transform: scale(0);

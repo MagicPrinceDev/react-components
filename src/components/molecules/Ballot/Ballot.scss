@@ -1,15 +1,16 @@
 // Rolster Technology Ballot Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 15/Abr/2023
+// Updated: 12/Sep/2023
 
 .rls-ballot {
+  --rls-avatar-width: var(--sizing-40);
+  --rls-avatar-height: var(--sizing-40);
+  
   --ballot-subtitle-width: 100%;
   --ballot-subtitle-height: var(--smalltext-line-height);
-  --avatar-width: var(--sizing-40);
-  --avatar-height: var(--sizing-40);
 
   position: relative;
   float: left;
@@ -68,5 +69,8 @@
     letter-spacing: var(--smalltext-letter-spacing);
     min-height: var(--ballot-subtitle-height);
     line-height: var(--ballot-subtitle-height);
+    overflow: var(--rls-ballot-subtitle-overflow);
+    text-overflow: var(--rls-ballot-subtitle-text-overflow);
+    white-space: var(--rls-ballot-subtitle-white-space);
   }
 }

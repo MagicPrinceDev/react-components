@@ -1,11 +1,9 @@
-/*!
- * Xofttion Datatable Component
- * v1.0.0
- * @license MIT
- * Author: Xofttion Developers
- * Created: 20/Mar/2018
- * Updated: 20/Abr/2023
-*/
+// Rolster Technology Datatable Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 12/Sep/2023
 
 @mixin datatable_cell_control() {
   display: flex;
@@ -16,7 +14,7 @@
     margin: auto;
   }
 
-  & > .xft-avatar {
+  & > .rls-avatar {
     border-radius: var(--sizing-6);
     font-size: var(--datatable-size);
     width: var(--sizing-32);
@@ -24,7 +22,7 @@
     line-height: var(--sizing-32);
   }
 
-  & > .xft-button-action {
+  & > .rls-button-action {
     &::after {
       width: var(--sizing-32);
       height: var(--sizing-32);
@@ -34,7 +32,7 @@
   }
 }
 
-.xft-datatable {
+.rls-datatable {
   --datatable-letter-spacing: 0.525px;
   --datatable-size: 0.8725rem;
 
@@ -122,7 +120,7 @@
       border: var(--border-1-danger-100);
     }
 
-    & + .xft-datatable__row {
+    & + .rls-datatable__row {
       margin-top: var(--sizing-12);
     }
   }
@@ -145,7 +143,7 @@
       @include datatable_cell_control();
     }
 
-    .xft-box-field {
+    .rls-box-field {
       width: 100%;
       padding: 0rem;
 
@@ -159,7 +157,7 @@
         padding: 0rem;
         box-shadow: none;
 
-        .xft-input-field {
+        .rls-input-field {
           padding: var(--sizing-8) 0rem !important;
 
           &__component,
@@ -176,8 +174,8 @@
       }
     }
 
-    .xft-list-field {
-      .xft-box-field__body {
+    .rls-list-field {
+      .rls-box-field__body {
         padding: var(--sizing-8) 0rem;
         border: none;
         box-shadow: none;
@@ -199,13 +197,13 @@
       }
 
       &__action {
-        .xft-icon {
+        .rls-icon {
           font-size: var(--sizing-20);
         }
       }
     }
 
-    .xft-input {
+    .rls-input {
       margin: var(--sizing-8) 0rem;
 
       &__component {
@@ -213,11 +211,11 @@
       }
     }
 
-    .xft-amount {
+    .rls-amount {
       font-size: var(--datatable-size);
     }
 
-    .xft-poster {
+    .rls-poster {
       display: flex;
       width: calc(100% - var(--sizing-4));
       height: 100%;
@@ -234,11 +232,11 @@
       color: var(--color-xofttion-500);
     }
 
-    & > .xft-ballot {
+    & > .rls-ballot {
       padding: 0rem;
       height: var(--sizing-40);
 
-      .xft-ballot__title {
+      .rls-ballot__title {
         font-weight: var(--font-weight-semibold);
         font-size: var(--smalltext-size);
         letter-spacing: var(--smalltext-letter-spacing);
@@ -246,7 +244,7 @@
         line-height: 1rem;
       }
 
-      .xft-ballot__subtitle {
+      .rls-ballot__subtitle {
         margin-top: 0rem;
         font-size: var(--overline-size);
         letter-spacing: var(--overline-letter-spacing);

@@ -6,24 +6,24 @@
 // Updated: 02/May/2023
 
 .rls-icon {
-  --icon-display: block;
+  --rls-icon-display: block;
 
   position: relative;
   float: left;
-  font-size: var(--icon-font-size);
-  width: var(--icon-width);
-  height: var(--icon-height);
-  line-height: var(--icon-height);
+  font-size: var(--rls-icon-font-size);
+  width: var(--rls-icon-width);
+  height: var(--rls-icon-height);
+  line-height: var(--rls-icon-height);
 
   &--skeleton {
-    --icon-display: none;
+    --rls-icon-display: none;
 
     background: var(--theme-rolster-300);
     border-radius: var(--sizing-4);
   }
 
   & > i {
-    display: var(--icon-display);
+    display: var(--rls-icon-display);
     color: inherit;
     float: left;
     width: 100%;

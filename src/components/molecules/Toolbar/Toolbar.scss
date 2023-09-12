@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   column-gap: var(--sizing-12);
-  height: var(--toolbar-height);
+  height: var(--rls-toolbar-height);
 
   & > * {
     width: auto;

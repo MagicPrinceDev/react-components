@@ -14,22 +14,22 @@
   }
 
   &__action {
-    --button-content-radius: var(--sizing-4) 0rem 0rem var(--sizing-4);
+    --rls-button-content-radius: var(--sizing-4) 0rem 0rem var(--sizing-4);
 
     width: auto;
   }
 
   &__icon {
-    --button-content-radius: 0rem var(--sizing-4) var(--sizing-4) 0rem;
-    --button-content-padding: var(--sizing-4);
+    --rls-button-content-radius: 0rem var(--sizing-4) var(--sizing-4) 0rem;
+    --rls-button-content-padding: var(--sizing-4);
 
     width: auto;
   }
 
   &__list {
-    --button-toggle-ul-height: 0rem;
-    --button-toggle-ul-opacity: 0;
-    --button-toggle-ul-transform: none;
+    --rls-button-toggle-ul-height: 0rem;
+    --rls-button-toggle-ul-opacity: 0;
+    --rls-button-toggle-ul-transform: none;
 
     position: absolute;
     top: 2.8125rem;
@@ -40,14 +40,14 @@
     z-index: var(--z-index-4);
 
     &--hide {
-      --button-toggle-ul-opacity: 0;
-      --button-toggle-ul-transform: scale(0, 0);
+      --rls-button-toggle-ul-opacity: 0;
+      --rls-button-toggle-ul-transform: scale(0, 0);
     }
 
     &--visible {
-      --button-toggle-ul-height: auto;
-      --button-toggle-ul-opacity: 1;
-      --button-toggle-ul-transform: scale(1, 1);
+      --rls-button-toggle-ul-height: auto;
+      --rls-button-toggle-ul-opacity: 1;
+      --rls-button-toggle-ul-transform: scale(1, 1);
 
       overflow: initial;
       opacity: 1;
@@ -60,8 +60,8 @@
       flex-direction: column;
       float: left;
       width: 100%;
-      height: var(--button-toggle-ul-height);
-      opacity: var(--button-toggle-ul-opacity);
+      height: var(--rls-button-toggle-ul-height);
+      opacity: var(--rls-button-toggle-ul-opacity);
       padding: var(--sizing-8) 0rem;
       border-radius: var(--sizing-8);
       box-sizing: border-box;
@@ -70,7 +70,7 @@
       z-index: var(--z-index-2);
       background: var(--background-theme-500);
       border: var(--border-3) solid var(--color-rolster-300);
-      transform: var(--button-toggle-ul-transform);
+      transform: var(--rls-button-toggle-ul-transform);
       transform-origin: 0% 0%;
       transition: transform 240ms 0ms var(--standard-curve),
         opacity 240ms 0ms var(--standard-curve);

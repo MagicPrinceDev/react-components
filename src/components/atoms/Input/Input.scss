@@ -6,7 +6,7 @@
 // Updated: 14/Abr/2022
 
 .rls-input {
-  --value-font-color: var(--input-font-color);
+  --value-font-color: var(--rls-input-font-color);
   --value-opacity: 1;
   --component-font-color: transparent;
 
@@ -15,7 +15,7 @@
   width: 100%;
 
   &--active {
-    --component-font-color: var(--input-font-color);
+    --component-font-color: var(--rls-input-font-color);
     --value-font-color: transparent;
   }
 
@@ -27,8 +27,8 @@
     position: relative;
     float: left;
     width: 100%;
-    height: var(--input-height);
-    line-height: var(--input-height);
+    height: var(--rls-input-height);
+    line-height: var(--rls-input-height);
     padding: 0rem;
     cursor: text;
     border: none;
@@ -36,8 +36,8 @@
     background: transparent;
     color: var(--component-font-color);
     font-weight: var(--font-weight-medium);
-    font-size: var(--input-font-size);
-    letter-spacing: var(--input-letter-spacing);
+    font-size: var(--rls-input-font-size);
+    letter-spacing: var(--rls-input-letter-spacing);
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -64,8 +64,8 @@
     top: 0rem;
     left: 0rem;
     width: 100%;
-    height: var(--input-height);
-    line-height: var(--input-height);
+    height: var(--rls-input-height);
+    line-height: var(--rls-input-height);
     background: transparent;
     pointer-events: none;
     overflow: hidden;
@@ -73,7 +73,7 @@
     opacity: var(--value-opacity);
     color: var(--value-font-color);
     font-weight: var(--font-weight-medium);
-    font-size: var(--input-font-size);
-    letter-spacing: var(--input-letter-spacing);
+    font-size: var(--rls-input-font-size);
+    letter-spacing: var(--rls-input-letter-spacing);
   }
 }
