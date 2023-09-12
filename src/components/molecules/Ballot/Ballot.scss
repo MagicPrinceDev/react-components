@@ -8,9 +8,6 @@
 .rls-ballot {
   --rls-avatar-width: var(--sizing-40);
   --rls-avatar-height: var(--sizing-40);
-  
-  --ballot-subtitle-width: 100%;
-  --ballot-subtitle-height: var(--smalltext-line-height);
 
   position: relative;
   float: left;
@@ -61,14 +58,14 @@
   &__subtitle {
     position: relative;
     float: left;
-    width: var(--ballot-subtitle-width);
+    width: var(--rls-ballot-subtitle-width);
     color: var(--color-theme-300);
     margin-top: var(--sizing-4);
     font-weight: var(--font-weight-semibold);
     font-size: var(--smalltext-size);
     letter-spacing: var(--smalltext-letter-spacing);
-    min-height: var(--ballot-subtitle-height);
-    line-height: var(--ballot-subtitle-height);
+    min-height: var(--rls-ballot-subtitle-height);
+    line-height: var(--rls-ballot-subtitle-height);
     overflow: var(--rls-ballot-subtitle-overflow);
     text-overflow: var(--rls-ballot-subtitle-text-overflow);
     white-space: var(--rls-ballot-subtitle-white-space);

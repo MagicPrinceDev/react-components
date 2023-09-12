@@ -1,12 +1,12 @@
 // Rolster Technology SkeletonText Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 17/Jun/2022
-// Updated: 03/May/2023
+// Updated: 12/Sep/2023
 
 .rls-skeleton-text {
-  --value-visibility: visible;
+  --pvt-value-visibility: visible;
 
   position: relative;
   float: left;
@@ -19,7 +19,7 @@
   overflow: hidden;
 
   &--active {
-    --value-visibility: hidden;
+    --pvt-value-visibility: hidden;
 
     background: var(--color-rolster-100);
     border-radius: var(--sizing-4);
@@ -61,7 +61,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    visibility: var(--value-visibility);
+    visibility: var(--pvt-value-visibility);
   }
 }
 

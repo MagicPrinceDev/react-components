@@ -1,13 +1,13 @@
 // Rolster Technology Switch Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
-// Created: 20/Mar/2018
-// Updated: 06/May/2023
+// Created: 25/Mar/2018
+// Updated: 12/Sep/2023
 
 .rls-switch {
-  --component-background: var(--border-theme-300);
-  --component-left: calc(var(--sizing-2) + 1px);
+  --pvt-component-background: var(--border-theme-300);
+  --pvt-component-left: calc(var(--sizing-2) + 1px);
 
   position: relative;
   float: left;
@@ -24,8 +24,8 @@
   }
 
   &--checked {
-    --component-background: var(--gradient-rolster-500);
-    --component-left: 1.125rem;
+    --pvt-component-background: var(--gradient-rolster-500);
+    --pvt-component-left: 1.125rem;
 
     border: var(--border-1-rolster-500);
   }
@@ -38,10 +38,10 @@
   &__component {
     position: absolute;
     top: calc(var(--sizing-2) + 1px);
-    left: var(--component-left);
+    left: var(--pvt-component-left);
     width: var(--sizing-16);
     height: var(--sizing-16);
-    background: var(--component-background);
+    background: var(--pvt-component-background);
     transition: left 160ms 0ms var(--standard-curve);
     border-radius: var(--sizing-12);
   }

@@ -1,26 +1,26 @@
 // Rolster Technology Input Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 14/Abr/2022
+// Updated: 12/Sep/2022
 
 .rls-input {
-  --value-font-color: var(--rls-input-font-color);
-  --value-opacity: 1;
-  --component-font-color: transparent;
+  --pvt-value-font-color: var(--rls-input-font-color);
+  --pvt-value-opacity: 1;
+  --pvt-component-font-color: transparent;
 
   position: relative;
   float: left;
   width: 100%;
 
   &--active {
-    --component-font-color: var(--rls-input-font-color);
-    --value-font-color: transparent;
+    --pvt-component-font-color: var(--rls-input-font-color);
+    --pvt-value-font-color: transparent;
   }
 
   &--disabled {
-    --value-opacity: 0.5;
+    --pvt-value-opacity: 0.5;
   }
 
   &__component {
@@ -34,7 +34,7 @@
     border: none;
     outline: none;
     background: transparent;
-    color: var(--component-font-color);
+    color: var(--pvt-component-font-color);
     font-weight: var(--font-weight-medium);
     font-size: var(--rls-input-font-size);
     letter-spacing: var(--rls-input-letter-spacing);
@@ -70,8 +70,8 @@
     pointer-events: none;
     overflow: hidden;
     white-space: nowrap;
-    opacity: var(--value-opacity);
-    color: var(--value-font-color);
+    opacity: var(--pvt-value-opacity);
+    color: var(--pvt-value-font-color);
     font-weight: var(--font-weight-medium);
     font-size: var(--rls-input-font-size);
     letter-spacing: var(--rls-input-letter-spacing);

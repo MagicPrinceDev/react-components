@@ -1,14 +1,14 @@
 // Rolster Technology DayPicker Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 04/May/2023
+// Updated: 12/Sep/2023
 
 .rls-day-picker {
-  --span-not-hover-background: transparent;
-  --span-not-hover-font-color: inherit;
-  --span-background: transparent;
+  --pvt-span-nothover-background: transparent;
+  --pvt-span-nothover-font-color: inherit;
+  --pvt-span-background: transparent;
 
   position: relative;
   float: left;
@@ -52,11 +52,11 @@
       margin: var(--sizing-2) 0rem;
       font-size: 0.875rem;
       font-weight: var(--font-weight-semibold);
-      background: var(--span-background);
+      background: var(--pvt-span-background);
 
       &:not(:hover) {
-        background: var(--span-not-hover-background);
-        color: var(--span-not-hover-font-color);
+        background: var(--pvt-span-nothover-background);
+        color: var(--pvt-span-nothover-font-color);
       }
 
       &:hover {
@@ -66,12 +66,12 @@
     }
 
     &--selected {
-      --span-not-hover-background: var(--color-rolster-500);
-      --span-not-hover-font-color: var(--color-light-500);
+      --pvt-span-nothover-background: var(--color-rolster-500);
+      --pvt-span-nothover-font-color: var(--color-light-500);
     }
 
     &--forbidden {
-      --span-background: var(--background-theme-100);
+      --pvt-span-background: var(--background-theme-100);
 
       pointer-events: none;
       opacity: 0.5;

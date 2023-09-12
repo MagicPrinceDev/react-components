@@ -1,20 +1,20 @@
 // Rolster Technology Button Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 11/Sep/2023
+// Updated: 12/Sep/2023
 
 .rls-button {
-  --rls-button-content-background: none;
-  --rls-button-content-border: none;
-  --rls-button-content-font-color: var(--color-rolster-500);
-  --rls-button-content-animation: none;
-  --rls-button-content-visibility: hidden;
-  --rls-button-hover-background: var(--color-rolster-100);
-  --rls-button-hover-color: var(--color-rolster-100);
-  --rls-button-hover-border: none;
-  --rls-button-ripple-background: var(--color-rolster-700);
+  --pvt-button-content-background: none;
+  --pvt-button-content-border: none;
+  --pvt-button-content-font-color: var(--color-rolster-500);
+  --pvt-button-content-animation: none;
+  --pvt-button-content-visibility: hidden;
+  --pvt-button-hover-background: var(--color-rolster-100);
+  --pvt-button-hover-font-color: var(--color-rolster-100);
+  --pvt-button-hover-border: none;
+  --pvt-button-ripple-background: var(--color-rolster-700);
 
   position: relative;
   float: left;
@@ -24,17 +24,17 @@
   background: transparent;
 
   &:not(:disabled):not(:active) {
-    --rls-button-content-animation: ripple-squarecenter 1000ms var(--standard-curve);
+    --pvt-button-content-animation: ripple-squarecenter 1000ms var(--standard-curve);
   }
 
   &:not(:disabled):focus {
-    --rls-button-content-visibility: visible;
+    --pvt-button-content-visibility: visible;
   }
 
   &:not(:disabled):hover {
-    --rls-button-content-background: var(--rls-button-hover-background);
-    --rls-button-content-border: var(--rls-button-hover-border);
-    --rls-button-content-font-color: var(--rls-button-hover-color);
+    --pvt-button-content-background: var(--pvt-button-hover-background);
+    --pvt-button-content-border: var(--pvt-button-hover-border);
+    --pvt-button-content-font-color: var(--pvt-button-hover-font-color);
   }
 
   &:disabled {
@@ -50,9 +50,9 @@
     padding: var(--rls-button-content-padding);
     box-sizing: border-box;
     border-radius: var(--rls-button-content-radius);
-    color: var(--rls-button-content-font-color);
-    border: var(--rls-button-content-border);
-    background: var(--rls-button-content-background);
+    color: var(--pvt-button-content-font-color);
+    border: var(--pvt-button-content-border);
+    background: var(--pvt-button-content-background);
 
     &::before {
       position: absolute;
@@ -68,44 +68,44 @@
       opacity: 0.26;
       transform: scale(0);
       z-index: var(--z-index-2);
-      background: var(--rls-button-ripple-background);
-      animation: var(--rls-button-content-animation);
-      visibility: var(--rls-button-content-visibility);
+      background: var(--pvt-button-ripple-background);
+      animation: var(--pvt-button-content-animation);
+      visibility: var(--pvt-button-content-visibility);
     }
 
     &--ghost {
-      --rls-button-content-font-color: var(--color-rolster-500);
-      --rls-button-content-background: none;
-      --rls-button-hover-border: none;
-      --rls-button-hover-background: var(--color-rolster-100);
-      --rls-button-hover-color: var(--color-rolster-500);
+      --pvt-button-content-font-color: var(--color-rolster-500);
+      --pvt-button-content-background: none;
+      --pvt-button-hover-border: none;
+      --pvt-button-hover-background: var(--color-rolster-100);
+      --pvt-button-hover-font-color: var(--color-rolster-500);
     }
 
     &--flat {
-      --rls-button-content-background: var(--color-rolster-100);
-      --rls-button-content-font-color: var(--color-rolster-500);
-      --rls-button-hover-background: var(--color-rolster-100);
-      --rls-button-hover-border: none;
-      --rls-button-hover-color: var(--color-rolster-700);
-      --rls-button-ripple-background: var(--color-rolster-500);
+      --pvt-button-content-background: var(--color-rolster-100);
+      --pvt-button-content-font-color: var(--color-rolster-500);
+      --pvt-button-hover-background: var(--color-rolster-100);
+      --pvt-button-hover-border: none;
+      --pvt-button-hover-font-color: var(--color-rolster-700);
+      --pvt-button-ripple-background: var(--color-rolster-500);
     }
 
     &--outline {
-      --rls-button-content-background: transparent;
-      --rls-button-content-font-color: var(--color-theme-300);
-      --rls-button-content-border: var(--border-1-theme-300);
-      --rls-button-hover-background: transparent;
-      --rls-button-hover-color: var(--color-rolster-500);
-      --rls-button-hover-border: var(--border-1-rolster-500);
+      --pvt-button-content-background: transparent;
+      --pvt-button-content-font-color: var(--color-theme-300);
+      --pvt-button-content-border: var(--border-1-theme-300);
+      --pvt-button-hover-background: transparent;
+      --pvt-button-hover-font-color: var(--color-rolster-500);
+      --pvt-button-hover-border: var(--border-1-rolster-500);
     }
 
     &--raised {
-      --rls-button-content-background: var(--color-rolster-500);
-      --rls-button-content-font-color: var(--color-light-500);
-      --rls-button-hover-background: var(--color-rolster-700);
-      --rls-button-hover-color: var(--color-light-500);
-      --rls-button-hover-border: none;
-      --rls-button-ripple-background: var(--color-light-500);
+      --pvt-button-content-background: var(--color-rolster-500);
+      --pvt-button-content-font-color: var(--color-light-500);
+      --pvt-button-hover-background: var(--color-rolster-700);
+      --pvt-button-hover-font-color: var(--color-light-500);
+      --pvt-button-hover-border: none;
+      --pvt-button-ripple-background: var(--color-light-500);
     }
   }
 

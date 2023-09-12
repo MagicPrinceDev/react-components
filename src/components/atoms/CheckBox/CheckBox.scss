@@ -1,12 +1,12 @@
 // Rolster Technology Checkbox Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 03/May/2023
+// Updated: 12/Sep/2023
 
 .rls-checkbox {
-  --component-transform: scale(0);
+  --pvt-component-transform: scale(0);
 
   position: relative;
   float: left;
@@ -23,7 +23,7 @@
   }
 
   &--checked {
-    --component-transform: scale(1);
+    --pvt-component-transform: scale(1);
 
     border: var(--border-1-rolster-500);
   }
@@ -39,7 +39,7 @@
     height: 0.875rem;
     margin: auto;
     background: var(--gradient-rolster-500);
-    transform: var(--component-transform);
+    transform: var(--pvt-component-transform);
     transform-origin: 50% 50%;
     transition: all 160ms 0ms var(--standard-curve);
   }
