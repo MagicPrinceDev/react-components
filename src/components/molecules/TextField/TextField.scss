@@ -1,0 +1,15 @@
+// Rolster Technology TextField Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 06/May/2023
+
+.rls-text-field {
+  --input-parent-padding: var(--sizing-6) var(--sizing-8);
+
+  position: relative;
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+}

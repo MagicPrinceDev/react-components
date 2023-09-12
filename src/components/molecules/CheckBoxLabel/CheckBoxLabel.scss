@@ -1,0 +1,41 @@
+// Rolster Technology CheckBoxLabel Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 14/Abr/2023
+
+.rls-checkbox-label {
+  --text-opacity: 1;
+
+  position: relative;
+  float: left;
+  width: 100%;
+
+  &--disabled {
+    --text-opacity: 0.5;
+
+    pointer-events: none;
+  }
+
+  &__component {
+    margin-right: var(--sizing-8);
+    width: auto;
+  }
+
+  &__text {
+    float: left;
+    max-width: calc(100% - var(--sizing-32));
+    height: var(--sizing-24);
+    line-height: var(--sizing-24);
+    color: var(--color-theme-300);
+    font-size: var(--label-size);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--label-letter-spacing);
+    user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    opacity: var(--text-opacity);
+  }
+}

@@ -1,0 +1,97 @@
+// Rolster Technology YearPicker Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 15/Abr/2023
+
+.rls-year-picker {
+  position: relative;
+  float: left;
+  width: 100%;
+  max-width: 17.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+
+  &__header {
+    display: flex;
+    box-sizing: border-box;
+    padding: var(--sizing-8) var(--sizing-12);
+    color: var(--color-theme-500);
+    background: var(--background-theme-100);
+  }
+
+  &__title {
+    width: 100%;
+    height: var(--sizing-32);
+    line-height: var(--sizing-32);
+    text-align: center;
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__action {
+    width: var(--sizing-32);
+    height: var(--sizing-32);
+    line-height: var(--sizing-32);
+
+    button {
+      color: var(--color-theme-500);
+      background: transparent;
+      outline: none;
+      width: inherit;
+      height: inherit;
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__component {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sizing-8);
+    width: 100%;
+    float: left;
+    padding: var(--sizing-8);
+    box-sizing: border-box;
+  }
+
+  &__year {
+    position: relative;
+    float: left;
+    display: flex;
+    box-sizing: border-box;
+    text-align: center;
+    height: var(--sizing-36);
+    border-radius: var(--sizing-8);
+    color: var(--color-theme-300);
+
+    &:hover {
+      background: var(--color-rolster-900);
+      color: var(--color-light-500);
+    }
+
+    &--selected {
+      &:not(:hover) {
+        background: var(--color-rolster-500);
+        color: var(--color-light-500);
+      }
+    }
+
+    &--disabled {
+      pointer-events: none;
+      border: none;
+      opacity: 0.5;
+    }
+
+    &__span {
+      margin: auto;
+      cursor: default;
+      pointer-events: none;
+      font-weight: var(--font-weight-medium);
+    }
+  }
+}

@@ -13,6 +13,11 @@
   --breadcrumb-height: var(--sizing-36);
 
   --button-label-text-transform: uppercase;
+  --button-content-padding: 0rem var(--sizing-8);
+  --button-content-radius: var(--sizing-4);
+
+  --button-action-ripple-dimension: var(--sizing-36);
+  --button-action-ripple-position: -1.125rem;
 
   --icon-font-size: var(--sizing-24);
   --icon-width: var(--sizing-24);
@@ -22,10 +27,13 @@
   --input-font-size: var(--sizing-16);
   --input-letter-spacing: var(--body-letter-spacing);
   --input-height: var(--sizing-24);
+  --input-parent-padding: 0rem;
 
   --poster-height: var(--sizing-36);
   --poster-padding: var(--sizing-8);
 
   --tabular-text-char-width: 0.625rem;
   --tabular-text-pointer-width: 0.25rem;
+
+  --toolbar-height: var(--sizing-56);
 }

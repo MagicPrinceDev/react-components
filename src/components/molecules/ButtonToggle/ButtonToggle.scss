@@ -1,0 +1,98 @@
+// Rolster Technology ButtonToggle Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 31/May/2023
+// Updated: 31/May/2023
+
+.rls-button-toggle {
+  width: auto;
+
+  &__content {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__action {
+    --button-content-radius: var(--sizing-4) 0rem 0rem var(--sizing-4);
+
+    width: auto;
+  }
+
+  &__icon {
+    --button-content-radius: 0rem var(--sizing-4) var(--sizing-4) 0rem;
+    --button-content-padding: var(--sizing-4);
+
+    width: auto;
+  }
+
+  &__list {
+    --button-toggle-ul-height: 0rem;
+    --button-toggle-ul-opacity: 0;
+    --button-toggle-ul-transform: none;
+
+    position: absolute;
+    top: 2.8125rem;
+    left: 0rem;
+    width: 100%;
+    height: 0rem;
+    overflow: hidden;
+    z-index: var(--z-index-4);
+
+    &--hide {
+      --button-toggle-ul-opacity: 0;
+      --button-toggle-ul-transform: scale(0, 0);
+    }
+
+    &--visible {
+      --button-toggle-ul-height: auto;
+      --button-toggle-ul-opacity: 1;
+      --button-toggle-ul-transform: scale(1, 1);
+
+      overflow: initial;
+      opacity: 1;
+      height: auto;
+    }
+
+    ul {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      float: left;
+      width: 100%;
+      height: var(--button-toggle-ul-height);
+      opacity: var(--button-toggle-ul-opacity);
+      padding: var(--sizing-8) 0rem;
+      border-radius: var(--sizing-8);
+      box-sizing: border-box;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: var(--z-index-2);
+      background: var(--background-theme-500);
+      border: var(--border-3) solid var(--color-rolster-300);
+      transform: var(--button-toggle-ul-transform);
+      transform-origin: 0% 0%;
+      transition: transform 240ms 0ms var(--standard-curve),
+        opacity 240ms 0ms var(--standard-curve);
+      will-change: opacity, transform;
+
+      li {
+        padding: 0rem var(--sizing-12);
+        box-sizing: border-box;
+        height: var(--sizing-40);
+        line-height: var(--sizing-40);
+        cursor: default;
+        font-weight: var(--font-weight-bold);
+        font-size: 0.825rem;
+        letter-spacing: 0.825px;
+        text-transform: uppercase;
+        color: var(--color-theme-300);
+
+        &:hover {
+          background: var(--background-theme-300);
+          color: var(--color-theme-500);
+        }
+      }
+    }
+  }
+}

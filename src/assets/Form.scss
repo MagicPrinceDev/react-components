@@ -1,0 +1,30 @@
+/*!
+ * Xofttion Form Component
+ * v1.0.0
+ * @license MIT
+ * Author: Xofttion Developers
+ * Created: 20/Mar/2018
+ * Updated: 22/Abr/2023
+*/
+
+.xft-form {
+  &__content {
+    padding: 0rem var(--sizing-16);
+    box-sizing: border-box;
+
+    & + .xft-form__content {
+      margin-top: var(--sizing-24);
+    }
+  }
+
+  &__footer {
+    position: relative;
+    float: left;
+    display: flex;
+    justify-content: end;
+    column-gap: var(--sizing-16);
+    padding: 0rem var(--sizing-16);
+    box-sizing: border-box;
+    margin-top: var(--sizing-24);
+  }
+}

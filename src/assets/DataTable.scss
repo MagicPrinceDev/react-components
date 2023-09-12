@@ -1,0 +1,274 @@
+/*!
+ * Xofttion Datatable Component
+ * v1.0.0
+ * @license MIT
+ * Author: Xofttion Developers
+ * Created: 20/Mar/2018
+ * Updated: 20/Abr/2023
+*/
+
+@mixin datatable_cell_control() {
+  display: flex;
+  width: var(--sizing-48);
+  padding: 0rem;
+
+  & > * {
+    margin: auto;
+  }
+
+  & > .xft-avatar {
+    border-radius: var(--sizing-6);
+    font-size: var(--datatable-size);
+    width: var(--sizing-32);
+    height: var(--sizing-32);
+    line-height: var(--sizing-32);
+  }
+
+  & > .xft-button-action {
+    &::after {
+      width: var(--sizing-32);
+      height: var(--sizing-32);
+      margin-top: calc(var(--sizing-16) * -1);
+      margin-left: calc(var(--sizing-16) * -1);
+    }
+  }
+}
+
+.xft-datatable {
+  --datatable-letter-spacing: 0.525px;
+  --datatable-size: 0.8725rem;
+
+  position: relative;
+  float: left;
+  width: 100%;
+  border-radius: var(--sizing-8);
+  box-sizing: border-box;
+
+  & > table {
+    position: relative;
+    float: left;
+    width: 100%;
+    display: block;
+  }
+
+  &__content {
+    position: relative;
+    display: block;
+    float: left;
+    width: 100%;
+    border-radius: 0rem;
+  }
+
+  &__table {
+    display: block;
+    float: left;
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  &__thead {
+    display: block;
+    float: left;
+    width: 100%;
+    margin-bottom: var(--sizing-4);
+  }
+
+  &__title {
+    padding: 0rem var(--sizing-12);
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  &__th {
+    position: relative;
+    display: block;
+    float: left;
+    text-align: left;
+    padding: 0rem var(--sizing-4);
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: var(--sizing-40);
+    line-height: var(--sizing-40);
+    color: var(--color-theme-500);
+    font-size: var(--datatable-size);
+    letter-spacing: var(--datatable-letter-spacing);
+    font-weight: var(--font-weight-bold);
+
+    &--control {
+      @include datatable_cell_control();
+    }
+  }
+
+  &__tbody {
+    position: relative;
+    float: left;
+    width: 100%;
+    display: block;
+  }
+
+  &__row {
+    position: relative;
+    display: flex;
+    padding: 0rem var(--sizing-12);
+    box-sizing: border-box;
+    border: var(--border-1-theme-100);
+    border-radius: var(--sizing-8);
+    background: rgba(252, 252, 252, 1);
+
+    &--error {
+      border: var(--border-1-danger-100);
+    }
+
+    & + .xft-datatable__row {
+      margin-top: var(--sizing-12);
+    }
+  }
+
+  &__td {
+    position: relative;
+    display: block;
+    float: left;
+    height: var(--sizing-40);
+    line-height: var(--sizing-40);
+    padding: 0rem var(--sizing-4);
+    cursor: default;
+    text-align: left;
+    color: var(--color-theme-input);
+    font-size: var(--datatable-size);
+    letter-spacing: var(--datatable-letter-spacing);
+    font-weight: var(--font-weight-medium);
+
+    &--control {
+      @include datatable_cell_control();
+    }
+
+    .xft-box-field {
+      width: 100%;
+      padding: 0rem;
+
+      &__label {
+        display: none;
+      }
+
+      &__body {
+        background: transparent;
+        border: none;
+        padding: 0rem;
+        box-shadow: none;
+
+        .xft-input-field {
+          padding: var(--sizing-8) 0rem !important;
+
+          &__component,
+          &__value {
+            font-size: var(--datatable-size);
+            font-weight: var(--font-weight-medium);
+            letter-spacing: var(--body-2-letter-spacing);
+          }
+        }
+      }
+
+      &__icon {
+        padding: 0rem;
+      }
+    }
+
+    .xft-list-field {
+      .xft-box-field__body {
+        padding: var(--sizing-8) 0rem;
+        border: none;
+        box-shadow: none;
+      }
+
+      &__control {
+        font-size: var(--datatable-size);
+        font-weight: var(--font-weight-medium);
+        letter-spacing: var(--body-2-letter-spacing);
+      }
+
+      &__suggestions {
+        top: var(--sizing-48);
+
+        &--higher {
+          top: initial;
+          bottom: var(--sizing-48);
+        }
+      }
+
+      &__action {
+        .xft-icon {
+          font-size: var(--sizing-20);
+        }
+      }
+    }
+
+    .xft-input {
+      margin: var(--sizing-8) 0rem;
+
+      &__component {
+        font-size: var(--datatable-size);
+      }
+    }
+
+    .xft-amount {
+      font-size: var(--datatable-size);
+    }
+
+    .xft-poster {
+      display: flex;
+      width: calc(100% - var(--sizing-4));
+      height: 100%;
+      margin: var(--sizing-6) 0rem;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      height: var(--sizing-28);
+      line-height: var(--sizing-28);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      background: var(--color-xofttion-100);
+      color: var(--color-xofttion-500);
+    }
+
+    & > .xft-ballot {
+      padding: 0rem;
+      height: var(--sizing-40);
+
+      .xft-ballot__title {
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--smalltext-size);
+        letter-spacing: var(--smalltext-letter-spacing);
+        min-height: 1rem;
+        line-height: 1rem;
+      }
+
+      .xft-ballot__subtitle {
+        margin-top: 0rem;
+        font-size: var(--overline-size);
+        letter-spacing: var(--overline-letter-spacing);
+        min-height: 1rem;
+        line-height: 1rem;
+      }
+    }
+
+    & > a {
+      &:hover {
+        color: var(--color-theme-700);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__footer {
+    position: relative;
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-theme-100);
+    border-radius: 0rem 0rem var(--sizing-8) var(--sizing-8);
+  }
+}

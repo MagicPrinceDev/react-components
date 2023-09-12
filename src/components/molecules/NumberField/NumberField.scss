@@ -1,0 +1,15 @@
+// Rolster Technology NumberField Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 06/May/2023
+// Updated: 06/May/2023
+
+.rls-number-field {
+  --input-parent-padding: var(--sizing-6) var(--sizing-8);
+
+  position: relative;
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+}

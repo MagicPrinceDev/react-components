@@ -1,0 +1,82 @@
+// Rolster Technology Pagination Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 13/May/2023
+
+.rls-pagination {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  float: left;
+  width: 100%;
+  overflow: hidden;
+  height: var(--sizing-40);
+  padding: 0rem var(--sizing-12);
+  box-sizing: border-box;
+
+  &__pages {
+    display: flex;
+    gap: var(--sizing-8);
+    width: auto;
+    margin: 0rem var(--sizing-8);
+  }
+
+  &__page {
+    background: var(--background-theme-100);
+    color: var(--color-theme-500);
+    cursor: default;
+    margin: auto 0rem;
+    text-align: center;
+    width: var(--sizing-32);
+    height: var(--sizing-32);
+    line-height: var(--sizing-32);
+    border-radius: var(--sizing-4);
+
+    &:hover {
+      background: var(--color-xofttion-300);
+      color: var(--color-xofttion-900);
+    }
+
+    &--active {
+      background: var(--gradient-xofttion-500);
+      color: var(--color-light-500);
+    }
+  }
+
+  &__description {
+    color: var(--font-primary-900);
+    margin: 0rem var(--sizing-8);
+    width: auto;
+    height: var(--sizing-40);
+    line-height: var(--sizing-40);
+    font-size: var(--body-1-size);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--body-1-letter-spacing);
+  }
+
+  &__actions {
+    width: auto;
+  }
+
+  &__action {
+    background: none;
+    outline: none;
+    color: var(--color-theme-300);
+    height: var(--sizing-36);
+    width: var(--sizing-36);
+    padding: var(--sizing-6);
+    margin: var(--sizing-2) 0rem;
+
+    &:hover {
+      color: var(--color-xofttion-300);
+      cursor: pointer;
+    }
+
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+}

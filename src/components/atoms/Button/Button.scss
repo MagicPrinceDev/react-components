@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 16/Abr/2023
+// Updated: 11/Sep/2023
 
 .rls-button {
   --button-content-background: none;
@@ -43,13 +43,13 @@
   }
 
   &__content {
-    line-height: var(--sizing-40);
-    height: var(--sizing-40);
-    padding: 0rem var(--sizing-8);
-    box-sizing: border-box;
-    border-radius: var(--sizing-4);
     display: flex;
     justify-content: center;
+    line-height: var(--sizing-40);
+    height: var(--sizing-40);
+    padding: var(--button-content-padding);
+    box-sizing: border-box;
+    border-radius: var(--button-content-radius);
     color: var(--button-content-font-color);
     border: var(--button-content-border);
     background: var(--button-content-background);
