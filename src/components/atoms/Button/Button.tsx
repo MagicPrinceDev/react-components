@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import './Button.css';
@@ -29,7 +30,7 @@ export function RlsButton({
       rls-theme={rlsTheme}
       disabled={disabled}
     >
-      <div className={`rls-button__content rls-button__content--${type}`}>
+      <div className={renderClassStatus('rls-button__content', { type })}>
         {prefixIcon && <RlsIcon value={prefixIcon} />}
         {children && (
           <div className="rls-button__label truncate">{children}</div>
