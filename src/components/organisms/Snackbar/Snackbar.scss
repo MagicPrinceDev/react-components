@@ -59,7 +59,7 @@
     white-space: nowrap;
     margin-bottom: var(--sizing-4);
     color: var(--color-rolster-500);
-    font-size: var(--body-size);
+    font-size: var(--body-font-size);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--body-letter-spacing);
   }
@@ -68,7 +68,7 @@
     display: block;
     line-height: var(--sizing-20);
     color: var(--color-theme-300);
-    font-size: var(--label-size);
+    font-size: var(--label-font-size);
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--label-letter-spacing);
   }

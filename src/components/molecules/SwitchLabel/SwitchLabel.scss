@@ -11,6 +11,7 @@
   position: relative;
   float: left;
   width: 100%;
+  display: flex;
 
   &--disabled {
     --pvt-text-opacity: 0.5;
@@ -29,7 +30,7 @@
     float: left;
     line-height: var(--sizing-24);
     color: var(--color-theme-300);
-    font-size: var(--label-size);
+    font-size: var(--label-font-size);
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--label-letter-spacing);
     user-select: none;

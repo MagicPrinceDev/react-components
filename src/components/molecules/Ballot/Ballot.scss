@@ -49,7 +49,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     font-weight: var(--font-weight-medium);
-    font-size: var(--label-size);
+    font-size: var(--label-font-size);
     letter-spacing: var(--label-letter-spacing);
     min-height: var(--label-line-height);
     line-height: var(--label-line-height);
@@ -62,7 +62,7 @@
     color: var(--color-theme-300);
     margin-top: var(--sizing-4);
     font-weight: var(--font-weight-semibold);
-    font-size: var(--smalltext-size);
+    font-size: var(--smalltext-font-size);
     letter-spacing: var(--smalltext-letter-spacing);
     min-height: var(--rls-ballot-subtitle-height);
     line-height: var(--rls-ballot-subtitle-height);
