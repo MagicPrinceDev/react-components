@@ -21,7 +21,8 @@
     "prettier": "prettier . --write",
     "clean": "rimraf ./dist",
     "build:css": "node-sass src/ -o dist/esm/",
-    "build": "npm run clean && tsc -p tsconfig.json && npm run build:css && rollup -c rollup.config.js",
+    "prettier:css": "prettier --write dist/**/*.css --ignore-path .prettierignore",
+    "build": "npm run clean && tsc -p tsconfig.json && npm run build:css && npm run prettier:css && rollup -c rollup.config.js",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "prepublishOnly": "npm run build"
