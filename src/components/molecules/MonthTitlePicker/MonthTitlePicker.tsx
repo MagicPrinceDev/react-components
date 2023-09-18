@@ -1,4 +1,4 @@
-import { MONTHS_NAME } from '@rolster/typescript-utils';
+import { MONTHS_NAME } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { ReactControl } from '../../../hooks';
 import {

@@ -1,4 +1,4 @@
-import { getDateFormat } from '@rolster/typescript-utils';
+import { formatDate } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { ReactControl } from '../../../hooks';
 import { RlsIcon } from '../../atoms';
@@ -33,7 +33,7 @@ export function RlsDateField({
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    setDescription(value ? getDateFormat(value, 'dd/mx/aa') : '');
+    setDescription(value ? formatDate(value, 'dd/mx/aa') : '');
   }, [value]);
 
   function onClickInput(): void {

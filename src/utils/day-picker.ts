@@ -1,8 +1,4 @@
-import {
-  changeDay,
-  getDateWeight,
-  getDaysMonth
-} from '@rolster/typescript-utils';
+import { fetchMonthDays, refactorDay, weight } from '@rolster/helpers-date';
 import { DayState, WeekState } from '../models';
 
 interface Props {
@@ -64,7 +60,7 @@ class Factory {
     const dayStart = this.date.getDay();
     const rightWeeks: WeekState[] = [];
 
-    const dayCount = getDaysMonth(
+    const dayCount = fetchMonthDays(
       this.date.getFullYear(),
       this.date.getMonth()
     );
@@ -120,13 +116,13 @@ class Factory {
 
   private minOverflowDay(day: number): boolean {
     return this.minDate
-      ? getDateWeight(changeDay(this.date, day)) < getDateWeight(this.minDate)
+      ? weight(refactorDay(this.date, day)) < weight(this.minDate)
       : false;
   }
 
   private maxOverflowDay(day: number): boolean {
     return this.maxDate
-      ? getDateWeight(changeDay(this.date, day)) > getDateWeight(this.maxDate)
+      ? weight(refactorDay(this.date, day)) > weight(this.maxDate)
       : false;
   }
 }

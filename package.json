@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
@@ -28,8 +28,10 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rolster/typescript-forms": "^4.0.2",
-    "@rolster/typescript-utils": "^4.0.3",
+    "@rolster/helpers-advanced": "^1.0.0",
+    "@rolster/helpers-date": "^1.0.0",
+    "@rolster/helpers-forms": "^1.0.1",
+    "@rolster/helpers-string": "^1.0.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.1",
     "object-path": "^0.11.8",

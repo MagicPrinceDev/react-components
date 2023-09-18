@@ -1,8 +1,8 @@
 import {
   DAYS_NAME_MIN,
-  changeDay,
-  normalizeMinTime
-} from '@rolster/typescript-utils';
+  normalizeMinTime,
+  refactorDay
+} from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { DateRange, WeekRangeState } from '../../../models';
 import { ReactControl } from '../../../hooks';
@@ -47,7 +47,7 @@ export function RlsDayRangePicker({
   }, [range, date, minDate, maxDate]);
 
   function onChange(value: number): void {
-    const newRange = range.recalculate(changeDay(initialDate, value));
+    const newRange = range.recalculate(refactorDay(initialDate, value));
 
     setRange(newRange);
     formControl?.setState(newRange);

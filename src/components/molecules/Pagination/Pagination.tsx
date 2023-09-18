@@ -1,4 +1,4 @@
-import { hasPattern } from '@rolster/typescript-utils';
+import { hasPattern } from '@rolster/helpers-string';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsIcon } from '../../atoms';

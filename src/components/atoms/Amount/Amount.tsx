@@ -1,4 +1,4 @@
-import { currencyFormat } from '@rolster/typescript-utils';
+import { currencyFormat } from '@rolster/helpers-advanced';
 import { RlsTabularText } from '../TabularText/TabularText';
 import './Amount.css';
 

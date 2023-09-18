@@ -1,4 +1,4 @@
-import { FormControls, FormGroup } from '@rolster/typescript-forms';
+import { FormControls, FormGroup } from '@rolster/helpers-forms';
 
 export function useFormGroup<T extends FormControls>(
   controls: T

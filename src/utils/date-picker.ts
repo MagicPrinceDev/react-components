@@ -1,9 +1,9 @@
-import { isAfterDate, isBeforeDate } from '@rolster/typescript-utils';
+import { isAfter, isBefore } from '@rolster/helpers-date';
 
 export function verifyDateRange(date: Date, min?: Date, max?: Date): Date {
-  return min && isBeforeDate(min, date)
+  return min && isBefore(min, date)
     ? min
-    : max && isAfterDate(max, date)
+    : max && isAfter(max, date)
     ? max
     : date;
 }

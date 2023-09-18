@@ -3,7 +3,7 @@ import {
   FormState,
   ValidatorError,
   ValidatorFn
-} from '@rolster/typescript-forms';
+} from '@rolster/helpers-forms';
 import { LegacyRef, useEffect, useRef, useState } from 'react';
 
 export interface ReactControl<E extends HTMLElement, T = any>
@@ -105,4 +105,10 @@ export function useFormControl<E extends HTMLElement, T = any>(
     subscribe,
     updateValueAndValidity
   };
+}
+
+export function useInputControl<T = any>(
+  props: Props<T> = {}
+): ReactControl<HTMLInputElement, T> {
+  return useFormControl<HTMLInputElement, T>(props);
 }

@@ -2,9 +2,10 @@ import {
   KeyboardEvent,
   KeyboardEventHandler,
   MouseEventHandler,
-  useEffect
+  useEffect,
+  useState
 } from 'react';
-import { ReactControl, useListState } from '../../../hooks';
+import { ReactControl, useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsIcon } from '../../atoms';
@@ -12,28 +13,29 @@ import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
 import './SelectField.css';
 
-interface SelectField extends RlsComponent {
-  suggestions: ListFieldElement[];
+interface SelectField<T = unknown> extends RlsComponent {
+  suggestions: ListFieldElement<T>[];
   children?: any;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement>;
   placeholder?: string;
 }
 
-export function RlsSelectField({
+export function RlsSelectField<T = unknown>({
   suggestions,
   children,
   disabled,
   formControl,
   placeholder,
   rlsTheme
-}: SelectField) {
+}: SelectField<T>) {
   const {
+    active,
     boxContentRef,
+    higher,
     inputRef,
     listRef,
-    active,
-    higher,
+    suggestionsField,
     value,
     visible,
     setActive,
@@ -41,10 +43,20 @@ export function RlsSelectField({
     setVisible,
     navigationElement,
     navigationInput
-  } = useListState();
+  } = useListControl(suggestions);
+
+  const [changeInternal, setChangeInternal] = useState(false);
 
   useEffect(() => {
-    setValue(formControl?.value ? String(formControl.value) : '');
+    if (!changeInternal) {
+      setValue(
+        (formControl?.value &&
+          suggestionsField.hasElement(formControl?.value)?.description) ||
+          ''
+      );
+    }
+
+    setChangeInternal(false);
   }, [formControl?.value]);
 
   function onFocusInput(): void {
@@ -123,10 +135,11 @@ export function RlsSelectField({
     setVisible(false);
 
     if (formControl) {
+      setChangeInternal(true);
       formControl.setState(value);
-    } else {
-      setValue(description);
     }
+
+    setValue(description);
   }
 
   return (

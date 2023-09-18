@@ -1,9 +1,9 @@
 import {
-  changeDay,
-  changeMonth,
-  changeYear,
-  getDateFormat
-} from '@rolster/typescript-utils';
+  formatDate,
+  refactorDay,
+  refactorMonth,
+  refactorYear
+} from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { ReactControl, useFormControl } from '../../../hooks';
 import { PickerListener, PickerListenerType } from '../../../types';
@@ -79,13 +79,13 @@ export function RlsDatePicker({
   const [value, setValue] = useState(dateInitial);
   const [{ day, month, year }, setVisibility] = useState(VISIBILITY.DAY);
 
-  const title = getDateFormat(value, FORMAT_DESCRIPTION);
+  const title = formatDate(value, FORMAT_DESCRIPTION);
 
   useEffect(() => {
     setValue((prevValue) => {
       return typeof yearControl.value === 'number'
         ? verifyDateRange(
-            changeYear(prevValue, yearControl.value),
+            refactorYear(prevValue, yearControl.value),
             minDate,
             maxDate
           )
@@ -99,7 +99,7 @@ export function RlsDatePicker({
     setValue((prevValue) => {
       return typeof monthControl.value === 'number'
         ? verifyDateRange(
-            changeMonth(prevValue, monthControl.value),
+            refactorMonth(prevValue, monthControl.value),
             minDate,
             maxDate
           )
@@ -113,7 +113,7 @@ export function RlsDatePicker({
     setValue((prevValue) => {
       return typeof dayControl.value === 'number'
         ? verifyDateRange(
-            changeDay(prevValue, dayControl.value),
+            refactorDay(prevValue, dayControl.value),
             minDate,
             maxDate
           )

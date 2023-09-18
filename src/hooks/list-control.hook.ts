@@ -7,24 +7,26 @@ import {
   useRef,
   useState
 } from 'react';
+import { ListFieldElement, ListFieldSuggestions } from '../models';
 
 type Elements = NodeListOf<HTMLLIElement> | undefined;
 
 const classElement = '.rls-list-field__element';
 
-const maxPositionVisible = 4;
-const listSizeRem = 16;
-const elementSizeRem = 4;
-const baseSizePx = 16;
-const elementSizePx = baseSizePx * elementSizeRem;
-const maxListSizePx = baseSizePx * listSizeRem;
+const MAX_POSITION_VISIBLE = 4;
+const LIST_SIZE_REM = 16;
+const ELEMENT_SIZE_REM = 4;
+const BASE_SIZE_PX = 16;
+const ELEMENT_SIZE_PX = BASE_SIZE_PX * ELEMENT_SIZE_REM;
+const MAZ_LIST_SIZE_PX = BASE_SIZE_PX * LIST_SIZE_REM;
 
-interface ListState {
+interface ListControl<T = unknown> {
+  active: boolean;
   boxContentRef: RefObject<HTMLDivElement>;
+  higher: boolean;
   inputRef: RefObject<HTMLInputElement>;
   listRef: RefObject<HTMLUListElement>;
-  active: boolean;
-  higher: boolean;
+  suggestionsField: ListFieldSuggestions<T>;
   value: string;
   visible: boolean;
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -34,11 +36,17 @@ interface ListState {
   navigationInput: (event: KeyboardEvent) => void;
 }
 
-export function useListState(ignoreHigher = false): ListState {
+export function useListControl<T = unknown>(
+  suggestions: ListFieldElement<T>[],
+  ignoreHigher = false
+): ListControl {
   const boxContentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [suggestionsField, setSuggestionsField] = useState(
+    new ListFieldSuggestions([])
+  );
   const [active, setActive] = useState(false);
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState('');
@@ -65,12 +73,16 @@ export function useListState(ignoreHigher = false): ListState {
     setLocationList();
   }, [visible]);
 
+  useEffect(() => {
+    setSuggestionsField(new ListFieldSuggestions(suggestions));
+  }, [suggestions]);
+
   function setLocationList(): void {
     if (boxContentRef?.current) {
       const { top, height } = boxContentRef.current.getBoundingClientRect();
-      const overflow = baseSizePx / 2;
+      const overflow = BASE_SIZE_PX / 2;
 
-      const positionEnd = top + height + maxListSizePx + overflow;
+      const positionEnd = top + height + MAZ_LIST_SIZE_PX + overflow;
 
       setHigher(positionEnd > window.innerHeight);
     }
@@ -116,12 +128,12 @@ export function useListState(ignoreHigher = false): ListState {
 
       elements.item(newPosition).focus();
 
-      if (positionElement > maxPositionVisible) {
-        const elementPosition = elements.length - maxPositionVisible;
+      if (positionElement > MAX_POSITION_VISIBLE) {
+        const elementPosition = elements.length - MAX_POSITION_VISIBLE;
 
         setTimeout(() => {
           listRef?.current?.scroll({
-            top: elementSizePx * elementPosition,
+            top: ELEMENT_SIZE_PX * elementPosition,
             behavior: 'smooth'
           });
         }, 100);
@@ -174,11 +186,12 @@ export function useListState(ignoreHigher = false): ListState {
   }
 
   return {
+    active,
     boxContentRef,
+    higher,
     inputRef,
     listRef,
-    active,
-    higher,
+    suggestionsField,
     value,
     visible,
     setActive,

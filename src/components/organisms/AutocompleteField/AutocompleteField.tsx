@@ -1,4 +1,4 @@
-import { hasPattern } from '@rolster/typescript-utils';
+import { hasPattern } from '@rolster/helpers-string';
 import {
   KeyboardEvent,
   KeyboardEventHandler,
@@ -6,7 +6,7 @@ import {
   useEffect,
   useState
 } from 'react';
-import { ReactControl, useListState } from '../../../hooks';
+import { ReactControl, useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsIcon, RlsProgressBar } from '../../atoms';
@@ -17,13 +17,12 @@ import './AutocompleteField.css';
 const DURATION_ANIMATION = 240;
 const MAX_ELEMENTS = 6;
 
-interface AutocompleteField extends RlsComponent {
-  suggestions: ListFieldElement[];
+interface AutocompleteField<T = unknown> extends RlsComponent {
+  suggestions: ListFieldElement<T>[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement>;
   placeholder?: string;
   searching?: boolean;
-  onSelect?: (value: any) => void;
   onSearch?: (pattern: string) => void;
 }
 
@@ -35,7 +34,7 @@ interface Store {
 
 type StoreNulleable = Store | null;
 
-export function RlsAutocompleteField({
+export function RlsAutocompleteField<T = unknown>({
   suggestions,
   children,
   disabled,
@@ -43,9 +42,8 @@ export function RlsAutocompleteField({
   placeholder,
   searching,
   rlsTheme,
-  onSelect,
   onSearch
-}: AutocompleteField) {
+}: AutocompleteField<T>) {
   const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<ListFieldElement[]>([]);
   const [store, setStore] = useState<Store>({
@@ -55,11 +53,12 @@ export function RlsAutocompleteField({
   });
 
   const {
+    active,
     boxContentRef,
+    higher,
     inputRef,
     listRef,
-    active,
-    higher,
+    suggestionsField,
     value,
     visible,
     setActive,
@@ -67,7 +66,9 @@ export function RlsAutocompleteField({
     setVisible,
     navigationElement,
     navigationInput
-  } = useListState(true);
+  } = useListControl(suggestions, true);
+
+  const [changeInternal, setChangeInternal] = useState(false);
 
   useEffect(() => {
     filterSuggestions(pattern, true);
@@ -78,7 +79,15 @@ export function RlsAutocompleteField({
   }, [pattern]);
 
   useEffect(() => {
-    setValue(formControl?.value ? String(formControl.value) : '');
+    if (!changeInternal) {
+      setValue(
+        (formControl?.value &&
+          suggestionsField.hasElement(formControl?.value)?.description) ||
+          ''
+      );
+    }
+
+    setChangeInternal(false);
   }, [formControl?.value]);
 
   function onClickControl(): void {
@@ -119,6 +128,7 @@ export function RlsAutocompleteField({
       setValue('');
 
       if (formControl) {
+        setChangeInternal(true);
         formControl.setState(undefined);
       }
     } else {
@@ -157,11 +167,12 @@ export function RlsAutocompleteField({
 
     setVisible(false);
 
-    if (onSelect) {
-      onSelect(value);
-    } else {
-      formControl ? formControl.setState(value) : setValue(description);
+    if (formControl) {
+      setChangeInternal(true);
+      formControl.setState(value);
     }
+
+    setValue(description);
   }
 
   function filterSuggestions(pattern: string | null, reboot = false): void {

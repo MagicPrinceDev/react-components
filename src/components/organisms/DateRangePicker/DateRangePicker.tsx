@@ -1,8 +1,8 @@
 import {
-  changeMonth,
-  changeYear,
-  normalizeMinTime
-} from '@rolster/typescript-utils';
+  normalizeMinTime,
+  refactorMonth,
+  refactorYear
+} from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { ReactControl, useFormControl } from '../../../hooks';
 import { DateRange } from '../../../models';
@@ -81,7 +81,7 @@ export function RlsDateRangePicker({
   useEffect(() => {
     setDate((prevValue) => {
       return typeof yearControl.value === 'number'
-        ? changeYear(prevValue, yearControl.value)
+        ? refactorYear(prevValue, yearControl.value)
         : prevValue;
     });
 
@@ -91,7 +91,7 @@ export function RlsDateRangePicker({
   useEffect(() => {
     setDate((prevValue) => {
       return typeof monthControl.value === 'number'
-        ? changeMonth(prevValue, monthControl.value)
+        ? refactorMonth(prevValue, monthControl.value)
         : prevValue;
     });
 

@@ -1,10 +1,10 @@
 import {
-  getDateFormat,
-  getDifference,
-  isAfterDate,
-  isBeforeDate,
-  normalizeMinTime
-} from '@rolster/typescript-utils';
+  formatDate,
+  isAfter,
+  isBefore,
+  normalizeMinTime,
+  timeDifference
+} from '@rolster/helpers-date';
 
 const FORMAT_DESCRIPTION = 'dd/mm/aa';
 
@@ -20,6 +20,18 @@ export interface ListFieldElement<T = unknown> {
   compareTo(value: T): boolean;
 
   hasCoincidence(pattern: string): boolean;
+}
+
+export class ListFieldSuggestions<T = unknown> {
+  constructor(public readonly collection: ListFieldElement<T>[]) {}
+
+  public hasElement(value: T): Undefined<ListFieldElement<T>> {
+    const [element] = this.collection.filter((element) =>
+      element.compareTo(value)
+    );
+
+    return element;
+  }
 }
 
 export interface DayState {
@@ -68,29 +80,29 @@ export class DateRange {
   constructor(minDate: Date, maxDate?: Date) {
     this.minDate = normalizeMinTime(minDate);
 
-    if (maxDate && isBeforeDate(maxDate, minDate)) {
+    if (maxDate && isBefore(maxDate, minDate)) {
       this.maxDate = normalizeMinTime(maxDate);
     } else {
       this.maxDate = normalizeMinTime(minDate);
     }
 
-    const minFormat = getDateFormat(this.minDate, FORMAT_DESCRIPTION);
-    const maxFormat = getDateFormat(this.maxDate, FORMAT_DESCRIPTION);
+    const minFormat = formatDate(this.minDate, FORMAT_DESCRIPTION);
+    const maxFormat = formatDate(this.maxDate, FORMAT_DESCRIPTION);
 
     this.description = `${minFormat} - ${maxFormat}`;
   }
 
   public recalculate(date: Date): DateRange {
-    if (isBeforeDate(this.minDate, date)) {
+    if (isBefore(this.minDate, date)) {
       return new DateRange(date, this.maxDate);
     }
 
-    if (isAfterDate(this.maxDate, date)) {
+    if (isAfter(this.maxDate, date)) {
       return new DateRange(this.minDate, date);
     }
 
-    const minDifference = getDifference(date, this.minDate);
-    const maxDifference = getDifference(this.maxDate, date);
+    const minDifference = timeDifference(date, this.minDate);
+    const maxDifference = timeDifference(this.maxDate, date);
 
     return minDifference > maxDifference
       ? new DateRange(this.minDate, date)

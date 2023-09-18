@@ -1,9 +1,9 @@
 import {
-  changeDay,
-  getDateWeight,
-  getDaysMonth,
-  isBetweenDate
-} from '@rolster/typescript-utils';
+  fetchMonthDays,
+  isBetween,
+  refactorDay,
+  weight
+} from '@rolster/helpers-date';
 import { DateRange, DayRangeState, WeekRangeState } from '../models';
 
 interface Props {
@@ -65,7 +65,7 @@ class Factory {
     const rightWeeks: WeekRangeState[] = [];
     const dayStart = this.date.getDay();
 
-    const dayCount = getDaysMonth(
+    const dayCount = fetchMonthDays(
       this.date.getFullYear(),
       this.date.getMonth()
     );
@@ -132,10 +132,10 @@ class Factory {
   }
 
   private isRangedFromDate(day: number): boolean {
-    return isBetweenDate(
+    return isBetween(
       this.range.minDate,
       this.range.maxDate,
-      changeDay(this.date, day)
+      refactorDay(this.date, day)
     );
   }
 
@@ -145,13 +145,13 @@ class Factory {
 
   private minOverflowDay(day: number): boolean {
     return this.minDate
-      ? getDateWeight(changeDay(this.date, day)) < getDateWeight(this.minDate)
+      ? weight(refactorDay(this.date, day)) < weight(this.minDate)
       : false;
   }
 
   private maxOverflowDay(day: number): boolean {
     return this.maxDate
-      ? getDateWeight(changeDay(this.date, day)) > getDateWeight(this.maxDate)
+      ? weight(refactorDay(this.date, day)) > weight(this.maxDate)
       : false;
   }
 }

@@ -1,4 +1,4 @@
-import { DAYS_NAME_MIN } from '@rolster/typescript-utils';
+import { DAYS_NAME_MIN } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../utils/css';
 import { createDayPicker } from '../../../utils/day-picker';

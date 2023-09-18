@@ -1,4 +1,4 @@
-import { MONTHS_NAME } from '@rolster/typescript-utils';
+import { MONTHS_NAME } from '@rolster/helpers-date';
 import { MonthState } from '../models';
 
 interface Props {

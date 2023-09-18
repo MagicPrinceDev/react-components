@@ -1,9 +1,9 @@
 // Rolster Technology Card Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 24/May/2023
+// Updated: 18/Sep/2023
 
 .rls-card {
   background: var(--background-theme-500);
@@ -11,6 +11,8 @@
   border: var(--border-1-theme-100);
 
   &__content {
+    display: flex;
+    flex-direction: column;
     padding: var(--sizing-16);
     box-sizing: border-box;
   }
