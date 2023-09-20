@@ -83,9 +83,9 @@ export function RlsDatePicker({
 
   useEffect(() => {
     setValue((prevValue) => {
-      return typeof yearControl.value === 'number'
+      return typeof yearControl.state === 'number'
         ? verifyDateRange(
-            refactorYear(prevValue, yearControl.value),
+            refactorYear(prevValue, yearControl.state),
             minDate,
             maxDate
           )
@@ -93,13 +93,13 @@ export function RlsDatePicker({
     });
 
     setVisibility(VISIBILITY.DAY);
-  }, [yearControl.value]);
+  }, [yearControl.state]);
 
   useEffect(() => {
     setValue((prevValue) => {
-      return typeof monthControl.value === 'number'
+      return typeof monthControl.state === 'number'
         ? verifyDateRange(
-            refactorMonth(prevValue, monthControl.value),
+            refactorMonth(prevValue, monthControl.state),
             minDate,
             maxDate
           )
@@ -107,19 +107,19 @@ export function RlsDatePicker({
     });
 
     setVisibility(VISIBILITY.DAY);
-  }, [monthControl.value]);
+  }, [monthControl.state]);
 
   useEffect(() => {
     setValue((prevValue) => {
-      return typeof dayControl.value === 'number'
+      return typeof dayControl.state === 'number'
         ? verifyDateRange(
-            refactorDay(prevValue, dayControl.value),
+            refactorDay(prevValue, dayControl.state),
             minDate,
             maxDate
           )
         : prevValue;
     });
-  }, [dayControl.value]);
+  }, [dayControl.state]);
 
   function onVisibilityDay(): void {
     setVisibility(VISIBILITY.DAY);

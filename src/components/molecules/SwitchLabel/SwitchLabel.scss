@@ -1,12 +1,16 @@
 // Rolster Technology SwitchLabel Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 12/Sep/2023
+// Updated: 19/Sep/2023
 
 .rls-switch-label {
   --pvt-text-opacity: 1;
+  --pvt-text-height: var(--sizing-24);
+  --pvt-text-overflow: hidden;
+  --pvt-text-white-space: nowrap;
+  --pvt-text-text-overflow: ellipsis;
 
   position: relative;
   float: left;
@@ -19,24 +23,31 @@
     pointer-events: none;
   }
 
+  &--extended {
+    --pvt-text-text-overflow: initial;
+    --pvt-text-overflow: initial;
+    --pvt-text-white-space: initial;
+    --pvt-text-height: auto;
+  }
+
   &__component {
     margin-right: var(--sizing-8);
     width: auto;
   }
 
   &__text {
-    max-width: calc(100% - var(--sizing-56));
-    height: var(--sizing-24);
     float: left;
+    max-width: calc(100% - var(--sizing-56));
+    height: var(--pvt-text-height);
     line-height: var(--sizing-24);
     color: var(--color-theme-300);
     font-size: var(--label-font-size);
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--label-letter-spacing);
     user-select: none;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     opacity: var(--pvt-text-opacity);
+    overflow: var(--pvt-text-overflow);
+    white-space: var(--pvt-text-white-space);
+    text-overflow: var(--pvt-text-text-overflow);
   }
 }

@@ -23,7 +23,7 @@ export function RlsMonthPicker({
   rlsTheme
 }: MonthPicker) {
   const initialDate = date || new Date();
-  const initialMonth = formControl?.value || initialDate.getMonth();
+  const initialMonth = formControl?.state || initialDate.getMonth();
 
   const [months, setMonths] = useState<MonthState[]>([]);
   const [value, setValue] = useState(initialMonth);
@@ -32,7 +32,7 @@ export function RlsMonthPicker({
     setMonths(
       createMonthPicker({
         date: initialDate,
-        value: formControl?.value || value,
+        value: formControl?.state || value,
         minDate,
         maxDate
       })

@@ -20,8 +20,10 @@ export default {
     }
   ],
   external: [
-    '@rolster/typescript-forms',
-    '@rolster/typescript-utils',
+    '@rolster/helpers-advanced',
+    '@rolster/helpers-date',
+    '@rolster/helpers-forms',
+    '@rolster/helpers-string',
     'react',
     'react-dom'
   ],

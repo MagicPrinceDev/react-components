@@ -81,14 +81,14 @@ export function RlsAutocompleteField<T = unknown>({
   useEffect(() => {
     if (!changeInternal) {
       setValue(
-        (formControl?.value &&
-          suggestionsField.hasElement(formControl?.value)?.description) ||
+        (formControl?.state &&
+          suggestionsField.hasElement(formControl?.state)?.description) ||
           ''
       );
     }
 
     setChangeInternal(false);
-  }, [formControl?.value]);
+  }, [formControl?.state]);
 
   function onClickControl(): void {
     if (!disabled) {

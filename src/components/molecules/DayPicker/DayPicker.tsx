@@ -26,7 +26,7 @@ export function RlsDayPicker({
   rlsTheme
 }: DayPicker) {
   const initialDate = date || new Date();
-  const initialDay = formControl?.value || initialDate.getDate();
+  const initialDay = formControl?.state || initialDate.getDate();
 
   const [weeks, setWeeks] = useState<WeekState[]>([]);
   const [value, setValue] = useState(initialDay);
@@ -35,7 +35,7 @@ export function RlsDayPicker({
     setWeeks(
       createDayPicker({
         date: initialDate,
-        value: formControl?.value || value,
+        value: formControl?.state || value,
         minDate,
         maxDate
       })

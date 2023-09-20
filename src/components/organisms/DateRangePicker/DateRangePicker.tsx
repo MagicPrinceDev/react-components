@@ -80,31 +80,31 @@ export function RlsDateRangePicker({
 
   useEffect(() => {
     setDate((prevValue) => {
-      return typeof yearControl.value === 'number'
-        ? refactorYear(prevValue, yearControl.value)
+      return typeof yearControl.state === 'number'
+        ? refactorYear(prevValue, yearControl.state)
         : prevValue;
     });
 
     setVisibility(VISIBILITY.DAY);
-  }, [yearControl.value]);
+  }, [yearControl.state]);
 
   useEffect(() => {
     setDate((prevValue) => {
-      return typeof monthControl.value === 'number'
-        ? refactorMonth(prevValue, monthControl.value)
+      return typeof monthControl.state === 'number'
+        ? refactorMonth(prevValue, monthControl.state)
         : prevValue;
     });
 
     setVisibility(VISIBILITY.DAY);
-  }, [monthControl.value]);
+  }, [monthControl.state]);
 
   useEffect(() => {
-    if (dayControl.value) {
-      setValue(dayControl.value);
+    if (dayControl.state) {
+      setValue(dayControl.state);
     }
 
     setVisibility(VISIBILITY.DAY);
-  }, [dayControl.value]);
+  }, [dayControl.state]);
 
   function onVisibilityDay(): void {
     setVisibility(VISIBILITY.DAY);
@@ -140,7 +140,7 @@ export function RlsDateRangePicker({
         </div>
 
         <div className="rls-date-range-picker__title rls-date-range-picker__title--year">
-          <span onClick={onVisibilityYear}>{yearControl.value}</span>
+          <span onClick={onVisibilityYear}>{yearControl.state}</span>
         </div>
 
         <RlsMonthTitlePicker

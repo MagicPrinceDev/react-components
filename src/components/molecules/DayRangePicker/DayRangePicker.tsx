@@ -29,7 +29,7 @@ export function RlsDayRangePicker({
   minDate,
   rlsTheme
 }: DayRangePicker) {
-  const initialRange = formControl?.value || DateRange.now();
+  const initialRange = formControl?.state || DateRange.now();
   const initialDate = normalizeMinTime(date || initialRange.minDate);
 
   const [weeks, setWeeks] = useState<WeekRangeState[]>([]);

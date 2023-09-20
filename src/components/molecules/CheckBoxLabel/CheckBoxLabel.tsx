@@ -7,24 +7,26 @@ import './CheckBoxLabel.css';
 
 interface CheckBoxLabel extends RlsComponent {
   disabled?: boolean;
+  extended?: boolean;
   formControl?: ReactControl<HTMLElement, boolean>;
 }
 
 export function RlsCheckBoxLabel({
   children,
   disabled,
+  extended,
   formControl,
   rlsTheme
 }: CheckBoxLabel) {
   const [checked, setChecked] = useState(formControl?.value || false);
 
   useEffect(() => {
-    setChecked(formControl?.value || false);
-  }, [formControl?.value]);
+    setChecked(formControl?.state || false);
+  }, [formControl?.state]);
 
   function onToggle(): void {
     if (formControl) {
-      formControl?.setState(!formControl.value);
+      formControl?.setState(!formControl.state);
     } else {
       setChecked(!checked);
     }
@@ -32,7 +34,10 @@ export function RlsCheckBoxLabel({
 
   return (
     <div
-      className={renderClassStatus('rls-checkbox-label', { disabled })}
+      className={renderClassStatus('rls-checkbox-label', {
+        disabled,
+        extended
+      })}
       rls-theme={rlsTheme}
     >
       <div className="rls-checkbox-label__component" onClick={onToggle}>

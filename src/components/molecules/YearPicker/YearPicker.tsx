@@ -23,13 +23,13 @@ export function RlsYearPicker({
   rlsTheme
 }: YearPicker) {
   const initialDate = date || new Date();
-  const initialYear = formControl?.value || initialDate.getFullYear();
+  const initialYear = formControl?.state || initialDate.getFullYear();
 
   const [value, setValue] = useState(initialYear);
   const [year, setYear] = useState(initialYear);
   const [template, setTemplate] = useState(
     createYearPicker({
-      value: formControl?.value || value,
+      value: formControl?.state || value,
       year: initialYear,
       minDate,
       maxDate
@@ -39,7 +39,7 @@ export function RlsYearPicker({
   useEffect(() => {
     setTemplate(
       createYearPicker({
-        value: formControl?.value || value,
+        value: formControl?.state || value,
         year,
         minDate,
         maxDate

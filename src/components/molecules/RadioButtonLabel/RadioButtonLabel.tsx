@@ -6,7 +6,8 @@ import { RlsComponent } from '../../definitions';
 import './RadioButtonLabel.css';
 
 interface RadioButtonLabel extends RlsComponent {
-  disabled?: false;
+  disabled?: boolean;
+  extended?: boolean;
   formControl?: ReactControl<HTMLElement>;
   value?: any;
 }
@@ -14,17 +15,18 @@ interface RadioButtonLabel extends RlsComponent {
 export function RlsRadioButtonLabel({
   children,
   disabled,
+  extended,
   formControl,
   rlsTheme,
   value
 }: RadioButtonLabel) {
-  const [checked, setChecked] = useState(formControl?.value || false);
+  const [checked, setChecked] = useState(formControl?.state || false);
 
   useEffect(() => {
-    setChecked(formControl?.value === value);
-  }, [formControl?.value]);
+    setChecked(formControl?.state === value);
+  }, [formControl?.state]);
 
-  function onToggle(): void {
+  function onSelect(): void {
     if (formControl) {
       formControl?.setState(value);
     }
@@ -32,10 +34,13 @@ export function RlsRadioButtonLabel({
 
   return (
     <div
-      className={renderClassStatus('rls-radiobutton-label', { disabled })}
+      className={renderClassStatus('rls-radiobutton-label', {
+        disabled,
+        extended
+      })}
       rls-theme={rlsTheme}
     >
-      <div className="rls-radiobutton-label__component" onClick={onToggle}>
+      <div className="rls-radiobutton-label__component" onClick={onSelect}>
         <RlsRadioButton checked={checked} disabled={disabled} />
       </div>
       <label className="rls-radiobutton-label__text">{children}</label>

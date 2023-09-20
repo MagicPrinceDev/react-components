@@ -36,11 +36,11 @@ interface Snackbar extends SnackbarConfig {
   visible?: boolean;
 }
 
-export type SnackbarCall = (config: SnackbarConfig) => void;
+export type FnSnackbar = (config: SnackbarConfig) => void;
 
 export interface SnackbarService {
   RlsSnackbar: JSX.Element;
-  showSnackbar: SnackbarCall;
+  snackbar: FnSnackbar;
 }
 
 export function RlsSnackbar({
@@ -88,11 +88,11 @@ export function useSnackbarService(): SnackbarService {
     } else if (timeoutId) {
       clearTimeout(timeoutId);
 
-      setTimeout(() => showSnackbar(config), DURATION_ANIMATION);
+      setTimeout(() => snackbar(config), DURATION_ANIMATION);
     }
   }, [visible]);
 
-  function showSnackbar(config: SnackbarConfig): void {
+  function snackbar(config: SnackbarConfig): void {
     const { content } = config;
 
     setConfig(config);
@@ -104,6 +104,6 @@ export function useSnackbarService(): SnackbarService {
 
   return {
     RlsSnackbar: rlsSnackbar,
-    showSnackbar
+    snackbar
   };
 }

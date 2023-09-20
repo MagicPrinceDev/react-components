@@ -6,25 +6,27 @@ import { RlsComponent } from '../../definitions';
 import './SwitchLabel.css';
 
 interface SwitchLabelProps extends RlsComponent {
-  disabled?: false;
+  disabled?: boolean;
+  extended?: boolean;
   formControl?: ReactControl<HTMLElement, boolean>;
 }
 
 export function RlsSwitchLabel({
   children,
   disabled,
+  extended,
   formControl,
   rlsTheme
 }: SwitchLabelProps) {
   const [checked, setChecked] = useState(formControl?.value || false);
 
   useEffect(() => {
-    setChecked(formControl?.value || false);
-  }, [formControl?.value]);
+    setChecked(formControl?.state || false);
+  }, [formControl?.state]);
 
   function onToggle(): void {
     if (formControl) {
-      formControl?.setState(!formControl.value);
+      formControl?.setState(!formControl.state);
     } else {
       setChecked(!checked);
     }
@@ -32,7 +34,7 @@ export function RlsSwitchLabel({
 
   return (
     <div
-      className={renderClassStatus('rls-switch-label', { disabled })}
+      className={renderClassStatus('rls-switch-label', { disabled, extended })}
       rls-theme={rlsTheme}
     >
       <div className="rls-switch-label__component" onClick={onToggle}>

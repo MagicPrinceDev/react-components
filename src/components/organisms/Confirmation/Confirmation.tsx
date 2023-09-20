@@ -23,11 +23,11 @@ interface Confirmation extends ConfirmationConfig {
   visible?: boolean;
 }
 
-export type ConfirmationCall = (props: Confirmation) => void;
+export type FnConfirmation = (props: Confirmation) => void;
 
 export interface ConfirmationService {
   RlsConfirmation: JSX.Element;
-  showConfirmation: ConfirmationCall;
+  confirmation: FnConfirmation;
 }
 
 export function RlsConfirmation({
@@ -124,7 +124,7 @@ export function useConfirmationService(): ConfirmationService {
     };
   }
 
-  function showConfirmation(config: ConfirmationConfig): void {
+  function confirmation(config: ConfirmationConfig): void {
     const { approved, reject } = config;
 
     setConfig({
@@ -138,6 +138,6 @@ export function useConfirmationService(): ConfirmationService {
 
   return {
     RlsConfirmation: rlsConfirmation,
-    showConfirmation
+    confirmation
   };
 }
