@@ -1,6 +1,6 @@
-import { Either } from '@rolster/helpers-advanced';
 import { createContext } from 'react';
 import {
+  ConfirmationResult,
   FnConfirmation,
   FnSnackbar,
   useConfirmationService,
@@ -15,7 +15,7 @@ interface State {
 
 export const RlsContext = createContext<State>({
   confirmation: () => {
-    return Promise.resolve(Either.success());
+    return Promise.resolve(ConfirmationResult.approved());
   },
   snackbar: () => {}
 });
