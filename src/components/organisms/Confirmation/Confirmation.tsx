@@ -1,4 +1,4 @@
-import { Either } from '@rolster/helpers-advanced';
+import { PartialSealed } from '@rolster/helpers-advanced';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../utils/css';
@@ -6,7 +6,22 @@ import { RlsButton } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';
 
-type Result = Either<void, void>;
+class Result extends PartialSealed<
+  void,
+  void,
+  {
+    approved: () => void;
+    reject: () => void;
+  }
+> {
+  public static approved(): Result {
+    return new Result('approved');
+  }
+
+  public static reject(): Result {
+    return new Result('reject');
+  }
+}
 
 interface ConfirmationAction {
   label: string;
@@ -126,7 +141,7 @@ export function useConfirmationService(): ConfirmationService {
           label: approved || 'Aceptar',
           onClick: () => {
             setVisible(false);
-            resolve(Either.success());
+            resolve(Result.approved());
           }
         },
         reject: reject
@@ -134,7 +149,7 @@ export function useConfirmationService(): ConfirmationService {
               label: reject,
               onClick: () => {
                 setVisible(false);
-                resolve(Either.failure());
+                resolve(Result.reject());
               }
             }
           : undefined
