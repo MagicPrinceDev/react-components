@@ -122,15 +122,13 @@ export function useConfirmationService(): ConfirmationService {
         rlsTheme,
         subtitle,
         title,
-        approved: approved
-          ? {
-              label: approved,
-              onClick: () => {
-                setVisible(false);
-                resolve(Either.success());
-              }
-            }
-          : undefined,
+        approved: {
+          label: approved || 'Aceptar',
+          onClick: () => {
+            setVisible(false);
+            resolve(Either.success());
+          }
+        },
         reject: reject
           ? {
               label: reject,
