@@ -1,3 +1,4 @@
+import { Either } from '@rolster/helpers-advanced';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../utils/css';
@@ -5,25 +6,32 @@ import { RlsButton } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';
 
+type Result = Either<void, void>;
+
 interface ConfirmationAction {
   label: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
-interface ConfirmationConfig {
-  approved?: ConfirmationAction;
+interface ConfirmationBasic {
   content?: ReactNode;
-  reject?: ConfirmationAction;
   subtitle?: string;
   title?: string;
   rlsTheme?: RlsTheme;
 }
 
-interface Confirmation extends ConfirmationConfig {
+interface Confirmation extends ConfirmationBasic {
+  approved?: ConfirmationAction;
+  reject?: ConfirmationAction;
   visible?: boolean;
 }
 
-export type FnConfirmation = (props: Confirmation) => void;
+interface ConfirmationConfig extends ConfirmationBasic {
+  approved?: string;
+  reject?: string;
+}
+
+export type FnConfirmation = (props: ConfirmationConfig) => Promise<Result>;
 
 export interface ConfirmationService {
   RlsConfirmation: JSX.Element;
@@ -39,7 +47,7 @@ export function RlsConfirmation({
   title,
   visible
 }: Confirmation) {
-  return ReactDOM.createPortal(
+  return (
     <div
       className={renderClassStatus('rls-confirmation', { visible })}
       rls-theme={rlsTheme}
@@ -92,48 +100,50 @@ export function RlsConfirmation({
       </div>
 
       <div className="rls-confirmation__backdrop"></div>
-    </div>,
-    document.body
+    </div>
   );
 }
 
-type RefactorAction = ConfirmationAction | undefined;
-
 export function useConfirmationService(): ConfirmationService {
-  const [config, setConfig] = useState<ConfirmationConfig>({});
+  const [config, setConfig] = useState<Confirmation>({});
   const [visible, setVisible] = useState(false);
 
-  const rlsConfirmation = <RlsConfirmation {...config} visible={visible} />;
+  const rlsConfirmation = ReactDOM.createPortal(
+    <RlsConfirmation {...config} visible={visible} />,
+    document.body
+  );
 
-  function refactorAction(action?: ConfirmationAction): RefactorAction {
-    if (!action) {
-      return undefined;
-    }
+  function confirmation(config: ConfirmationConfig): Promise<Result> {
+    return new Promise<Result>((resolve) => {
+      const { content, rlsTheme, subtitle, title, approved, reject } = config;
 
-    const { label, onClick } = action;
+      setConfig({
+        content,
+        rlsTheme,
+        subtitle,
+        title,
+        approved: approved
+          ? {
+              label: approved,
+              onClick: () => {
+                setVisible(false);
+                resolve(Either.success());
+              }
+            }
+          : undefined,
+        reject: reject
+          ? {
+              label: reject,
+              onClick: () => {
+                setVisible(false);
+                resolve(Either.failure());
+              }
+            }
+          : undefined
+      });
 
-    return {
-      label,
-      onClick: () => {
-        setVisible(false);
-
-        if (onClick) {
-          onClick();
-        }
-      }
-    };
-  }
-
-  function confirmation(config: ConfirmationConfig): void {
-    const { approved, reject } = config;
-
-    setConfig({
-      ...config,
-      approved: refactorAction(approved),
-      reject: refactorAction(reject)
+      setVisible(true);
     });
-
-    setVisible(true);
   }
 
   return {

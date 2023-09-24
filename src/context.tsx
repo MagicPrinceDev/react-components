@@ -1,3 +1,4 @@
+import { Either } from '@rolster/helpers-advanced';
 import { createContext } from 'react';
 import {
   FnConfirmation,
@@ -13,8 +14,10 @@ interface State {
 }
 
 export const RlsContext = createContext<State>({
-  snackbar: () => {},
-  confirmation: () => {}
+  confirmation: () => {
+    return Promise.resolve(Either.success());
+  },
+  snackbar: () => {}
 });
 
 export function RlsApplication({ children }: RlsComponent) {

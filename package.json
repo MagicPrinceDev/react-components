@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
@@ -28,7 +28,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rolster/helpers-advanced": "^1.0.0",
+    "@rolster/helpers-advanced": "^1.1.1",
     "@rolster/helpers-date": "^1.0.0",
     "@rolster/helpers-forms": "^1.0.1",
     "@rolster/helpers-string": "^1.0.0",
