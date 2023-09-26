@@ -1,4 +1,4 @@
-import { fetchMonthDays, refactorDay, weight } from '@rolster/helpers-date';
+import { daysFromMonth, refactorDay, weight } from '@rolster/helpers-date';
 import { DayState, WeekState } from '../models';
 
 interface Props {
@@ -60,7 +60,7 @@ class Factory {
     const dayStart = this.date.getDay();
     const rightWeeks: WeekState[] = [];
 
-    const dayCount = fetchMonthDays(
+    const dayCount = daysFromMonth(
       this.date.getFullYear(),
       this.date.getMonth()
     );

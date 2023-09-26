@@ -1,4 +1,4 @@
-import { MONTHS_NAME } from '@rolster/helpers-date';
+import { MONTH_NAMES, Month } from '@rolster/helpers-date';
 import { MonthState } from '../models';
 
 interface Props {
@@ -8,8 +8,8 @@ interface Props {
   maxDate?: Date;
 }
 
-export const MONTH_MAX_VALUE = 11;
-export const MONTH_MIN_VALUE = 0;
+export const MONTH_MAX_VALUE = Month.January;
+export const MONTH_MIN_VALUE = Month.December;
 
 class Factory {
   private value: number;
@@ -50,7 +50,7 @@ class Factory {
   public createMonth(value: number): MonthState {
     return {
       value,
-      label: MONTHS_NAME[value],
+      label: MONTH_NAMES[value],
       disabled: this.overflowMonth(value),
       selected: value === this.value
     };

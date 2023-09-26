@@ -1,4 +1,4 @@
-import { DAYS_NAME_MIN } from '@rolster/helpers-date';
+import { DAY_LABELS } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../utils/css';
 import { createDayPicker } from '../../../utils/day-picker';
@@ -6,8 +6,6 @@ import { ReactControl } from '../../../hooks';
 import { WeekState } from '../../../models';
 import { RlsComponent } from '../../definitions';
 import './DayPicker.css';
-
-const titles = DAYS_NAME_MIN;
 
 interface DayPicker extends RlsComponent {
   date?: Date;
@@ -56,7 +54,7 @@ export function RlsDayPicker({
   return (
     <div className="rls-day-picker" rls-theme={rlsTheme}>
       <div className="rls-day-picker__header">
-        {titles.map((title, index) => (
+        {DAY_LABELS.map((title, index) => (
           <label key={index} className="rls-day-picker__label">
             {title}
           </label>

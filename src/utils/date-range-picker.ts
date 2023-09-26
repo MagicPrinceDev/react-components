@@ -1,5 +1,5 @@
 import {
-  fetchMonthDays,
+  daysFromMonth,
   isBetween,
   refactorDay,
   weight
@@ -65,7 +65,7 @@ class Factory {
     const rightWeeks: WeekRangeState[] = [];
     const dayStart = this.date.getDay();
 
-    const dayCount = fetchMonthDays(
+    const dayCount = daysFromMonth(
       this.date.getFullYear(),
       this.date.getMonth()
     );

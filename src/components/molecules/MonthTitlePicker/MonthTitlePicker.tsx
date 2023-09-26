@@ -1,4 +1,4 @@
-import { MONTHS_NAME } from '@rolster/helpers-date';
+import { MONTH_NAMES } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
 import { ReactControl } from '../../../hooks';
 import {
@@ -33,7 +33,7 @@ export function RlsMonthTitlePicker({
   const [limitMinMonth, setLimitMinMonth] = useState(false);
   const [limitMaxMonth, setLimitMaxMonth] = useState(false);
 
-  const monthName = MONTHS_NAME[month || 0];
+  const monthName = MONTH_NAMES[month || 0];
 
   useEffect(() => {
     if (typeof month === 'number' && date) {

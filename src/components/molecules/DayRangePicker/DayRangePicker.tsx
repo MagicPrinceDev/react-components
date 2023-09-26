@@ -1,5 +1,5 @@
 import {
-  DAYS_NAME_MIN,
+  DAY_LABELS,
   normalizeMinTime,
   refactorDay
 } from '@rolster/helpers-date';
@@ -10,8 +10,6 @@ import { createRangePicker } from '../../../utils/date-range-picker';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './DayRangePicker.css';
-
-const titles = DAYS_NAME_MIN;
 
 interface DayRangePicker extends RlsComponent {
   date?: Date;
@@ -56,7 +54,7 @@ export function RlsDayRangePicker({
   return (
     <div className="rls-day-range-picker" rls-theme={rlsTheme}>
       <div className="rls-day-range-picker__header">
-        {titles.map((title, index) => (
+        {DAY_LABELS.map((title, index) => (
           <label key={index} className="rls-day-range-picker__label">
             {title}
           </label>
