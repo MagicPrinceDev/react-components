@@ -4,7 +4,7 @@ import {
   refactorYear
 } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
-import { ReactControl, useFormControl } from '../../../hooks';
+import { ReactControl, useReactControl } from '../../../hooks';
 import { DateRange } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { PickerListener, PickerListenerType } from '../../../types';
@@ -70,9 +70,9 @@ export function RlsDateRangePicker({
   const dateInitial = normalizeMinTime(datePicker || new Date());
   const rangeInitial = formControl?.state || DateRange.now();
 
-  const yearControl = useFormControl({ state: dateInitial.getFullYear() });
-  const monthControl = useFormControl({ state: dateInitial.getMonth() });
-  const dayControl = useFormControl({ state: rangeInitial });
+  const yearControl = useReactControl({ state: dateInitial.getFullYear() });
+  const monthControl = useReactControl({ state: dateInitial.getMonth() });
+  const dayControl = useReactControl({ state: rangeInitial });
 
   const [value, setValue] = useState(rangeInitial);
   const [date, setDate] = useState(dateInitial);

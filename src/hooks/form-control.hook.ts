@@ -18,7 +18,7 @@ interface Props<T> {
   validators?: ValidatorFn<T>[];
 }
 
-export function useFormControl<E extends HTMLElement, T = any>(
+export function useReactControl<E extends HTMLElement, T = any>(
   props: Props<T> = {}
 ): ReactControl<E, T> {
   const [state, setState] = useState<FormState<T>>(props.state);
@@ -107,8 +107,13 @@ export function useFormControl<E extends HTMLElement, T = any>(
   };
 }
 
-export function useInputControl<T = any>(
-  props: Props<T> = {}
-): ReactControl<HTMLInputElement, T> {
-  return useFormControl<HTMLInputElement, T>(props);
+type Element<T> = ReactControl<HTMLElement, T>;
+type Input<T> = ReactControl<HTMLInputElement, T>;
+
+export function useFormControl<T = any>(props: Props<T> = {}): Element<T> {
+  return useReactControl<HTMLElement, T>(props);
+}
+
+export function useInputControl<T = any>(props: Props<T> = {}): Input<T> {
+  return useReactControl<HTMLInputElement, T>(props);
 }
