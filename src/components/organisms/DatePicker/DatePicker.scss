@@ -1,18 +1,19 @@
 // Rolster Technology DatePicker Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 04/May/2023
+// Updated: 03/Oct/2023
 
 .rls-date-picker {
   position: relative;
-  float: left;
-  max-width: 18.75rem;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  max-width: 18.75rem;
 
   &__header {
-    background: var(--color-xofttion-100);
+    background: var(--color-rolster-100);
     padding: var(--sizing-8);
     box-sizing: border-box;
     margin-bottom: var(--sizing-16);
@@ -25,7 +26,7 @@
     font-weight: var(--font-weight-bold);
 
     &:hover {
-      color: var(--color-xofttion-500);
+      color: var(--color-rolster-500);
     }
 
     &--description {
@@ -45,6 +46,7 @@
 
   &__component {
     display: flex;
+    width: 18.75rem;
     padding: 0rem var(--sizing-4);
     box-sizing: border-box;
     margin-bottom: var(--sizing-8);
@@ -80,22 +82,22 @@
   }
 
   &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sizing-8);
     padding: var(--sizing-8) var(--sizing-16) var(--sizing-12) var(--sizing-16);
     overflow: hidden;
     box-sizing: border-box;
 
     &--cancel {
       width: calc(50% - var(--sizing-4));
-      margin-right: var(--sizing-4);
     }
 
     &--today {
       width: calc(50% - var(--sizing-4));
-      margin-left: var(--sizing-4);
     }
 
     &--ok {
-      margin-top: var(--sizing-8);
       width: 100%;
     }
 
