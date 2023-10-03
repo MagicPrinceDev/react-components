@@ -9,6 +9,7 @@ interface InputMoney {
   defaultValue?: number;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
+  onValue?: (value: number) => void;
   placeholder?: string;
   symbol?: string;
 }
@@ -18,6 +19,7 @@ export function RlsInputMoney({
   defaultValue,
   disabled,
   formControl,
+  onValue,
   placeholder,
   symbol
 }: InputMoney) {
@@ -29,6 +31,16 @@ export function RlsInputMoney({
     });
   }, []);
 
+  function onMoney(value: number): void {
+    if (!formControl) {
+      setValue(value);
+    }
+
+    if (onValue) {
+      onValue(value);
+    }
+  }
+
   return (
     <div className="rls-input-money">
       <RlsInput
@@ -37,6 +49,7 @@ export function RlsInputMoney({
         disabled={disabled}
         placeholder={placeholder}
         defaultValue={defaultValue}
+        onValue={onMoney}
       >
         <RlsAmount
           value={formControl?.state || value}

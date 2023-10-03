@@ -18,6 +18,7 @@ interface SelectField<T = unknown> extends RlsComponent {
   children?: any;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement>;
+  onSelect?: (value: T) => void;
   placeholder?: string;
 }
 
@@ -26,6 +27,7 @@ export function RlsSelectField<T = unknown>({
   children,
   disabled,
   formControl,
+  onSelect,
   placeholder,
   rlsTheme
 }: SelectField<T>) {
@@ -109,13 +111,13 @@ export function RlsSelectField<T = unknown>({
     setVisible(false);
   }
 
-  function onClickElement(element: ListFieldElement): MouseEventHandler {
+  function onClickItem(element: ListFieldElement<T>): MouseEventHandler {
     return () => {
       onChange(element);
     };
   }
 
-  function onKeydownElement(element: ListFieldElement): KeyboardEventHandler {
+  function onKeydownItem(element: ListFieldElement<T>): KeyboardEventHandler {
     return (event) => {
       switch (event.code) {
         case 'Enter':
@@ -129,17 +131,21 @@ export function RlsSelectField<T = unknown>({
     };
   }
 
-  function onChange({ description, value }: ListFieldElement): void {
+  function onChange({ description, value }: ListFieldElement<T>): void {
     inputRef?.current?.focus();
 
     setVisible(false);
 
-    if (formControl) {
-      setChangeInternal(true);
-      formControl.setState(value);
-    }
+    if (onSelect) {
+      onSelect(value);
+    } else {
+      if (formControl) {
+        setChangeInternal(true);
+        formControl.setState(value);
+      }
 
-    setValue(description);
+      setValue(description);
+    }
   }
 
   return (
@@ -189,8 +195,8 @@ export function RlsSelectField<T = unknown>({
               key={index}
               className="rls-list-field__element"
               tabIndex={-1}
-              onClick={onClickElement(element)}
-              onKeyDown={onKeydownElement(element)}
+              onClick={onClickItem(element)}
+              onKeyDown={onKeydownItem(element)}
             >
               <RlsBallot
                 subtitle={element.subtitle}

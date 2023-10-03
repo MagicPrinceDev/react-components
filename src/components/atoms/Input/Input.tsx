@@ -8,6 +8,7 @@ interface Input extends RlsComponent {
   defaultValue?: any;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement>;
+  onValue?: (value: any) => void;
   placeholder?: string;
   type?: HTMLInputTypeAttribute;
 }
@@ -17,6 +18,7 @@ export function RlsInput({
   defaultValue,
   disabled,
   formControl,
+  onValue,
   placeholder,
   type
 }: Input) {
@@ -35,6 +37,10 @@ export function RlsInput({
 
   function setState(value: string | number): void {
     formControl?.setState(value);
+
+    if (onValue) {
+      onValue(value);
+    }
   }
 
   function onFocus(): void {

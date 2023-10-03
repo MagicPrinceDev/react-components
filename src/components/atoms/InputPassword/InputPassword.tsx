@@ -9,6 +9,7 @@ type InputPasswordType = 'password' | 'text';
 interface InputPassword extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, string>;
+  onValue?: (value: string) => void;
   placeholder?: string;
   type?: InputPasswordType;
 }
@@ -16,6 +17,7 @@ interface InputPassword extends RlsComponent {
 export function RlsInputPassword({
   disabled,
   formControl,
+  onValue,
   placeholder,
   type
 }: InputPassword) {
@@ -23,6 +25,10 @@ export function RlsInputPassword({
 
   function onChange(event: any): void {
     formControl?.setState(event.target.value);
+
+    if (onValue) {
+      onValue(event.target.value);
+    }
   }
 
   function onFocus() {

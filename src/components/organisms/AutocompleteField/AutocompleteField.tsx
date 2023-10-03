@@ -21,32 +21,34 @@ interface AutocompleteField<T = unknown> extends RlsComponent {
   suggestions: ListFieldElement<T>[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement>;
+  onSearch?: (pattern: string) => void;
+  onSelect?: (value: T) => void;
   placeholder?: string;
   searching?: boolean;
-  onSearch?: (pattern: string) => void;
 }
 
-interface Store {
-  coincidences?: ListFieldElement[];
+interface Store<T> {
+  coincidences?: ListFieldElement<T>[];
   pattern: string;
-  previous: Store | null;
+  previous: Store<T> | null;
 }
 
-type StoreNulleable = Store | null;
+type StoreNulleable<T> = Store<T> | null;
 
 export function RlsAutocompleteField<T = unknown>({
   suggestions,
   children,
   disabled,
   formControl,
+  onSearch,
+  onSelect,
   placeholder,
   searching,
-  rlsTheme,
-  onSearch
+  rlsTheme
 }: AutocompleteField<T>) {
   const [pattern, setPattern] = useState('');
-  const [coincidences, setCoincidences] = useState<ListFieldElement[]>([]);
-  const [store, setStore] = useState<Store>({
+  const [coincidences, setCoincidences] = useState<ListFieldElement<T>[]>([]);
+  const [store, setStore] = useState<Store<T>>({
     pattern: '',
     coincidences: [],
     previous: null
@@ -142,13 +144,13 @@ export function RlsAutocompleteField<T = unknown>({
     setVisible(false);
   }
 
-  function onClickElement(element: ListFieldElement): MouseEventHandler {
+  function onClickItem(element: ListFieldElement<T>): MouseEventHandler {
     return () => {
       onChange(element);
     };
   }
 
-  function onKeydownElement(element: ListFieldElement): KeyboardEventHandler {
+  function onKeydownItem(element: ListFieldElement<T>): KeyboardEventHandler {
     return (event) => {
       switch (event.code) {
         case 'Enter':
@@ -162,17 +164,21 @@ export function RlsAutocompleteField<T = unknown>({
     };
   }
 
-  function onChange(element: ListFieldElement): void {
+  function onChange(element: ListFieldElement<T>): void {
     const { description, value } = element;
 
     setVisible(false);
 
-    if (formControl) {
-      setChangeInternal(true);
-      formControl.setState(value);
-    }
+    if (onSelect) {
+      onSelect(value);
+    } else {
+      if (formControl) {
+        setChangeInternal(true);
+        formControl.setState(value);
+      }
 
-    setValue(description);
+      setValue(description);
+    }
   }
 
   function filterSuggestions(pattern: string | null, reboot = false): void {
@@ -198,12 +204,12 @@ export function RlsAutocompleteField<T = unknown>({
     }
   }
 
-  function searchForPattern(value: string): StoreNulleable {
+  function searchForPattern(value: string): StoreNulleable<T> {
     if (!store.pattern) {
       return null;
     }
 
-    let newStore: StoreNulleable = store;
+    let newStore: StoreNulleable<T> = store;
     let search = false;
 
     while (!search && newStore) {
@@ -217,7 +223,7 @@ export function RlsAutocompleteField<T = unknown>({
     return newStore || rebootStore();
   }
 
-  function rebootStore(): Store {
+  function rebootStore(): Store<T> {
     const newStore = createStoreEmpty();
 
     setStore(newStore);
@@ -225,7 +231,7 @@ export function RlsAutocompleteField<T = unknown>({
     return newStore;
   }
 
-  function createStoreEmpty(): Store {
+  function createStoreEmpty(): Store<T> {
     return {
       coincidences: undefined,
       pattern: '',
@@ -313,8 +319,8 @@ export function RlsAutocompleteField<T = unknown>({
               key={index}
               className="rls-list-field__element"
               tabIndex={-1}
-              onClick={onClickElement(element)}
-              onKeyDown={onKeydownElement(element)}
+              onClick={onClickItem(element)}
+              onKeyDown={onKeydownItem(element)}
             >
               <RlsBallot
                 subtitle={element.subtitle}

@@ -7,6 +7,7 @@ interface InputNumber {
   disabled?: boolean;
   defaultValue?: number;
   formControl?: ReactControl<HTMLInputElement, number>;
+  onValue?: (value: number) => void;
   placeholder?: string;
 }
 
@@ -14,6 +15,7 @@ export function RlsInputNumber({
   disabled,
   defaultValue,
   formControl,
+  onValue,
   placeholder
 }: InputNumber) {
   const [value, setValue] = useState(defaultValue || 0);
@@ -24,6 +26,16 @@ export function RlsInputNumber({
     });
   }, []);
 
+  function onNumber(value: number): void {
+    if (!formControl) {
+      setValue(value);
+    }
+
+    if (onValue) {
+      onValue(value);
+    }
+  }
+
   return (
     <div className="rls-input-number">
       <RlsInput
@@ -31,6 +43,7 @@ export function RlsInputNumber({
         type="number"
         disabled={disabled}
         placeholder={placeholder}
+        onValue={onNumber}
       >
         {formControl?.state || value}
       </RlsInput>
