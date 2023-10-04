@@ -1,9 +1,9 @@
 // Rolster Technology MonthPicker Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 27/Ago/2022
+// Updated: 04/Oct/2023
 
 .rls-month-picker {
   position: relative;
@@ -42,13 +42,13 @@
       pointer-events: none;
       opacity: 0.5;
     }
+  }
 
-    &__span {
-      font-size: 0.725rem;
-      margin: auto;
-      cursor: default;
-      pointer-events: none;
-      font-weight: var(--font-weight-semibold);
-    }
+  &__span {
+    font-size: 0.725rem;
+    margin: auto;
+    cursor: default;
+    pointer-events: none;
+    font-weight: var(--font-weight-semibold);
   }
 }
