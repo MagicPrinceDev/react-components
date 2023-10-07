@@ -1,9 +1,9 @@
 // Rolster Technology Pagination Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 13/May/2023
+// Updated: 04/Oct/2023
 
 .rls-pagination {
   position: relative;
@@ -35,12 +35,12 @@
     border-radius: var(--sizing-4);
 
     &:hover {
-      background: var(--color-xofttion-300);
-      color: var(--color-xofttion-900);
+      background: var(--color-rolster-300);
+      color: var(--color-rolster-900);
     }
 
     &--active {
-      background: var(--gradient-xofttion-500);
+      background: var(--gradient-rolster-500);
       color: var(--color-light-500);
     }
   }
@@ -70,7 +70,7 @@
     margin: var(--sizing-2) 0rem;
 
     &:hover {
-      color: var(--color-xofttion-300);
+      color: var(--color-rolster-300);
       cursor: pointer;
     }
 

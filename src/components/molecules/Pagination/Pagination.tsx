@@ -37,7 +37,7 @@ export interface PaginationState {
   next?: PaginationState;
 }
 
-export function Pagination<T>({
+export function RlsPagination<T>({
   elements,
   count: defaultCount,
   filter,
