@@ -1,9 +1,9 @@
 // Rolster Technology ButtonAction Component
-// v1.0.3
+// v1.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 19/Sep/2023
+// Updated: 11/Oct/2023
 
 .rls-button-action {
   --pvt-tooltip-transition-delay: 0ms;
@@ -19,7 +19,7 @@
   user-select: none;
   cursor: default;
   background: transparent;
-  color: var(--rls-buttonaction-color);
+  color: var(--rls-action-color);
 
   &::before {
     position: absolute;
@@ -31,7 +31,7 @@
     visibility: hidden;
     border-radius: 50%;
     transform: scale(0);
-    background: var(--rls-buttonaction-ripple-color);
+    background: var(--rls-action-ripple-color);
     padding-top: calc(120% - var(--sizing-8));
     padding-left: calc(120% - var(--sizing-8));
     margin-top: calc(-60% + var(--sizing-4));
@@ -52,12 +52,12 @@
     top: 50%;
     left: 50%;
     opacity: 0.24;
-    width: var(--rls-buttonaction-ripple-dimension);
-    height: var(--rls-buttonaction-ripple-dimension);
-    margin-top: var(--rls-buttonaction-ripple-position);
-    margin-left: var(--rls-buttonaction-ripple-position);
+    width: var(--rls-action-ripple-dimension);
+    height: var(--rls-action-ripple-dimension);
+    margin-top: var(--rls-action-ripple-position);
+    margin-left: var(--rls-action-ripple-position);
     border-radius: 50%;
-    background: var(--rls-buttonaction-ripple-color);
+    background: var(--rls-action-ripple-color);
     transform: scale(0);
     transition: transform 160ms 0ms var(--sharp-curve);
   }

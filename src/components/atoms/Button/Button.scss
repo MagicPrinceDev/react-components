@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v1.0.3
+// v1.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 19/Sep/2023
+// Updated: 11/Oct/2023
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -129,9 +129,9 @@
     line-height: initial;
     width: auto;
     margin: auto 0rem;
-    font-size: 0.825rem;
+    font-size: var(--button-font-size);
     font-weight: var(--font-weight-bold);
-    letter-spacing: 0.825px;
+    letter-spacing: var(--button-letter-spacing);
     text-transform: var(--rls-button-label-text-transform);
 
     a {
