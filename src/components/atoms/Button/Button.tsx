@@ -33,7 +33,7 @@ export function RlsButton({
       <div className={renderClassStatus('rls-button__content', { type })}>
         {prefixIcon && <RlsIcon value={prefixIcon} />}
         {children && (
-          <div className="rls-button__label truncate">{children}</div>
+          <div className="rls-button__label">{children}</div>
         )}
         {suffixIcon && <RlsIcon value={suffixIcon} />}
       </div>

@@ -65,6 +65,7 @@
   &__content {
     display: flex;
     justify-content: center;
+    overflow: hidden;
     line-height: var(--sizing-40);
     height: var(--sizing-40);
     padding: var(--rls-button-content-padding);
@@ -133,6 +134,9 @@
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--button-letter-spacing);
     text-transform: var(--rls-button-label-text-transform);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 
     a {
       text-decoration: none;
