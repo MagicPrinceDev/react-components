@@ -1,3 +1,4 @@
+import { isDefined } from '@rolster/helpers-advanced';
 import {
   AbstractControl,
   FormState,
@@ -41,8 +42,8 @@ export function useReactControl<E extends HTMLElement, T = any>(
   useEffect(() => {
     updateValueAndValidity();
 
-    if (state) {
-      setValue(state);
+    if (isDefined(state)) {
+      setValue(state as T);
     }
 
     subscribers.forEach((subscriber) => {
