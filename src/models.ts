@@ -22,15 +22,11 @@ export interface ListFieldElement<T = unknown> {
   hasCoincidence(pattern: string): boolean;
 }
 
-export class ListFieldSuggestions<T = unknown> {
-  constructor(public readonly collection: ListFieldElement<T>[]) {}
+export class ListFieldCollection<T = unknown> {
+  constructor(public readonly value: ListFieldElement<T>[]) {}
 
-  public hasElement(value: T): Undefined<ListFieldElement<T>> {
-    const [element] = this.collection.filter((element) =>
-      element.compareTo(value)
-    );
-
-    return element;
+  public findElement(value: T): Undefined<ListFieldElement<T>> {
+    return this.value.find((element) => element.compareTo(value));
   }
 }
 

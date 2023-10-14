@@ -20,7 +20,7 @@ const MAX_ELEMENTS = 6;
 interface AutocompleteField<T = unknown> extends RlsComponent {
   suggestions: ListFieldElement<T>[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement>;
+  formControl?: ReactControl<HTMLElement, T>;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: T) => void;
   placeholder?: string;
@@ -60,7 +60,7 @@ export function RlsAutocompleteField<T = unknown>({
     higher,
     inputRef,
     listRef,
-    suggestionsField,
+    collection,
     value,
     visible,
     setActive,
@@ -82,15 +82,22 @@ export function RlsAutocompleteField<T = unknown>({
 
   useEffect(() => {
     if (!changeInternal) {
-      setValue(
-        (formControl?.state &&
-          suggestionsField.hasElement(formControl?.state)?.description) ||
-          ''
-      );
+      redefineDescription();
     }
 
     setChangeInternal(false);
   }, [formControl?.state]);
+
+  useEffect(() => {
+    redefineDescription();
+  }, [collection]);
+
+  function redefineDescription(): void {
+    const element =
+      formControl?.state && collection.findElement(formControl?.state);
+
+    setValue(element?.description || '');
+  }
 
   function onClickControl(): void {
     if (!disabled) {

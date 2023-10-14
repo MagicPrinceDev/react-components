@@ -7,7 +7,7 @@ import {
   useRef,
   useState
 } from 'react';
-import { ListFieldElement, ListFieldSuggestions } from '../models';
+import { ListFieldElement, ListFieldCollection } from '../models';
 
 type Elements = NodeListOf<HTMLLIElement> | undefined;
 
@@ -23,10 +23,10 @@ const MAZ_LIST_SIZE_PX = BASE_SIZE_PX * LIST_SIZE_REM;
 interface ListControl<T = unknown> {
   active: boolean;
   boxContentRef: RefObject<HTMLDivElement>;
+  collection: ListFieldCollection<T>;
   higher: boolean;
   inputRef: RefObject<HTMLInputElement>;
   listRef: RefObject<HTMLUListElement>;
-  suggestionsField: ListFieldSuggestions<T>;
   value: string;
   visible: boolean;
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -44,9 +44,7 @@ export function useListControl<T = unknown>(
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [suggestionsField, setSuggestionsField] = useState(
-    new ListFieldSuggestions([])
-  );
+  const [collection, setCollection] = useState(new ListFieldCollection([]));
   const [active, setActive] = useState(false);
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState('');
@@ -74,7 +72,7 @@ export function useListControl<T = unknown>(
   }, [visible]);
 
   useEffect(() => {
-    setSuggestionsField(new ListFieldSuggestions(suggestions));
+    setCollection(new ListFieldCollection(suggestions));
   }, [suggestions]);
 
   function setLocationList(): void {
@@ -188,10 +186,10 @@ export function useListControl<T = unknown>(
   return {
     active,
     boxContentRef,
+    collection,
     higher,
     inputRef,
     listRef,
-    suggestionsField,
     value,
     visible,
     setActive,
