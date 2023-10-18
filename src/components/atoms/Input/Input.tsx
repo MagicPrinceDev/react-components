@@ -58,7 +58,7 @@ export function RlsInput({
     <div
       className={renderClassStatus('rls-input', {
         active: formControl?.active || active,
-        disabled
+        disabled: formControl?.disabled || disabled
       })}
     >
       <input
@@ -67,7 +67,7 @@ export function RlsInput({
         autoComplete="off"
         type={type || 'text'}
         placeholder={placeholder}
-        disabled={disabled}
+        disabled={formControl?.disabled || disabled}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}

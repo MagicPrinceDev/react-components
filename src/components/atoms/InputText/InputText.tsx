@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ReactControl } from '../../../hooks';
 import { RlsInput } from '../Input/Input';
 import './InputText.css';
@@ -20,12 +20,6 @@ export function RlsInputText({
 }: InputText) {
   const [value, setValue] = useState(defaultValue || '');
 
-  useEffect(() => {
-    formControl?.subscribe((value) => {
-      setValue(value || '');
-    });
-  }, []);
-
   function onText(value: string): void {
     if (!formControl) {
       setValue(value);
@@ -41,6 +35,7 @@ export function RlsInputText({
       <RlsInput
         formControl={formControl}
         type="text"
+        defaultValue={defaultValue}
         disabled={disabled}
         placeholder={placeholder}
         onValue={onText}

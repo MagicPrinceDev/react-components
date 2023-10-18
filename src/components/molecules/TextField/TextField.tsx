@@ -5,15 +5,19 @@ import { RlsComponent } from '../../definitions';
 import './TextField.css';
 
 interface TextField extends RlsComponent {
+  defaultValue?: string;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, string>;
+  onValue?: (value: string) => void;
   placeholder?: string;
 }
 
 export function RlsTextField({
   children,
+  defaultValue,
   disabled,
   formControl,
+  onValue,
   placeholder,
   rlsTheme
 }: TextField) {
@@ -24,7 +28,7 @@ export function RlsTextField({
         renderClassStatus('rls-box-field', {
           active: formControl?.active,
           error: formControl?.dirty && !formControl?.valid,
-          disabled
+          disabled: formControl?.disabled || disabled
         })
       }
       rls-theme={rlsTheme}
@@ -33,9 +37,11 @@ export function RlsTextField({
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <RlsInputText
+            defaultValue={defaultValue}
             formControl={formControl}
             disabled={disabled}
             placeholder={placeholder}
+            onValue={onValue}
           />
         </div>
       </div>

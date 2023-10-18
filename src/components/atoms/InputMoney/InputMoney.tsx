@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ReactControl } from '../../../hooks';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
@@ -25,12 +25,6 @@ export function RlsInputMoney({
 }: InputMoney) {
   const [value, setValue] = useState(defaultValue || 0);
 
-  useEffect(() => {
-    formControl?.subscribe((value) => {
-      setValue(value || 0);
-    });
-  }, []);
-
   function onMoney(value: number): void {
     if (!formControl) {
       setValue(value);
@@ -46,9 +40,9 @@ export function RlsInputMoney({
       <RlsInput
         formControl={formControl}
         type="number"
+        defaultValue={defaultValue}
         disabled={disabled}
         placeholder={placeholder}
-        defaultValue={defaultValue}
         onValue={onMoney}
       >
         <RlsAmount

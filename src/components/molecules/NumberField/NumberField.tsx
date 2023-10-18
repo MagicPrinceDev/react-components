@@ -5,15 +5,19 @@ import { RlsComponent } from '../../definitions';
 import './NumberField.css';
 
 interface NumberField extends RlsComponent {
+  defaultValue?: number;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
+  onValue?: (value: number) => void;
   placeholder?: string;
 }
 
 export function RlsNumberField({
   children,
+  defaultValue,
   disabled,
   formControl,
+  onValue,
   placeholder,
   rlsTheme
 }: NumberField) {
@@ -24,7 +28,7 @@ export function RlsNumberField({
         renderClassStatus('rls-box-field', {
           active: formControl?.active,
           error: formControl?.dirty && !formControl?.valid,
-          disabled
+          disabled: formControl?.disabled || disabled
         })
       }
       rls-theme={rlsTheme}
@@ -33,9 +37,11 @@ export function RlsNumberField({
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <RlsInputNumber
+            defaultValue={defaultValue}
             formControl={formControl}
             disabled={disabled}
             placeholder={placeholder}
+            onValue={onValue}
           />
         </div>
       </div>

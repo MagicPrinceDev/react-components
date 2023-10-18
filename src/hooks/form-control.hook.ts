@@ -6,10 +6,11 @@ import {
   ValidatorFn
 } from '@rolster/helpers-forms';
 import { LegacyRef, useEffect, useRef, useState } from 'react';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 export interface ReactControl<E extends HTMLElement, T = any>
   extends AbstractControl<T> {
-  elementRef: LegacyRef<E>;
+  elementRef?: LegacyRef<E>;
 }
 
 type Subscriber<T> = (state?: FormState<T>) => void;
@@ -35,7 +36,9 @@ export function useReactControl<E extends HTMLElement, T = any>(
   );
   const [errors, setErrors] = useState<ValidatorError[]>([]);
   const [error, setError] = useState<ValidatorError>();
-  const [subscribers] = useState<Set<Subscriber<T>>>(new Set());
+  const [subscribers] = useState<BehaviorSubject<FormState<T>>>(
+    new BehaviorSubject(props.state)
+  );
 
   const elementRef = useRef<E>(null);
 
@@ -46,9 +49,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
       setValue(state as T);
     }
 
-    subscribers.forEach((subscriber) => {
-      subscriber(state);
-    });
+    subscribers.next(state);
   }, [state]);
 
   useEffect(() => {
@@ -60,8 +61,8 @@ export function useReactControl<E extends HTMLElement, T = any>(
     setState(initialValue);
   }
 
-  function subscribe(subscriber: (state?: FormState<T>) => void): void {
-    subscribers.add(subscriber);
+  function subscribe(subscriber: Subscriber<T>): Subscription {
+    return subscribers.subscribe(subscriber);
   }
 
   function updateValueAndValidity(): void {

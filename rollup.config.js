@@ -25,7 +25,8 @@ export default {
     '@rolster/helpers-forms',
     '@rolster/helpers-string',
     'react',
-    'react-dom'
+    'react-dom',
+    'rxjs'
   ],
   plugins: [
     resolve(),

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ReactControl } from '../../../hooks';
 import { RlsInput } from '../Input/Input';
 import './InputNumber.css';
@@ -20,12 +20,6 @@ export function RlsInputNumber({
 }: InputNumber) {
   const [value, setValue] = useState(defaultValue || 0);
 
-  useEffect(() => {
-    formControl?.subscribe((value) => {
-      setValue(value || 0);
-    });
-  }, []);
-
   function onNumber(value: number): void {
     if (!formControl) {
       setValue(value);
@@ -41,6 +35,7 @@ export function RlsInputNumber({
       <RlsInput
         formControl={formControl}
         type="number"
+        defaultValue={defaultValue}
         disabled={disabled}
         placeholder={placeholder}
         onValue={onNumber}

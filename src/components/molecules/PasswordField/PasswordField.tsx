@@ -31,7 +31,7 @@ export function RlsPasswordField({
         renderClassStatus(' rls-box-field', {
           active: formControl?.active,
           error: formControl?.dirty && !formControl?.valid,
-          disabled
+          disabled: formControl?.disabled || disabled
         })
       }
       rls-theme={rlsTheme}

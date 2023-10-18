@@ -6,8 +6,10 @@ import './MoneyField.css';
 
 interface MoneyField extends RlsComponent {
   decimals?: boolean;
+  defaultValue?: number;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
+  onValue?: (value: number) => void;
   placeholder?: string;
   symbol?: string;
 }
@@ -15,8 +17,10 @@ interface MoneyField extends RlsComponent {
 export function RlsMoneyField({
   children,
   decimals,
+  defaultValue,
   disabled,
   formControl,
+  onValue,
   placeholder,
   symbol,
   rlsTheme
@@ -28,7 +32,7 @@ export function RlsMoneyField({
         renderClassStatus('rls-box-field', {
           active: formControl?.active,
           error: formControl?.dirty && !formControl?.valid,
-          disabled
+          disabled: formControl?.disabled || disabled
         })
       }
       rls-theme={rlsTheme}
@@ -37,11 +41,13 @@ export function RlsMoneyField({
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <RlsInputMoney
+            defaultValue={defaultValue}
             formControl={formControl}
             disabled={disabled}
             placeholder={placeholder}
             symbol={symbol}
             decimals={decimals}
+            onValue={onValue}
           />
         </div>
       </div>

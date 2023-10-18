@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
@@ -30,13 +30,14 @@
   "dependencies": {
     "@rolster/helpers-advanced": "^1.1.1",
     "@rolster/helpers-date": "^1.1.0",
-    "@rolster/helpers-forms": "^1.1.2",
+    "@rolster/helpers-forms": "^1.2.1",
     "@rolster/helpers-string": "^1.0.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.1",
     "object-path": "^0.11.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rxjs": "^7.8.1",
     "sass": "^1.62.1",
     "sort-by": "^0.0.2"
   },
