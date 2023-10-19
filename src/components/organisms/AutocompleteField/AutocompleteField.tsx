@@ -23,6 +23,7 @@ interface AutocompleteField<T = unknown> extends RlsComponent {
   formControl?: ReactControl<HTMLElement, T>;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: T) => void;
+  onValue?: (value?: T) => void;
   placeholder?: string;
   searching?: boolean;
 }
@@ -42,6 +43,7 @@ export function RlsAutocompleteField<T = unknown>({
   formControl,
   onSearch,
   onSelect,
+  onValue,
   placeholder,
   searching,
   rlsTheme
@@ -140,6 +142,10 @@ export function RlsAutocompleteField<T = unknown>({
         setChangeInternal(true);
         formControl.setState(undefined);
       }
+
+      if (onValue) {
+        onValue(undefined);
+      }
     } else {
       setVisible(true);
 
@@ -171,9 +177,7 @@ export function RlsAutocompleteField<T = unknown>({
     };
   }
 
-  function onChange(element: ListFieldElement<T>): void {
-    const { description, value } = element;
-
+  function onChange({ description, value }: ListFieldElement<T>): void {
     setVisible(false);
 
     if (onSelect) {
@@ -185,6 +189,10 @@ export function RlsAutocompleteField<T = unknown>({
       }
 
       setValue(description);
+    }
+
+    if (onValue) {
+      onValue(value);
     }
   }
 

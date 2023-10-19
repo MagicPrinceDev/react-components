@@ -4,25 +4,25 @@ import { RlsInput } from '../Input/Input';
 import './InputText.css';
 
 interface InputText {
-  defaultValue?: string;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, string>;
   onValue?: (value: string) => void;
   placeholder?: string;
+  value?: string;
 }
 
 export function RlsInputText({
-  defaultValue,
   disabled,
   formControl,
   onValue,
-  placeholder
+  placeholder,
+  value
 }: InputText) {
-  const [value, setValue] = useState(defaultValue || '');
+  const [valueInput, setValueInput] = useState(value || '');
 
   function onText(value: string): void {
     if (!formControl) {
-      setValue(value);
+      setValueInput(value);
     }
 
     if (onValue) {
@@ -35,12 +35,12 @@ export function RlsInputText({
       <RlsInput
         formControl={formControl}
         type="text"
-        defaultValue={defaultValue}
+        value={value}
         disabled={disabled}
         placeholder={placeholder}
         onValue={onText}
       >
-        {formControl?.state || value}
+        {formControl?.state || value || valueInput}
       </RlsInput>
     </div>
   );

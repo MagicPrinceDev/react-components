@@ -5,24 +5,24 @@ import './InputNumber.css';
 
 interface InputNumber {
   disabled?: boolean;
-  defaultValue?: number;
   formControl?: ReactControl<HTMLInputElement, number>;
   onValue?: (value: number) => void;
   placeholder?: string;
+  value?: number;
 }
 
 export function RlsInputNumber({
   disabled,
-  defaultValue,
   formControl,
   onValue,
-  placeholder
+  placeholder,
+  value
 }: InputNumber) {
-  const [value, setValue] = useState(defaultValue || 0);
+  const [valueInput, setValueInput] = useState(value || 0);
 
   function onNumber(value: number): void {
     if (!formControl) {
-      setValue(value);
+      setValueInput(value);
     }
 
     if (onValue) {
@@ -35,12 +35,12 @@ export function RlsInputNumber({
       <RlsInput
         formControl={formControl}
         type="number"
-        defaultValue={defaultValue}
+        value={value}
         disabled={disabled}
         placeholder={placeholder}
         onValue={onNumber}
       >
-        {formControl?.state || value}
+        {formControl?.state || value || valueInput}
       </RlsInput>
     </div>
   );

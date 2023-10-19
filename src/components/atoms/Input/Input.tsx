@@ -5,22 +5,22 @@ import { RlsComponent } from '../../definitions';
 import './Input.css';
 
 interface Input extends RlsComponent {
-  defaultValue?: any;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement>;
   onValue?: (value: any) => void;
   placeholder?: string;
   type?: HTMLInputTypeAttribute;
+  value?: any;
 }
 
 export function RlsInput({
   children,
-  defaultValue,
   disabled,
   formControl,
   onValue,
   placeholder,
-  type
+  type,
+  value
 }: Input) {
   const [active, setActive] = useState(false);
 
@@ -71,7 +71,7 @@ export function RlsInput({
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}
-        value={formControl?.state || defaultValue || ''}
+        value={formControl?.state || value || ''}
       />
       <span className="rls-input__value">{children}</span>
     </div>

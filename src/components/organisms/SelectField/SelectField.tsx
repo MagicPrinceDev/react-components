@@ -19,6 +19,7 @@ interface SelectField<T = unknown> extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T>;
   onSelect?: (value: T) => void;
+  onValue?: (value: T) => void;
   placeholder?: string;
 }
 
@@ -28,6 +29,7 @@ export function RlsSelectField<T = unknown>({
   disabled,
   formControl,
   onSelect,
+  onValue,
   placeholder,
   rlsTheme
 }: SelectField<T>) {
@@ -152,6 +154,10 @@ export function RlsSelectField<T = unknown>({
       }
 
       setValue(description);
+    }
+
+    if (onValue) {
+      onValue(value);
     }
   }
 

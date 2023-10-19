@@ -6,28 +6,28 @@ import './InputMoney.css';
 
 interface InputMoney {
   decimals?: boolean;
-  defaultValue?: number;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
   onValue?: (value: number) => void;
   placeholder?: string;
   symbol?: string;
+  value?: number;
 }
 
 export function RlsInputMoney({
   decimals,
-  defaultValue,
   disabled,
   formControl,
   onValue,
   placeholder,
-  symbol
+  symbol,
+  value
 }: InputMoney) {
-  const [value, setValue] = useState(defaultValue || 0);
+  const [valueInput, setValueInput] = useState(value || 0);
 
   function onMoney(value: number): void {
     if (!formControl) {
-      setValue(value);
+      setValueInput(value);
     }
 
     if (onValue) {
@@ -40,13 +40,13 @@ export function RlsInputMoney({
       <RlsInput
         formControl={formControl}
         type="number"
-        defaultValue={defaultValue}
+        value={value}
         disabled={disabled}
         placeholder={placeholder}
         onValue={onMoney}
       >
         <RlsAmount
-          value={formControl?.state || value}
+          value={formControl?.state || value || valueInput}
           symbol={symbol}
           decimals={decimals}
         />
