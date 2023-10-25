@@ -13,6 +13,9 @@ export interface ReactControl<E extends HTMLElement, T = any>
   elementRef?: LegacyRef<E>;
 }
 
+export type ReactInputControl<T = any> = ReactControl<HTMLInputElement, T>;
+export type ReactHtmlControl<T = any> = ReactControl<HTMLElement, T>;
+
 type Subscriber<T> = (state?: FormState<T>) => void;
 
 interface Props<T> {

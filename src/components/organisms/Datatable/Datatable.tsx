@@ -4,6 +4,7 @@ import { RlsComponent } from '../../definitions';
 interface DatatableCell extends RlsComponent {
   className?: string;
   control?: boolean;
+  overflow?: boolean;
 }
 
 interface DatatableRow extends RlsComponent {
@@ -42,12 +43,14 @@ export function RlsDatatableData({ children, className }: DatatableRow) {
 export function RlsDatatableCell({
   children,
   className,
-  control
+  control,
+  overflow
 }: DatatableCell) {
   return (
     <th
       className={
-        `${className} ` + renderClassStatus('rls-datatable__cell', { control })
+        `${className} ` +
+        renderClassStatus('rls-datatable__cell', { control, overflow })
       }
     >
       {children}

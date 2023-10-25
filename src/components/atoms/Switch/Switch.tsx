@@ -8,12 +8,7 @@ interface Switch extends RlsComponent {
   onClick?: () => void;
 }
 
-export function RlsSwitch({
-  checked,
-  disabled,
-  rlsTheme,
-  onClick
-}: Switch) {
+export function RlsSwitch({ checked, disabled, onClick, rlsTheme }: Switch) {
   return (
     <div
       className={renderClassStatus('rls-switch', { checked, disabled })}
