@@ -25,7 +25,7 @@
     "jsx": "react-jsx",
     "typeRoots": ["node_modules/@types/**/*.d.ts", "src/**/*.d.ts"]
   },
-  "files": ["node_modules/@rolster/typescript-types/index.d.ts"],
+  "files": ["node_modules/@rolster/types/index.d.ts"],
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,9 +1,9 @@
 // Rolster Technology AutocompleteField Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 12/Sep/2023
+// Updated: 30/Oct/2023
 
 .rls-autocomplete-field {
   &.rls-box-field--selected {
@@ -22,9 +22,8 @@
   .rls-list-field__ul {
     &__search {
       display: flex;
-      width: calc(100% - var(--sizing-24));
-      margin: var(--sizing-4) var(--sizing-12) var(--sizing-12) var(--sizing-12);
-      overflow: hidden;
+      width: calc(100% - var(--sizing-8));
+      margin: var(--sizing-4) var(--sizing-4) var(--sizing-12) var(--sizing-4);
       background: var(--background-theme-300);
       border-radius: var(--sizing-8);
       padding: var(--sizing-8);
@@ -35,7 +34,7 @@
         background: transparent;
 
         &:not(:disabled):hover {
-          color: var(--color-xofttion-300);
+          color: var(--color-rolster-300);
         }
 
         &:disabled {
@@ -65,7 +64,7 @@
       }
 
       &::selection {
-        background: var(--color-xofttion-700);
+        background: var(--color-rolster-700);
         color: var(--color-light-500);
       }
 
@@ -83,8 +82,8 @@
     .rls-ballot {
       &__title {
         label {
-          background: var(--color-xofttion-100);
-          color: var(--color-xofttion-500);
+          background: var(--color-rolster-100);
+          color: var(--color-rolster-500);
           padding: 0rem var(--sizing-4);
           border-radius: var(--sizing-4);
         }

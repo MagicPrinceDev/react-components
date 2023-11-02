@@ -1,9 +1,11 @@
 import { isDefined } from '@rolster/helpers-advanced';
 import {
   AbstractControl,
+  AbstractGroup,
   FormState,
   ValidatorError,
-  ValidatorFn
+  ValidatorFn,
+  evalFormStateValid
 } from '@rolster/helpers-forms';
 import { LegacyRef, useEffect, useRef, useState } from 'react';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -27,13 +29,13 @@ export function useReactControl<E extends HTMLElement, T = any>(
   props: Props<T> = {}
 ): ReactControl<E, T> {
   const [state, setState] = useState<FormState<T>>(props.state);
+  const [group, setGroup] = useState<AbstractGroup<any>>();
   const [value, setValue] = useState<T>(props.state as T);
   const [dirty, setDirty] = useState<boolean>(false);
   const [active, setActive] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [initialValue] = useState<FormState<T>>(props.state);
   const [valid, setValid] = useState<boolean>(true);
-  const [invalid, setInvalid] = useState<boolean>(false);
   const [validators, setValidators] = useState<ValidatorFn<T>[]>(
     props.validators || []
   );
@@ -45,6 +47,8 @@ export function useReactControl<E extends HTMLElement, T = any>(
 
   const elementRef = useRef<E>(null);
 
+  const invalid = (() => !valid)();
+
   useEffect(() => {
     updateValueAndValidity();
 
@@ -53,6 +57,8 @@ export function useReactControl<E extends HTMLElement, T = any>(
     }
 
     subscribers.next(state);
+
+    group?.updateValidity();
   }, [state]);
 
   useEffect(() => {
@@ -69,25 +75,12 @@ export function useReactControl<E extends HTMLElement, T = any>(
   }
 
   function updateValueAndValidity(): void {
-    const errors = validators.reduce((errors, validator) => {
-      const error = validator(state);
-
-      if (error) {
-        errors.push(error);
-      }
-
-      return errors;
-    }, [] as ValidatorError[]);
-
-    const [error] = errors;
+    const errors = evalFormStateValid({ state, validators });
 
     setErrors(errors);
-    setError(error);
+    setError(errors[0]);
 
-    const validState = errors.length === 0;
-
-    setValid(validState);
-    setInvalid(!validState);
+    setValid(errors.length === 0);
   }
 
   return {
@@ -105,6 +98,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
     setActive,
     setDirty,
     setDisabled,
+    setGroup,
     setValidators,
     setState,
     subscribe,

@@ -299,67 +299,69 @@ export function RlsAutocompleteField<T = unknown>({
           higher
         })}
       >
-        <ul ref={listRef} className="rls-list-field__ul">
-          <div className="rls-list-field__ul__search">
-            <input
-              ref={inputRef}
-              className="rls-list-field__ul__control"
-              type="text"
-              value={pattern}
-              onChange={({ target: { value } }) => {
-                setPattern(value);
-              }}
-              disabled={disabled || searching}
-              onFocus={onFocusInput}
-              onBlur={onBlurInput}
-              onKeyDown={onKeydownInput}
-            />
-
-            {onSearch && (
-              <button
-                disabled={disabled || searching}
-                onClick={() => {
-                  onSearch(pattern);
+        <div className="rls-list-field__suggestions__body">
+          <ul ref={listRef} className="rls-list-field__ul">
+            <div className="rls-list-field__ul__search">
+              <input
+                ref={inputRef}
+                className="rls-list-field__ul__control"
+                type="text"
+                value={pattern}
+                onChange={({ target: { value } }) => {
+                  setPattern(value);
                 }}
+                disabled={disabled || searching}
+                onFocus={onFocusInput}
+                onBlur={onBlurInput}
+                onKeyDown={onKeydownInput}
+              />
+
+              {onSearch && (
+                <button
+                  disabled={disabled || searching}
+                  onClick={() => {
+                    onSearch(pattern);
+                  }}
+                >
+                  <RlsIcon value="search" />
+                </button>
+              )}
+            </div>
+
+            {searching && <RlsProgressBar indeterminate={true} />}
+
+            {coincidences.map((element, index) => (
+              <li
+                key={index}
+                className="rls-list-field__element"
+                tabIndex={-1}
+                onClick={onClickItem(element)}
+                onKeyDown={onKeydownItem(element)}
               >
-                <RlsIcon value="search" />
-              </button>
+                <RlsBallot
+                  subtitle={element.subtitle}
+                  img={element.img}
+                  initials={element.initials}
+                >
+                  {element.title}
+                </RlsBallot>
+              </li>
+            ))}
+
+            {!coincidences.length && (
+              <li className="rls-list-field__empty">
+                <div className="rls-list-field__empty__description">
+                  <label className="label-bold truncate">
+                    Selección no disponible
+                  </label>
+                  <label className="caption-regular">
+                    Lo sentimos, en el momento no hay elementos en el listado
+                  </label>
+                </div>
+              </li>
             )}
-          </div>
-
-          {searching && <RlsProgressBar indeterminate={true} />}
-
-          {coincidences.map((element, index) => (
-            <li
-              key={index}
-              className="rls-list-field__element"
-              tabIndex={-1}
-              onClick={onClickItem(element)}
-              onKeyDown={onKeydownItem(element)}
-            >
-              <RlsBallot
-                subtitle={element.subtitle}
-                img={element.img}
-                initials={element.initials}
-              >
-                {element.title}
-              </RlsBallot>
-            </li>
-          ))}
-
-          {!coincidences.length && (
-            <li className="rls-list-field__empty">
-              <div className="rls-list-field__empty__description">
-                <label className="label-bold truncate">
-                  Selección no disponible
-                </label>
-                <label className="caption-regular">
-                  Lo sentimos, en el momento no hay elementos en el listado
-                </label>
-              </div>
-            </li>
-          )}
-        </ul>
+          </ul>
+        </div>
 
         <div
           className="rls-list-field__backdrop"

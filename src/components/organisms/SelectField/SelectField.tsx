@@ -202,38 +202,40 @@ export function RlsSelectField<T = unknown>({
           higher
         })}
       >
-        <ul ref={listRef} className="rls-list-field__ul">
-          {suggestions.map((element, index) => (
-            <li
-              key={index}
-              className="rls-list-field__element"
-              tabIndex={-1}
-              onClick={onClickItem(element)}
-              onKeyDown={onKeydownItem(element)}
-            >
-              <RlsBallot
-                subtitle={element.subtitle}
-                img={element.img}
-                initials={element.initials}
+        <div className="rls-list-field__suggestions__body">
+          <ul ref={listRef} className="rls-list-field__ul">
+            {suggestions.map((element, index) => (
+              <li
+                key={index}
+                className="rls-list-field__element"
+                tabIndex={-1}
+                onClick={onClickItem(element)}
+                onKeyDown={onKeydownItem(element)}
               >
-                {element.title}
-              </RlsBallot>
-            </li>
-          ))}
+                <RlsBallot
+                  subtitle={element.subtitle}
+                  img={element.img}
+                  initials={element.initials}
+                >
+                  {element.title}
+                </RlsBallot>
+              </li>
+            ))}
 
-          {!suggestions.length && (
-            <li className="rls-list-field__empty">
-              <div className="rls-list-field__empty__description">
-                <label className="label-bold truncate">
-                  Selección no disponible
-                </label>
-                <label className="caption-regular">
-                  Lo sentimos, en el momento no hay elementos en el listado
-                </label>
-              </div>
-            </li>
-          )}
-        </ul>
+            {!suggestions.length && (
+              <li className="rls-list-field__empty">
+                <div className="rls-list-field__empty__description">
+                  <label className="label-bold truncate">
+                    Selección no disponible
+                  </label>
+                  <label className="caption-regular">
+                    Lo sentimos, en el momento no hay elementos en el listado
+                  </label>
+                </div>
+              </li>
+            )}
+          </ul>
+        </div>
 
         <div
           className="rls-list-field__backdrop"
