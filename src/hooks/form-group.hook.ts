@@ -1,26 +1,23 @@
 import {
   AbstractGroup,
   FormControls,
-  ValidatorError,
   ValidatorGroupFn,
   evalFormControlsValid
 } from '@rolster/helpers-forms';
-import { useState } from 'react';
 
 type JsonControl<T extends FormControls> = Record<keyof T, any>;
 
 export function useFormGroup<T extends FormControls>(
   controls: T,
-  validatorsFn?: ValidatorGroupFn[]
+  validators?: ValidatorGroupFn<T>[]
 ): AbstractGroup<T> {
-  const [validators] = useState<ValidatorGroupFn[]>(validatorsFn || []);
+  const errors = (() =>
+    validators ? evalFormControlsValid({ controls, validators }) : [])();
 
-  const [validGroup, setValid] = useState<boolean>(true);
-  const [errors, setErrors] = useState<ValidatorError[]>([]);
-  const [error, setError] = useState<ValidatorError>();
+  const error = (() => errors[0])();
 
   const valid = (() =>
-    validGroup &&
+    errors.length === 0 &&
     Object.values(controls).reduce(
       (validState, { valid }) => validState && valid,
       true
@@ -39,14 +36,7 @@ export function useFormGroup<T extends FormControls>(
     }, {});
   }
 
-  function updateValidity(): void {
-    const errors = evalFormControlsValid({ controls, validators });
-
-    setErrors(errors);
-    setError(errors[0]);
-
-    setValid(errors.length === 0);
-  }
+  function updateValidity(): void {}
 
   function updateValueAndValidity(): void {
     Object.values(controls).forEach((control) =>
@@ -65,8 +55,6 @@ export function useFormGroup<T extends FormControls>(
     updateValueAndValidity,
     valid
   };
-
-  Object.values(controls).forEach((control) => control.setGroup(formGroup));
 
   return formGroup;
 }

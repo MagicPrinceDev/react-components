@@ -3,7 +3,6 @@ import {
   AbstractControl,
   AbstractGroup,
   FormState,
-  ValidatorError,
   ValidatorFn,
   evalFormStateValid
 } from '@rolster/helpers-forms';
@@ -35,18 +34,20 @@ export function useReactControl<E extends HTMLElement, T = any>(
   const [active, setActive] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [initialValue] = useState<FormState<T>>(props.state);
-  const [valid, setValid] = useState<boolean>(true);
   const [validators, setValidators] = useState<ValidatorFn<T>[]>(
     props.validators || []
   );
-  const [errors, setErrors] = useState<ValidatorError[]>([]);
-  const [error, setError] = useState<ValidatorError>();
   const [subscribers] = useState<BehaviorSubject<FormState<T>>>(
     new BehaviorSubject(props.state)
   );
 
   const elementRef = useRef<E>(null);
 
+  const errors = (() =>
+    validators ? evalFormStateValid({ state, validators }) : [])();
+
+  const error = (() => errors[0])();
+  const valid = (() => errors.length === 0)();
   const invalid = (() => !valid)();
 
   useEffect(() => {
@@ -74,14 +75,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
     return subscribers.subscribe(subscriber);
   }
 
-  function updateValueAndValidity(): void {
-    const errors = evalFormStateValid({ state, validators });
-
-    setErrors(errors);
-    setError(errors[0]);
-
-    setValid(errors.length === 0);
-  }
+  function updateValueAndValidity(): void {}
 
   return {
     active,
