@@ -1,15 +1,15 @@
 import { isDefined } from '@rolster/helpers-advanced';
 import {
-  AbstractControl,
+  AbstractFormControl,
   FormState,
   ValidatorFn,
-  evalFormStateValid
+  evalFormControlValid
 } from '@rolster/helpers-forms';
 import { LegacyRef, useEffect, useRef, useState } from 'react';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 export interface ReactControl<E extends HTMLElement, T = any>
-  extends Omit<AbstractControl<T>, 'setFormGroup' | 'updateValueAndValidity'> {
+  extends AbstractFormControl<T> {
   elementRef?: LegacyRef<E>;
 }
 
@@ -42,7 +42,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
   const elementRef = useRef<E>(null);
 
   const errors = (() =>
-    validators ? evalFormStateValid({ state, validators }) : [])();
+    validators ? evalFormControlValid({ state, validators }) : [])();
 
   const error = (() => errors[0])();
   const valid = (() => errors.length === 0)();
@@ -65,24 +65,27 @@ export function useReactControl<E extends HTMLElement, T = any>(
     return subscribers.subscribe(subscriber);
   }
 
+  function updateValueAndValidity(): void {}
+
   return {
     active,
     dirty,
     disabled,
     elementRef,
+    error,
     errors,
     invalid,
-    valid,
-    value,
-    error,
-    state,
     reset,
     setActive,
     setDirty,
     setDisabled,
     setValidators,
     setState,
-    subscribe
+    subscribe,
+    updateValueAndValidity,
+    state,
+    valid,
+    value
   };
 }
 

@@ -1,48 +1,44 @@
 import {
-  AbstractGroup,
-  FormControls,
+  AbstractFormGroup,
+  AbstractGroupControls,
+  JsonControls,
   ValidatorGroupFn,
-  evalFormControlsValid
+  controlsToJson,
+  controlsToValid,
+  evalFormGroupValid
 } from '@rolster/helpers-forms';
 import { useState } from 'react';
+import { ReactFormArray } from './form-array.hook';
+import { ReactControl } from './form-control.hook';
 
-type JsonControl<T extends FormControls> = Record<keyof T, any>;
-
-export type ReactGroup<T extends FormControls> = Omit<
-  AbstractGroup<T>,
-  'updateValueAndValidity'
+export type ReactControls = Record<
+  string,
+  ReactControl<HTMLElement> | ReactFormArray<any>
 >;
 
-export function useFormGroup<T extends FormControls>(
+export type ReactGroup<T extends ReactControls> = AbstractFormGroup<T>;
+
+export function useFormGroup<T extends AbstractGroupControls>(
   controls: T,
   initialValidators: ValidatorGroupFn<T>[] = []
-): ReactGroup<T> {
+): AbstractFormGroup<T> {
   const [validators, setValidators] =
     useState<ValidatorGroupFn<T>[]>(initialValidators);
 
-  const errors = (() => evalFormControlsValid({ controls, validators }))();
-
+  const errors = (() => evalFormGroupValid({ controls, validators }))();
   const error = (() => errors[0])();
-
-  const valid = (() =>
-    errors.length === 0 &&
-    Object.values(controls).reduce(
-      (validState, { valid }) => validState && valid,
-      true
-    ))();
-
+  const valid = (() => errors.length === 0 && controlsToValid(controls))();
   const invalid = (() => !valid)();
 
   function reset(): void {
     Object.values(controls).forEach((control) => control.reset());
   }
 
-  function json(): JsonControl<T> {
-    return Object.entries(controls).reduce<any>((json, [key, { state }]) => {
-      json[key] = state;
-      return json;
-    }, {});
+  function json(): JsonControls<T> {
+    return controlsToJson(controls);
   }
+
+  function updateValueAndValidity(): void {}
 
   return {
     controls,
@@ -52,6 +48,7 @@ export function useFormGroup<T extends FormControls>(
     json,
     reset,
     setValidators,
+    updateValueAndValidity,
     valid
   };
 }

@@ -27,13 +27,13 @@ interface ListControl<T = unknown> {
   higher: boolean;
   inputRef: RefObject<HTMLInputElement>;
   listRef: RefObject<HTMLUListElement>;
-  value: string;
-  visible: boolean;
+  navigationElement: (event: KeyboardEvent) => void;
+  navigationInput: (event: KeyboardEvent) => void;
   setActive: Dispatch<SetStateAction<boolean>>;
   setValue: Dispatch<SetStateAction<string>>;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  navigationElement: (event: KeyboardEvent) => void;
-  navigationInput: (event: KeyboardEvent) => void;
+  value: string;
+  visible: boolean;
 }
 
 export function useListControl<T = unknown>(
@@ -190,12 +190,12 @@ export function useListControl<T = unknown>(
     higher,
     inputRef,
     listRef,
-    value,
-    visible,
+    navigationElement,
+    navigationInput,
     setActive,
     setValue,
     setVisible,
-    navigationElement,
-    navigationInput
+    value,
+    visible
   };
 }

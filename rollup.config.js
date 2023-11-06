@@ -26,7 +26,8 @@ export default {
     '@rolster/helpers-string',
     'react',
     'react-dom',
-    'rxjs'
+    'rxjs',
+    'uuid'
   ],
   plugins: [
     resolve(),
