@@ -1,85 +1,118 @@
 import {
-  AbstractArray,
-  AbstractArrayControl,
-  AbstractArrayControls,
-  AbstractArrayGroup,
-  ArrayState,
+  AbstractArrayState,
+  FormArrayBuilderState,
+  FormArrayControlProps,
+  FormArrayGroupProps,
+  FormArrayProps,
   FormState,
   ValidatorError,
   ValidatorFn,
-  ValidatorGroupFn,
-  controlsToJson,
+  ValidatorGroupFn
+} from '@rolster/helpers-forms';
+import {
+  controlsToDirty,
+  controlsToState,
   evalFormControlValid,
   evalFormGroupValid
-} from '@rolster/helpers-forms';
+} from '@rolster/helpers-forms/helpers';
 import { LegacyRef, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import {
+  ReactArrayControl,
+  ReactArrayControls,
+  ReactArrayGroup,
+  ReactFormArray
+} from './types';
 
-interface FormArrayControlProps<T> {
-  dirty: boolean;
-  uuid: string;
-  state?: FormState<T>;
+interface ReactFormArrayControlProps<T = any> extends FormArrayControlProps<T> {
+  active?: boolean;
+  dirty?: boolean;
+  disabled?: boolean;
+}
+
+interface AbstractRolsterArrayControl<
+  T = any,
+  C extends ReactArrayControls = any
+> extends ReactArrayControl<HTMLElement, T> {
+  formGroup?: RolsterArrayGroup<C>;
   validators?: ValidatorFn<T>[];
 }
 
-interface FormArrayGroupProps<T extends AbstractArrayControls> {
-  controls: T;
-  uuid: string;
+type RolsterArrayControls = ReactArrayControls<AbstractRolsterArrayControl>;
+
+class RolsterArrayControl<T = any, C extends ReactArrayControls = any>
+  implements AbstractRolsterArrayControl<T, C>
+{
+  public readonly uuid: string;
+  public readonly active: boolean;
+  public readonly disabled: boolean;
+  public readonly dirty: boolean;
+  public readonly errors: ValidatorError<T>[];
+  public readonly invalid: boolean;
+  public readonly valid: boolean;
+  public readonly value: T;
+  public readonly error?: ValidatorError<T> | undefined;
+  public readonly state?: FormState<T>;
+  public readonly validators?: ValidatorFn<T>[] | undefined;
+
+  formGroup?: RolsterArrayGroup<C> | undefined;
+  elementRef?: LegacyRef<HTMLElement> | undefined;
+
+  constructor(props: ReactFormArrayControlProps<T>) {
+    const { uuid, active, dirty, disabled, state, validators } = props;
+
+    this.uuid = uuid;
+    this.active = active || false;
+    this.dirty = dirty || false;
+    this.disabled = disabled || false;
+    this.state = state;
+    this.validators = validators;
+
+    this.errors = (() =>
+      validators ? evalFormControlValid({ state, validators }) : [])();
+
+    this.error = (() => this.errors[0])();
+    this.valid = (() => this.errors.length === 0)();
+    this.invalid = (() => !this.valid)();
+    this.value = state as T;
+  }
+
+  public setActive(active: boolean): void {
+    this.formGroup?.formArray?.update(this, { active });
+  }
+
+  public setDirty(dirty: boolean): void {
+    this.formGroup?.formArray?.update(this, { dirty });
+  }
+
+  public setDisabled(disabled: boolean): void {
+    this.formGroup?.formArray?.update(this, { disabled });
+  }
+
+  public setState(state?: FormState<T>): void {
+    this.formGroup?.formArray?.update(this, { state });
+  }
+
+  public reset(): void {}
+}
+
+interface RolsterArrayGroup<T extends RolsterArrayControls>
+  extends ReactArrayGroup<T> {
+  formArray?: RolsterFormArray<T>;
   validators?: ValidatorGroupFn<T>[];
 }
 
-type ArrayControlProps = Record<
-  string,
-  Omit<FormArrayControlProps<any>, 'uuid' | 'dirty'>
->;
-
-interface ReactArrayProps<T extends AbstractArrayControls> {
-  mapper: (state: ArrayState<T>) => ArrayControlProps;
-  state?: ArrayState<T>[];
-  validators?: ValidatorGroupFn<T>[];
+interface RolsterFormArray<T extends ReactArrayControls>
+  extends ReactFormArray<T> {
+  update(
+    control: AbstractRolsterArrayControl<any>,
+    changes: Partial<ReactFormArrayControlProps<any>>
+  ): void;
 }
 
-function createArrayControl<T = any>(
-  props: FormArrayControlProps<T>
-): AbstractArrayControl<T> {
-  const { dirty, uuid, state, validators } = props;
-
-  const errors = (() =>
-    validators ? evalFormControlValid({ state, validators }) : [])();
-
-  const error = (() => errors[0])();
-  const valid = (() => errors.length === 0)();
-  const invalid = (() => !valid)();
-
-  return {
-    dirty,
-    error,
-    errors,
-    invalid,
-    reset: () => {},
-    state,
-    updateValueAndValidity: () => {},
-    uuid,
-    valid,
-    validators,
-    value: state as T
-  };
-}
-
-function useArrayControl<T = any>(
-  props: Omit<FormArrayControlProps<T>, 'uuid'>
-): AbstractArrayControl<T> {
-  return createArrayControl({
-    dirty: props.dirty,
-    uuid: uuid(),
-    state: props.state,
-    validators: props.validators
-  });
-}
-
-function useArrayGroup<T extends AbstractArrayControls>(
+function createArrayGroup<T extends RolsterArrayControls>(
   props: FormArrayGroupProps<T>
-): AbstractArrayGroup<T> {
+): RolsterArrayGroup<T> {
   const { controls, uuid, validators } = props;
 
   const errors = (() =>
@@ -89,65 +122,114 @@ function useArrayGroup<T extends AbstractArrayControls>(
   const valid = (() => errors.length === 0)();
   const invalid = (() => !valid)();
 
-  const arrayGroup = {
+  const dirty = (() => controlsToDirty(controls))();
+
+  const formGroup = {
     controls,
-    error,
+    dirty,
     errors,
     invalid,
     uuid,
     valid,
+    error,
     validators
   };
 
-  Object.values(controls).forEach((control) => (control.group = arrayGroup));
+  Object.values(controls).forEach((control) => (control.formGroup = formGroup));
 
-  return arrayGroup;
+  return formGroup;
 }
 
-function createControlsFromState<T extends AbstractArrayControls>(
-  state: ArrayState<T>,
-  mapper: (state: ArrayState<T>) => ArrayControlProps
+function createControlsFromState<T extends ReactArrayControls>(
+  state: Partial<AbstractArrayState<T>>,
+  builder: FormArrayBuilderState<T>
 ): T {
-  return Object.entries(mapper(state)).reduce((controls, [key, props]) => {
-    controls[key] = useArrayControl({ ...props, dirty: !!props.state });
+  return Object.entries(builder(state)).reduce((controls, [key, props]) => {
+    controls[key] = new RolsterArrayControl({
+      ...props,
+      uuid: uuid(),
+      dirty: !!props.state
+    });
 
     return controls;
   }, {} as any);
 }
 
-export interface ReactArrayControl<T = any> extends AbstractArrayControl<T> {
-  elementRef?: LegacyRef<HTMLElement>;
+function cloneArrayControl<T>(
+  control: AbstractRolsterArrayControl<T>,
+  changes: Partial<ReactFormArrayControlProps<T>>
+): AbstractRolsterArrayControl<T> {
+  const { active, dirty, disabled, uuid, state, validators } = control;
+
+  return new RolsterArrayControl({
+    uuid,
+    active,
+    dirty,
+    disabled,
+    state,
+    validators,
+    ...changes
+  });
 }
 
-export type ReactFormArray<T extends AbstractArrayControls> = AbstractArray<T>;
+function cloneArrayGroup<T = any, C extends ReactArrayControls = any>(
+  group: RolsterArrayGroup<C>,
+  control: AbstractRolsterArrayControl<T>,
+  changes: Partial<ReactFormArrayControlProps<T>>
+): RolsterArrayGroup<C> {
+  const newControl = cloneArrayControl(control, changes);
 
-export function useFormArray<T extends AbstractArrayControls>(
-  props: ReactArrayProps<T>
+  const controls = Object.entries(group.controls).reduce(
+    (json, [key, control]) => {
+      json[key] = control.uuid === newControl.uuid ? newControl : control;
+
+      return json;
+    },
+    {} as any
+  );
+
+  return createArrayGroup({
+    controls,
+    uuid: group.uuid,
+    validators: group.validators
+  });
+}
+
+export function useFormArray<T extends ReactArrayControls>(
+  props: FormArrayProps<T>
 ): ReactFormArray<T> {
-  const initialState = props.state || [];
-  const { mapper, validators } = props;
+  const [state, setState] = useState(props.state);
+  const [currentState] = useState(props.state);
 
-  const [currentState] = useState(initialState);
-  const [state, setState] = useState<ArrayState<T>[]>([]);
-  const [groups, setGroups] = useState<AbstractArrayGroup<T>[]>(
-    initialState.map((state) =>
-      useArrayGroup({
-        controls: createControlsFromState(state, mapper),
-        uuid: uuid(),
-        validators
-      })
-    )
+  const { builder, validators } = props;
+
+  const [controls, setControls] = useState<T[]>([]);
+  const [groups, setGroups] = useState<RolsterArrayGroup<T>[]>(
+    props.state
+      ? props.state.map((state) =>
+          createArrayGroup({
+            controls: createControlsFromState(state, builder),
+            uuid: uuid(),
+            validators
+          })
+        )
+      : []
   );
 
   useEffect(() => {
-    setState(groups.map(({ controls }) => controlsToJson(controls)));
+    setControls(groups.map(({ controls }) => controls));
+    setState(groups.map(({ controls }) => controlsToState(controls)));
   }, [groups]);
 
   const errors = (() =>
     validators
-      ? groups.reduce((errors, { controls }) => {
-          return [...errors, ...evalFormGroupValid({ controls, validators })];
-        }, [] as ValidatorError[])
+      ? groups.reduce(
+          (errors, { controls }) => [
+            ...errors,
+            ...evalFormGroupValid({ controls, validators })
+          ],
+          [] as ValidatorError[]
+        )
       : [])();
 
   const error = (() => errors[0])();
@@ -156,78 +238,56 @@ export function useFormArray<T extends AbstractArrayControls>(
 
   const dirty = (() =>
     groups.reduce(
-      (dirty, { controls }) =>
-        dirty &&
-        Object.values(controls).reduce(
-          (dirty, control) => dirty && control.dirty,
-          true
-        ),
+      (currentDirty, { controls }) => currentDirty && controlsToDirty(controls),
       true
     ))();
 
-  function push(state: ArrayState<T>): void {
+  function push(state: Partial<AbstractArrayState<T>>): void {
     setGroups([
       ...groups,
-      useArrayGroup({
-        controls: createControlsFromState(state, mapper),
+      createArrayGroup({
+        controls: createControlsFromState(state, builder),
         uuid: uuid(),
         validators
       })
     ]);
   }
 
-  function update(control: AbstractArrayControl, state: FormState): void {
-    const controlGroup = control.group;
-
-    if (controlGroup) {
-      const newControl = createArrayControl({
-        dirty: true,
-        uuid: control.uuid,
-        state,
-        validators: control.validators
-      });
-
-      const controls = Object.entries(controlGroup.controls).reduce(
-        (json, [key, control]) => {
-          json[key] =
-            (control as any).uuid === newControl.uuid ? newControl : control;
-
-          return json;
-        },
-        {} as any
-      );
-
-      const newGroup = useArrayGroup({
-        controls,
-        uuid: controlGroup.uuid,
-        validators: controlGroup.validators
-      });
+  function update(
+    control: AbstractRolsterArrayControl<T>,
+    changes: Partial<ReactFormArrayControlProps<T>>
+  ): void {
+    if (control.formGroup) {
+      const group = cloneArrayGroup(control.formGroup, control, changes);
 
       setGroups(
-        groups.map((group) => (group.uuid === newGroup.uuid ? newGroup : group))
+        groups.map((currentGroup) =>
+          currentGroup.uuid === group.uuid ? group : currentGroup
+        )
       );
     }
   }
 
-  function remove(group: AbstractArrayGroup<T>): void {
+  function remove(group: ReactArrayGroup<T>): void {
     setGroups(groups.filter(({ uuid }) => group.uuid !== uuid));
   }
 
   function reset(): void {
     setGroups(
-      currentState.map((state) =>
-        useArrayGroup({
-          controls: createControlsFromState(state, mapper),
-          uuid: uuid(),
-          validators
-        })
-      )
+      currentState
+        ? currentState.map((state) =>
+            createArrayGroup({
+              controls: createControlsFromState(state, builder),
+              uuid: uuid(),
+              validators
+            })
+          )
+        : []
     );
   }
 
-  function updateValueAndValidity(): void {}
-
-  return {
+  const formArray: RolsterFormArray<T> = {
+    controls,
     dirty,
     error,
     errors,
@@ -237,9 +297,12 @@ export function useFormArray<T extends AbstractArrayControls>(
     remove,
     reset,
     state,
-    value: state,
-    valid,
     update,
-    updateValueAndValidity
+    valid,
+    value: state as T[]
   };
+
+  groups.forEach((group) => (group.formArray = formArray));
+
+  return formArray;
 }

@@ -30,7 +30,7 @@
   "dependencies": {
     "@rolster/helpers-advanced": "^1.1.1",
     "@rolster/helpers-date": "^1.1.0",
-    "@rolster/helpers-forms": "^1.5.7",
+    "@rolster/helpers-forms": "^1.6.5",
     "@rolster/helpers-string": "^1.0.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.1",

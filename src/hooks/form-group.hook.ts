@@ -1,54 +1,56 @@
 import {
-  AbstractFormGroup,
-  AbstractGroupControls,
-  JsonControls,
-  ValidatorGroupFn,
-  controlsToJson,
-  controlsToValid,
-  evalFormGroupValid
+  FormGroupProps,
+  StateControls,
+  ValueControls
 } from '@rolster/helpers-forms';
+import {
+  controlsToDirty,
+  controlsToState,
+  controlsToValid,
+  controlsToValue,
+  evalFormGroupValid
+} from '@rolster/helpers-forms/helpers';
 import { useState } from 'react';
-import { ReactFormArray } from './form-array.hook';
-import { ReactControl } from './form-control.hook';
+import { ReactControls, ReactGroup } from './types';
 
-export type ReactControls = Record<
-  string,
-  ReactControl<HTMLElement> | ReactFormArray<any>
->;
+export function useFormGroup<T extends ReactControls>(
+  props: FormGroupProps<T>
+): ReactGroup<T> {
+  const [validators, setValidators] = useState(props.validators);
 
-export type ReactGroup<T extends ReactControls> = AbstractFormGroup<T>;
+  const { controls } = props;
 
-export function useFormGroup<T extends AbstractGroupControls>(
-  controls: T,
-  initialValidators: ValidatorGroupFn<T>[] = []
-): AbstractFormGroup<T> {
-  const [validators, setValidators] =
-    useState<ValidatorGroupFn<T>[]>(initialValidators);
+  const errors = (() =>
+    validators ? evalFormGroupValid({ controls, validators }) : [])();
 
-  const errors = (() => evalFormGroupValid({ controls, validators }))();
   const error = (() => errors[0])();
   const valid = (() => errors.length === 0 && controlsToValid(controls))();
   const invalid = (() => !valid)();
+
+  const dirty = (() => controlsToDirty(controls))();
 
   function reset(): void {
     Object.values(controls).forEach((control) => control.reset());
   }
 
-  function json(): JsonControls<T> {
-    return controlsToJson(controls);
+  function states(): StateControls<T> {
+    return controlsToState(controls);
   }
 
-  function updateValueAndValidity(): void {}
+  function values(): ValueControls<T> {
+    return controlsToValue(controls);
+  }
 
   return {
     controls,
+    dirty,
     error,
     errors,
     invalid,
-    json,
     reset,
+    states,
     setValidators,
-    updateValueAndValidity,
-    valid
+    valid,
+    values
   };
 }

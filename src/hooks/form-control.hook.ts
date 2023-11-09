@@ -1,40 +1,24 @@
 import { isDefined } from '@rolster/helpers-advanced';
 import {
-  AbstractFormControl,
+  FormControlProps,
   FormState,
-  ValidatorFn,
-  evalFormControlValid
+  SubscriberControl
 } from '@rolster/helpers-forms';
-import { LegacyRef, useEffect, useRef, useState } from 'react';
+import { evalFormControlValid } from '@rolster/helpers-forms/helpers';
+import { useEffect, useRef, useState } from 'react';
 import { BehaviorSubject, Subscription } from 'rxjs';
-
-export interface ReactControl<E extends HTMLElement, T = any>
-  extends AbstractFormControl<T> {
-  elementRef?: LegacyRef<E>;
-}
-
-export type ReactInputControl<T = any> = ReactControl<HTMLInputElement, T>;
-export type ReactHtmlControl<T = any> = ReactControl<HTMLElement, T>;
-
-type Subscriber<T> = (state?: FormState<T>) => void;
-
-interface ReactControlProps<T> {
-  state?: FormState<T>;
-  validators?: ValidatorFn<T>[];
-}
+import { ReactFormControl, ReactHtmlControl, ReactInputControl } from './types';
 
 export function useReactControl<E extends HTMLElement, T = any>(
-  props: ReactControlProps<T> = {}
-): ReactControl<E, T> {
+  props: FormControlProps<T> = {}
+): ReactFormControl<E, T> {
   const [state, setState] = useState<FormState<T>>(props.state);
   const [value, setValue] = useState<T>(props.state as T);
   const [dirty, setDirty] = useState<boolean>(false);
   const [active, setActive] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [initialValue] = useState<FormState<T>>(props.state);
-  const [validators, setValidators] = useState<ValidatorFn<T>[]>(
-    props.validators || []
-  );
+  const [validators, setValidators] = useState(props.validators);
   const [subscribers] = useState<BehaviorSubject<FormState<T>>>(
     new BehaviorSubject(props.state)
   );
@@ -61,11 +45,9 @@ export function useReactControl<E extends HTMLElement, T = any>(
     setState(initialValue);
   }
 
-  function subscribe(subscriber: Subscriber<T>): Subscription {
+  function subscribe(subscriber: SubscriberControl<T>): Subscription {
     return subscribers.subscribe(subscriber);
   }
-
-  function updateValueAndValidity(): void {}
 
   return {
     active,
@@ -82,7 +64,6 @@ export function useReactControl<E extends HTMLElement, T = any>(
     setValidators,
     setState,
     subscribe,
-    updateValueAndValidity,
     state,
     valid,
     value
@@ -90,13 +71,13 @@ export function useReactControl<E extends HTMLElement, T = any>(
 }
 
 export function useFormControl<T = any>(
-  props: ReactControlProps<T> = {}
+  props: FormControlProps<T> = {}
 ): ReactHtmlControl<T> {
   return useReactControl<HTMLElement, T>(props);
 }
 
 export function useInputControl<T = any>(
-  props: ReactControlProps<T> = {}
+  props: FormControlProps<T> = {}
 ): ReactInputControl<T> {
   return useReactControl<HTMLInputElement, T>(props);
 }
