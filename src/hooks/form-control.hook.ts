@@ -14,7 +14,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
 ): ReactFormControl<E, T> {
   const [state, setState] = useState<FormState<T>>(props.state);
   const [value, setValue] = useState<T>(props.state as T);
-  const [dirty, setDirty] = useState<boolean>(false);
+  const [touched, setTouched] = useState<boolean>(false);
   const [active, setActive] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [initialValue] = useState<FormState<T>>(props.state);
@@ -41,7 +41,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
   }, [state]);
 
   function reset(): void {
-    setDirty(false);
+    setTouched(false);
     setState(initialValue);
   }
 
@@ -51,7 +51,6 @@ export function useReactControl<E extends HTMLElement, T = any>(
 
   return {
     active,
-    dirty,
     disabled,
     elementRef,
     error,
@@ -59,11 +58,12 @@ export function useReactControl<E extends HTMLElement, T = any>(
     invalid,
     reset,
     setActive,
-    setDirty,
     setDisabled,
     setValidators,
     setState,
     subscribe,
+    setTouched,
+    touched,
     state,
     valid,
     value

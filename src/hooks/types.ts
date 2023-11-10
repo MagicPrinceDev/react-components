@@ -26,7 +26,10 @@ export type ReactControl<E extends HTMLElement = HTMLElement, T = any> =
 export type ReactInputControl<T = any> = ReactFormControl<HTMLInputElement, T>;
 export type ReactHtmlControl<T = any> = ReactFormControl<HTMLElement, T>;
 
-export type ReactArrayInputControl<T = any> = ReactArrayControl<HTMLInputElement, T>;
+export type ReactArrayInputControl<T = any> = ReactArrayControl<
+  HTMLInputElement,
+  T
+>;
 export type ReactArrayHtmlControl<T = any> = ReactArrayControl<HTMLElement, T>;
 
 export type ReactControls = AbstractGroupControls<
@@ -39,8 +42,12 @@ export type ReactArrayControls<
   T extends ReactArrayControl = ReactArrayControl
 > = AbstractArrayControls<T>;
 
-export type ReactArrayGroup<T extends ReactArrayControls> =
-  AbstractArrayGroup<T>;
+export type ReactArrayGroup<
+  T extends ReactArrayControls,
+  E = any
+> = AbstractArrayGroup<T, E>;
 
-export type ReactFormArray<T extends ReactArrayControls = ReactArrayControls> =
-  AbstractArray<T>;
+export type ReactFormArray<
+  T extends ReactArrayControls = ReactArrayControls,
+  E = any
+> = AbstractArray<T, E>;

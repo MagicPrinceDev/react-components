@@ -8,6 +8,12 @@
   "unpkg": "dist/es/lib.js",
   "types": "dist/esm/index.d.ts",
   "author": "Rolster Technology <rolster.developments@gmail.com>",
+  "contributors": [
+    {
+      "name": "Daniel Andrés Castillo Pedroza",
+      "email": "ing.dacastillop@gmail.com"
+    }
+  ],
   "license": "MIT",
   "files": [
     "dist/"
@@ -30,7 +36,7 @@
   "dependencies": {
     "@rolster/helpers-advanced": "^1.1.1",
     "@rolster/helpers-date": "^1.1.0",
-    "@rolster/helpers-forms": "^1.6.5",
+    "@rolster/helpers-forms": "^1.6.10",
     "@rolster/helpers-string": "^1.0.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.1",

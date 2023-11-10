@@ -5,13 +5,14 @@ import {
   FormArrayGroupProps,
   FormArrayProps,
   FormState,
+  SetArrayProps,
   ValidatorError,
   ValidatorFn,
   ValidatorGroupFn
 } from '@rolster/helpers-forms';
 import {
-  controlsToDirty,
   controlsToState,
+  controlsToTouched,
   evalFormControlValid,
   evalFormGroupValid
 } from '@rolster/helpers-forms/helpers';
@@ -26,8 +27,8 @@ import {
 
 interface ReactFormArrayControlProps<T = any> extends FormArrayControlProps<T> {
   active?: boolean;
-  dirty?: boolean;
   disabled?: boolean;
+  touched?: boolean;
 }
 
 interface AbstractRolsterArrayControl<
@@ -46,7 +47,7 @@ class RolsterArrayControl<T = any, C extends ReactArrayControls = any>
   public readonly uuid: string;
   public readonly active: boolean;
   public readonly disabled: boolean;
-  public readonly dirty: boolean;
+  public readonly touched: boolean;
   public readonly errors: ValidatorError<T>[];
   public readonly invalid: boolean;
   public readonly valid: boolean;
@@ -59,11 +60,11 @@ class RolsterArrayControl<T = any, C extends ReactArrayControls = any>
   elementRef?: LegacyRef<HTMLElement> | undefined;
 
   constructor(props: ReactFormArrayControlProps<T>) {
-    const { uuid, active, dirty, disabled, state, validators } = props;
+    const { uuid, active, disabled, state, touched, validators } = props;
 
     this.uuid = uuid;
     this.active = active || false;
-    this.dirty = dirty || false;
+    this.touched = touched || false;
     this.disabled = disabled || false;
     this.state = state;
     this.validators = validators;
@@ -81,8 +82,8 @@ class RolsterArrayControl<T = any, C extends ReactArrayControls = any>
     this.formGroup?.formArray?.update(this, { active });
   }
 
-  public setDirty(dirty: boolean): void {
-    this.formGroup?.formArray?.update(this, { dirty });
+  public setTouched(touched: boolean): void {
+    this.formGroup?.formArray?.update(this, { touched });
   }
 
   public setDisabled(disabled: boolean): void {
@@ -113,7 +114,7 @@ interface RolsterFormArray<T extends ReactArrayControls>
 function createArrayGroup<T extends RolsterArrayControls>(
   props: FormArrayGroupProps<T>
 ): RolsterArrayGroup<T> {
-  const { controls, uuid, validators } = props;
+  const { controls, uuid, entity, validators } = props;
 
   const errors = (() =>
     validators ? evalFormGroupValid({ controls, validators }) : [])();
@@ -122,11 +123,12 @@ function createArrayGroup<T extends RolsterArrayControls>(
   const valid = (() => errors.length === 0)();
   const invalid = (() => !valid)();
 
-  const dirty = (() => controlsToDirty(controls))();
+  const touched = (() => controlsToTouched(controls))();
 
   const formGroup = {
     controls,
-    dirty,
+    touched,
+    entity,
     errors,
     invalid,
     uuid,
@@ -148,7 +150,7 @@ function createControlsFromState<T extends ReactArrayControls>(
     controls[key] = new RolsterArrayControl({
       ...props,
       uuid: uuid(),
-      dirty: !!props.state
+      touched: !!props.state
     });
 
     return controls;
@@ -159,12 +161,12 @@ function cloneArrayControl<T>(
   control: AbstractRolsterArrayControl<T>,
   changes: Partial<ReactFormArrayControlProps<T>>
 ): AbstractRolsterArrayControl<T> {
-  const { active, dirty, disabled, uuid, state, validators } = control;
+  const { active, disabled, touched, uuid, state, validators } = control;
 
   return new RolsterArrayControl({
     uuid,
     active,
-    dirty,
+    touched,
     disabled,
     state,
     validators,
@@ -188,16 +190,14 @@ function cloneArrayGroup<T = any, C extends ReactArrayControls = any>(
     {} as any
   );
 
-  return createArrayGroup({
-    controls,
-    uuid: group.uuid,
-    validators: group.validators
-  });
+  const { uuid, entity, validators } = group;
+
+  return createArrayGroup({ controls, uuid, entity, validators });
 }
 
-export function useFormArray<T extends ReactArrayControls>(
+export function useFormArray<T extends ReactArrayControls, E = any>(
   props: FormArrayProps<T>
-): ReactFormArray<T> {
+): ReactFormArray<T, E> {
   const [state, setState] = useState(props.state);
   const [currentState] = useState(props.state);
 
@@ -236,21 +236,50 @@ export function useFormArray<T extends ReactArrayControls>(
   const valid = (() => errors.length === 0)();
   const invalid = (() => !valid)();
 
-  const dirty = (() =>
+  const touched = (() =>
     groups.reduce(
-      (currentDirty, { controls }) => currentDirty && controlsToDirty(controls),
-      true
+      (currentDirty, { controls }) =>
+        currentDirty || controlsToTouched(controls),
+      false
     ))();
 
-  function push(state: Partial<AbstractArrayState<T>>): void {
+  function push(state: Partial<AbstractArrayState<T>>, entity?: E): void {
     setGroups([
       ...groups,
       createArrayGroup({
         controls: createControlsFromState(state, builder),
+        entity,
         uuid: uuid(),
         validators
       })
     ]);
+  }
+
+  function merge(collection: SetArrayProps<T, E>[]): void {
+    setGroups([
+      ...groups,
+      ...collection.map(({ state, entity }) =>
+        createArrayGroup({
+          controls: createControlsFromState(state, builder),
+          entity,
+          uuid: uuid(),
+          validators
+        })
+      )
+    ]);
+  }
+
+  function set(collection: SetArrayProps<T, E>[]): void {
+    setGroups(
+      collection.map(({ state, entity }) =>
+        createArrayGroup({
+          controls: createControlsFromState(state, builder),
+          entity,
+          uuid: uuid(),
+          validators
+        })
+      )
+    );
   }
 
   function update(
@@ -288,14 +317,16 @@ export function useFormArray<T extends ReactArrayControls>(
 
   const formArray: RolsterFormArray<T> = {
     controls,
-    dirty,
+    touched,
     error,
     errors,
     groups,
     invalid,
+    merge,
     push,
     remove,
     reset,
+    set,
     state,
     update,
     valid,

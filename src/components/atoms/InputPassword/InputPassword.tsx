@@ -37,9 +37,9 @@ export function RlsInputPassword({
   }
 
   function onBlur() {
-    setActive(false);
     formControl?.setActive(false);
-    formControl?.setDirty(true);
+    formControl?.setTouched(true);
+    setActive(false);
   }
 
   return (

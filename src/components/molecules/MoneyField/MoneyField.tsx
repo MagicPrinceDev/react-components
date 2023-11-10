@@ -31,7 +31,7 @@ export function RlsMoneyField({
         'rls-money-field ' +
         renderClassStatus('rls-box-field', {
           active: formControl?.active,
-          error: formControl?.dirty && !formControl?.valid,
+          error: formControl?.touched && !formControl?.valid,
           disabled: formControl?.disabled || disabled
         })
       }
@@ -51,7 +51,7 @@ export function RlsMoneyField({
           />
         </div>
       </div>
-      {formControl?.dirty && formControl?.error && (
+      {formControl?.touched && formControl?.error && (
         <div className="rls-box-field__helper rls-box-field__helper--error">
           <span>{formControl?.error.message}</span>
         </div>

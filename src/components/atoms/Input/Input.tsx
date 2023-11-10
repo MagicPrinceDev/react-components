@@ -49,7 +49,7 @@ export function RlsInput({
   }
 
   function onBlur(): void {
-    formControl?.setDirty(true);
+    formControl?.setTouched(true);
     formControl?.setActive(false);
     setActive(false);
   }

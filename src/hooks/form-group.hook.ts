@@ -4,8 +4,8 @@ import {
   ValueControls
 } from '@rolster/helpers-forms';
 import {
-  controlsToDirty,
   controlsToState,
+  controlsToTouched,
   controlsToValid,
   controlsToValue,
   evalFormGroupValid
@@ -27,7 +27,7 @@ export function useFormGroup<T extends ReactControls>(
   const valid = (() => errors.length === 0 && controlsToValid(controls))();
   const invalid = (() => !valid)();
 
-  const dirty = (() => controlsToDirty(controls))();
+  const touched = (() => controlsToTouched(controls))();
 
   function reset(): void {
     Object.values(controls).forEach((control) => control.reset());
@@ -43,13 +43,13 @@ export function useFormGroup<T extends ReactControls>(
 
   return {
     controls,
-    dirty,
     error,
     errors,
     invalid,
     reset,
     states,
     setValidators,
+    touched,
     valid,
     values
   };
