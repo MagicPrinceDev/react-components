@@ -44,10 +44,10 @@ export type ReactArrayControls<
 
 export type ReactArrayGroup<
   T extends ReactArrayControls,
-  E = any
-> = AbstractArrayGroup<T, E>;
+  R = any
+> = AbstractArrayGroup<T, R>;
 
 export type ReactFormArray<
   T extends ReactArrayControls = ReactArrayControls,
-  E = any
-> = AbstractArray<T, E>;
+  R = any
+> = AbstractArray<T, R>;

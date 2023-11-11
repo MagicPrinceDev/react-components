@@ -4,11 +4,11 @@ import {
   ValueControls
 } from '@rolster/helpers-forms';
 import {
+  controlsAllChecked,
+  controlsSomeChecked,
   controlsToState,
-  controlsToTouched,
-  controlsToValid,
   controlsToValue,
-  evalFormGroupValid
+  groupIsValid
 } from '@rolster/helpers-forms/helpers';
 import { useState } from 'react';
 import { ReactControls, ReactGroup } from './types';
@@ -21,13 +21,17 @@ export function useFormGroup<T extends ReactControls>(
   const { controls } = props;
 
   const errors = (() =>
-    validators ? evalFormGroupValid({ controls, validators }) : [])();
+    validators ? groupIsValid({ controls, validators }) : [])();
 
   const error = (() => errors[0])();
-  const valid = (() => errors.length === 0 && controlsToValid(controls))();
+  const valid = (() =>
+    errors.length === 0 && controlsAllChecked(controls, 'valid'))();
   const invalid = (() => !valid)();
 
-  const touched = (() => controlsToTouched(controls))();
+  const touched = (() => controlsSomeChecked(controls, 'touched'))();
+  const toucheds = (() => controlsAllChecked(controls, 'touched'))();
+  const dirty = (() => controlsSomeChecked(controls, 'dirty'))();
+  const dirties = (() => controlsAllChecked(controls, 'dirty'))();
 
   function reset(): void {
     Object.values(controls).forEach((control) => control.reset());
@@ -43,13 +47,20 @@ export function useFormGroup<T extends ReactControls>(
 
   return {
     controls,
+    dirty,
+    dirties,
     error,
     errors,
     invalid,
+    pristine: !dirty,
+    pristines: !dirties,
     reset,
     states,
     setValidators,
     touched,
+    toucheds,
+    untouched: !touched,
+    untoucheds: !toucheds,
     valid,
     values
   };

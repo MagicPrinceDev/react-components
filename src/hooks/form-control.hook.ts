@@ -4,7 +4,7 @@ import {
   FormState,
   SubscriberControl
 } from '@rolster/helpers-forms';
-import { evalFormControlValid } from '@rolster/helpers-forms/helpers';
+import { controlIsValid } from '@rolster/helpers-forms/helpers';
 import { useEffect, useRef, useState } from 'react';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ReactFormControl, ReactHtmlControl, ReactInputControl } from './types';
@@ -12,9 +12,10 @@ import { ReactFormControl, ReactHtmlControl, ReactInputControl } from './types';
 export function useReactControl<E extends HTMLElement, T = any>(
   props: FormControlProps<T> = {}
 ): ReactFormControl<E, T> {
-  const [state, setState] = useState<FormState<T>>(props.state);
+  const [state, setCurrentState] = useState<FormState<T>>(props.state);
   const [value, setValue] = useState<T>(props.state as T);
   const [touched, setTouched] = useState<boolean>(false);
+  const [dirty, setDirty] = useState<boolean>(false);
   const [active, setActive] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [initialValue] = useState<FormState<T>>(props.state);
@@ -26,7 +27,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
   const elementRef = useRef<E>(null);
 
   const errors = (() =>
-    validators ? evalFormControlValid({ state, validators }) : [])();
+    validators ? controlIsValid({ state, validators }) : [])();
 
   const error = (() => errors[0])();
   const valid = (() => errors.length === 0)();
@@ -40,9 +41,15 @@ export function useReactControl<E extends HTMLElement, T = any>(
     subscribers.next(state);
   }, [state]);
 
+  function setState(state?: FormState<T>): void {
+    setDirty(true);
+    setCurrentState(state);
+  }
+
   function reset(): void {
     setTouched(false);
-    setState(initialValue);
+    setDirty(false);
+    setCurrentState(initialValue);
   }
 
   function subscribe(subscriber: SubscriberControl<T>): Subscription {
@@ -51,20 +58,24 @@ export function useReactControl<E extends HTMLElement, T = any>(
 
   return {
     active,
+    dirty,
     disabled,
     elementRef,
+    enabled: !disabled,
     error,
     errors,
     invalid,
+    pristine: !dirty,
     reset,
     setActive,
     setDisabled,
     setValidators,
     setState,
-    subscribe,
     setTouched,
-    touched,
     state,
+    subscribe,
+    touched,
+    untouched: !touched,
     valid,
     value
   };

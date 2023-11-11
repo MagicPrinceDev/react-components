@@ -36,7 +36,7 @@
   "dependencies": {
     "@rolster/helpers-advanced": "^1.1.1",
     "@rolster/helpers-date": "^1.1.0",
-    "@rolster/helpers-forms": "^1.6.10",
+    "@rolster/helpers-forms": "^1.8.0",
     "@rolster/helpers-string": "^1.0.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.1",
