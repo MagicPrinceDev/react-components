@@ -1,6 +1,6 @@
 import {
-  AbstractArrayState,
-  AbstractArrayValue,
+  ArrayStateGroup,
+  ArrayValueGroup,
   FormArrayControlProps,
   FormArrayGroupProps,
   FormArrayProps,
@@ -15,6 +15,7 @@ import {
   controlsAllChecked,
   controlsSomeChecked,
   controlsToState,
+  controlsToValue,
   groupAllChecked,
   groupIsValid,
   groupSomeChecked
@@ -149,10 +150,13 @@ class RolsterArrayGroup<
   public readonly error?: ValidatorError<any> | undefined;
   public readonly validators?: ValidatorGroupFn<T>[] | undefined;
 
+  public readonly state: ArrayStateGroup<T>;
+  public readonly value: ArrayValueGroup<T>;
+
   parentArray?: RolsterFormArray<T> | undefined;
 
   constructor(props: FormArrayGroupProps<T>) {
-    const { controls, uuid, validators } = props;
+    const { controls, resource, uuid, validators } = props;
 
     Object.values(controls).forEach((control) => {
       control.parentGroup = this;
@@ -161,12 +165,14 @@ class RolsterArrayGroup<
     this.uuid = uuid;
     this.controls = controls;
     this.validators = validators;
+    this.resource = resource;
 
     this.errors = (() =>
       validators ? groupIsValid({ controls, validators }) : [])();
 
     this.error = (() => this.errors[0])();
-    this.valid = (() => this.errors.length === 0)();
+    this.valid = (() =>
+      this.errors.length === 0 && controlsAllChecked(controls, 'valid'))();
     this.invalid = (() => !this.valid)();
 
     this.touched = (() => controlsSomeChecked(controls, 'touched'))();
@@ -177,6 +183,9 @@ class RolsterArrayGroup<
     this.pristine = !this.dirty;
     this.dirties = (() => controlsAllChecked(controls, 'dirty'))();
     this.pristines = !this.dirties;
+
+    this.state = (() => controlsToState(controls))();
+    this.value = (() => controlsToValue(controls))();
   }
 }
 
@@ -251,10 +260,8 @@ export function useFormArray<T extends ReactArrayControls, R = any>(
   props: RolsterArrayProps<T, R>
 ): ReactFormArray<T, R> {
   const [currentState] = useState(props.groups);
-  const [state, setState] = useState<AbstractArrayState<T>[]>([]);
-
-  const { validators } = props;
-
+  const [state, setState] = useState<ArrayStateGroup<T>[]>([]);
+  const [validators, setValidators] = useState(props.validators);
   const [controls, setControls] = useState<T[]>([]);
   const [groups, setGroups] = useState(props.groups || []);
 
@@ -267,7 +274,8 @@ export function useFormArray<T extends ReactArrayControls, R = any>(
     validators ? arrayIsValid({ groups, validators }) : [])();
 
   const error = (() => errors[0])();
-  const valid = (() => errors.length === 0)();
+  const valid = (() =>
+    errors.length === 0 && groupAllChecked(groups, 'valid'))();
   const invalid = (() => !valid)();
 
   const touched = (() => groupSomeChecked(groups, 'touched'))();
@@ -325,7 +333,7 @@ export function useFormArray<T extends ReactArrayControls, R = any>(
     remove,
     reset,
     set,
-    setValidators: () => {},
+    setValidators,
     state,
     touched,
     toucheds,
@@ -333,7 +341,7 @@ export function useFormArray<T extends ReactArrayControls, R = any>(
     untoucheds: !toucheds,
     update,
     valid,
-    value: state as AbstractArrayValue<T>[]
+    value: state as ArrayValueGroup<T>[]
   };
 
   groups.forEach((group) => (group.parentArray = formArray));

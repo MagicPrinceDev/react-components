@@ -1,8 +1,4 @@
-import {
-  FormGroupProps,
-  StateControls,
-  ValueControls
-} from '@rolster/helpers-forms';
+import { FormGroupProps } from '@rolster/helpers-forms';
 import {
   controlsAllChecked,
   controlsSomeChecked,
@@ -33,16 +29,11 @@ export function useFormGroup<T extends ReactControls>(
   const dirty = (() => controlsSomeChecked(controls, 'dirty'))();
   const dirties = (() => controlsAllChecked(controls, 'dirty'))();
 
+  const state = (() => controlsToState(controls))();
+  const value = (() => controlsToValue(controls))();
+
   function reset(): void {
     Object.values(controls).forEach((control) => control.reset());
-  }
-
-  function states(): StateControls<T> {
-    return controlsToState(controls);
-  }
-
-  function values(): ValueControls<T> {
-    return controlsToValue(controls);
   }
 
   return {
@@ -55,13 +46,13 @@ export function useFormGroup<T extends ReactControls>(
     pristine: !dirty,
     pristines: !dirties,
     reset,
-    states,
+    state,
     setValidators,
     touched,
     toucheds,
     untouched: !touched,
     untoucheds: !toucheds,
     valid,
-    values
+    value
   };
 }
