@@ -5,10 +5,10 @@ import {
   useEffect,
   useState
 } from 'react';
-import { ReactControl, useListControl } from '../../../hooks';
+import { ReactHtmlControl, useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsIcon } from '../../atoms';
+import { RlsErrorMessage, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
 import './SelectField.css';
@@ -17,7 +17,7 @@ interface SelectField<T = unknown> extends RlsComponent {
   suggestions: ListFieldElement<T>[];
   children?: any;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?: ReactHtmlControl<T>;
   onSelect?: (value: T) => void;
   onValue?: (value: T) => void;
   placeholder?: string;
@@ -47,7 +47,7 @@ export function RlsSelectField<T = unknown>({
     setVisible,
     navigationElement,
     navigationInput
-  } = useListControl(suggestions);
+  } = useListControl({ suggestions, formControl });
 
   const [changeInternal, setChangeInternal] = useState(false);
 
@@ -164,13 +164,15 @@ export function RlsSelectField<T = unknown>({
   return (
     <div
       ref={boxContentRef}
-      className={
-        'rls-select-field rls-list-field ' +
-        renderClassStatus('rls-box-field', { active, disabled })
-      }
+      className={renderClassStatus(
+        'rls-box-field',
+        { active, disabled },
+        'rls-select-field rls-list-field'
+      )}
       rls-theme={rlsTheme}
     >
       {children && <label className="rls-box-field__label">{children}</label>}
+      
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <input
@@ -194,6 +196,14 @@ export function RlsSelectField<T = unknown>({
           </button>
         </div>
       </div>
+
+      {formControl?.touched && formControl?.error && (
+        <div className="rls-box-field__error">
+          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+            {formControl.error.message}
+          </RlsErrorMessage>
+        </div>
+      )}
 
       <div
         className={renderClassStatus('rls-list-field__suggestions', {
@@ -228,9 +238,9 @@ export function RlsSelectField<T = unknown>({
                   <label className="label-bold truncate">
                     Selección no disponible
                   </label>
-                  <label className="caption-regular">
+                  <p className="caption-regular">
                     Lo sentimos, en el momento no hay elementos en el listado
-                  </label>
+                  </p>
                 </div>
               </li>
             )}

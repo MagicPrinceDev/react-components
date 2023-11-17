@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ReactControl } from '../../../hooks';
+import { ReactInputControl } from '../../../hooks';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
 import './InputMoney.css';
@@ -7,7 +7,7 @@ import './InputMoney.css';
 interface InputMoney {
   decimals?: boolean;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, number>;
+  formControl?: ReactInputControl<number>;
   onValue?: (value: number) => void;
   placeholder?: string;
   symbol?: string;

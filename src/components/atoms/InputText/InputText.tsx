@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { ReactControl } from '../../../hooks';
+import { ReactInputControl } from '../../../hooks';
 import { RlsInput } from '../Input/Input';
 import './InputText.css';
 
 interface InputText {
   disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, string>;
+  formControl?: ReactInputControl<string>;
   onValue?: (value: string) => void;
   placeholder?: string;
   value?: string;

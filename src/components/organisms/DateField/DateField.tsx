@@ -1,7 +1,8 @@
 import { formatDate } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
-import { ReactControl } from '../../../hooks';
-import { RlsIcon } from '../../atoms';
+import { ReactHtmlControl } from '../../../hooks';
+import { renderClassStatus } from '../../../utils/css';
+import { RlsErrorMessage, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsDatePicker } from '../DatePicker/DatePicker';
 import { RlsModal } from '../Modal/Modal';
@@ -10,7 +11,7 @@ import './DateField.css';
 interface DateField extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, Date>;
+  formControl?: ReactHtmlControl<Date>;
   maxDate?: Date;
   minDate?: Date;
   placeholder?: string;
@@ -44,6 +45,10 @@ export function RlsDateField({
     if (value) {
       formControl?.setState(undefined);
       setValue(undefined);
+
+      if (formControl && !formControl.touched) {
+        formControl.setTouched(true);
+      }
     } else {
       setShow(true);
     }
@@ -51,7 +56,7 @@ export function RlsDateField({
 
   return (
     <div className="rls-date-field" rls-theme={rlsTheme}>
-      <div className="rls-box-field">
+      <div className={renderClassStatus('rls-box-field', { disabled })}>
         {children && <label className="rls-box-field__label">{children}</label>}
 
         <div className="rls-box-field__component">
@@ -63,13 +68,26 @@ export function RlsDateField({
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
+              disabled={disabled}
             />
 
-            <button className="rls-date-field__action" onClick={onClean}>
+            <button
+              className="rls-date-field__action"
+              onClick={onClean}
+              disabled={disabled}
+            >
               <RlsIcon value={value ? 'trash-2' : 'calendar'} />
             </button>
           </div>
         </div>
+
+        {formControl?.touched && formControl?.error && (
+          <div className="rls-box-field__error">
+            <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+              {formControl.error.message}
+            </RlsErrorMessage>
+          </div>
+        )}
       </div>
 
       <RlsModal visible={show}>
@@ -85,6 +103,10 @@ export function RlsDateField({
             }
 
             setShow(false);
+
+            if (formControl && !formControl.touched) {
+              formControl.setTouched(true);
+            }
           }}
         />
       </RlsModal>

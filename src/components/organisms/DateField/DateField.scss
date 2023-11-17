@@ -1,9 +1,9 @@
 // Rolster Technology DateField Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 03/Oct/2023
+// Updated: 13/Nov/2023
 
 .rls-date-field {
   --rls-boxfield-body-padding: var(--sizing-6) var(--sizing-8);
@@ -45,5 +45,9 @@
     padding: 0rem;
     margin-left: var(--sizing-4);
     background: transparent;
+
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 }

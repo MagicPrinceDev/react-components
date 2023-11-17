@@ -1,12 +1,12 @@
 import { HTMLInputTypeAttribute, useState } from 'react';
-import { ReactControl } from '../../../hooks';
+import { ReactInputControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './Input.css';
 
 interface Input extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement>;
+  formControl?: ReactInputControl;
   onValue?: (value: any) => void;
   placeholder?: string;
   type?: HTMLInputTypeAttribute;
@@ -49,7 +49,10 @@ export function RlsInput({
   }
 
   function onBlur(): void {
-    formControl?.setTouched(true);
+    if (formControl && !formControl.touched) {
+      formControl.setTouched(true);
+    }
+
     formControl?.setActive(false);
     setActive(false);
   }

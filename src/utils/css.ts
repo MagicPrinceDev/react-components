@@ -1,6 +1,10 @@
 type Status = Record<string, string | boolean | undefined | null>;
 
-export function renderClassStatus(base: string, status: Status = {}): string {
+export function renderClassStatus(
+  base: string,
+  status: Status = {},
+  aditionals?: string
+): string {
   const resultClass = [base];
 
   Object.entries(status).forEach(([name, value]) => {
@@ -10,6 +14,10 @@ export function renderClassStatus(base: string, status: Status = {}): string {
         : resultClass.push(`${base}--${name}`);
     }
   });
+
+  if (aditionals) {
+    resultClass.push(aditionals);
+  }
 
   return resultClass.join(' ');
 }

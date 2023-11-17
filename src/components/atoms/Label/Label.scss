@@ -1,0 +1,12 @@
+// Rolster Technology Label Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 15/Nov/2023
+// Updated: 15/Nov/2023
+
+.rls-label {
+  &[rls-theme] {
+    color: var(--color-rolster-500);
+  }
+}

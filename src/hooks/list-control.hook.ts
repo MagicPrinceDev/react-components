@@ -8,6 +8,7 @@ import {
   useState
 } from 'react';
 import { ListFieldElement, ListFieldCollection } from '../models';
+import { ReactHtmlControl } from './types';
 
 type Elements = NodeListOf<HTMLLIElement> | undefined;
 
@@ -36,10 +37,17 @@ interface ListControl<T = unknown> {
   visible: boolean;
 }
 
-export function useListControl<T = unknown>(
-  suggestions: ListFieldElement<T>[],
+interface ListControlProps<T = unknown> {
+  suggestions: ListFieldElement<T>[];
+  formControl?: ReactHtmlControl<T>;
+  ignoreHigher?: boolean;
+}
+
+export function useListControl<T = unknown>({
+  suggestions,
+  formControl,
   ignoreHigher = false
-): ListControl {
+}: ListControlProps<T>): ListControl {
   const boxContentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,6 +55,7 @@ export function useListControl<T = unknown>(
   const [collection, setCollection] = useState(new ListFieldCollection([]));
   const [active, setActive] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [opened, setOpened] = useState(false);
   const [value, setValue] = useState('');
   const [higher, setHigher] = useState(false);
 
@@ -68,6 +77,14 @@ export function useListControl<T = unknown>(
   }, []);
 
   useEffect(() => {
+    if (visible && !opened) {
+      setOpened(true);
+    }
+
+    if (!visible && opened && formControl && !formControl.touched) {
+      formControl.setTouched(true);
+    }
+
     setLocationList();
   }, [visible]);
 

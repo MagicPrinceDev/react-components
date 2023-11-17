@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ReactControl } from '../../../hooks';
+import { ReactInputControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './InputPassword.css';
@@ -8,7 +8,7 @@ type InputPasswordType = 'password' | 'text';
 
 interface InputPassword extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, string>;
+  formControl?: ReactInputControl<string>;
   onValue?: (value: string) => void;
   placeholder?: string;
   type?: InputPasswordType;
@@ -32,13 +32,16 @@ export function RlsInputPassword({
   }
 
   function onFocus() {
-    setActive(true);
     formControl?.setActive(true);
+    setActive(true);
   }
 
   function onBlur() {
+    if (formControl && !formControl.touched) {
+      formControl.setTouched(true);
+    }
+
     formControl?.setActive(false);
-    formControl?.setTouched(true);
     setActive(false);
   }
 

@@ -1,0 +1,21 @@
+// Rolster Technology ErrorMessage Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 17/Nov/2023
+// Updated: 17/Nov/2023
+
+.rls-error-message {
+  --rls-icon-color: var(--color-rolster-500);
+  --rls-icon-width: var(--sizing-16);
+  --rls-icon-height: var(--sizing-16);
+  --rls-icon-font-size: var(--sizing-16);
+
+  display: flex;
+  align-items: center;
+  column-gap: var(--sizing-4);
+
+  span {
+    color: var(--color-theme-300);
+  }
+}

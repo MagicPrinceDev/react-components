@@ -1,12 +1,12 @@
-import { ReactControl } from '../../../hooks';
+import { ReactInputControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsInputNumber } from '../../atoms';
+import { RlsErrorMessage, RlsInputNumber } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './NumberField.css';
 
 interface NumberField extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, number>;
+  formControl?: ReactInputControl<number>;
   onValue?: (value: number) => void;
   placeholder?: string;
   value?: number;
@@ -23,17 +23,19 @@ export function RlsNumberField({
 }: NumberField) {
   return (
     <div
-      className={
-        'rls-number-field ' +
-        renderClassStatus('rls-box-field', {
+      className={renderClassStatus(
+        'rls-box-field',
+        {
           active: formControl?.active,
           error: formControl?.touched && !formControl?.valid,
           disabled: formControl?.disabled || disabled
-        })
-      }
+        },
+        'rls-number-field'
+      )}
       rls-theme={rlsTheme}
     >
       {children && <label className="rls-box-field__label">{children}</label>}
+
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <RlsInputNumber
@@ -45,9 +47,12 @@ export function RlsNumberField({
           />
         </div>
       </div>
+
       {formControl?.touched && formControl?.error && (
-        <div className="rls-box-field__helper rls-box-field__helper--error">
-          <span>{formControl?.error.message}</span>
+        <div className="rls-box-field__error">
+          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+            {formControl.error.message}
+          </RlsErrorMessage>
         </div>
       )}
     </div>

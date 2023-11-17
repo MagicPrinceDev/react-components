@@ -1,9 +1,9 @@
 // Rolster Technology CheckBoxLabel Component
-// v1.0.2
+// v1.0.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 19/Sep/2023
+// Updated: 15/Nov/2023
 
 .rls-checkbox-label {
   --pvt-text-opacity: 1;
@@ -12,10 +12,8 @@
   --pvt-text-white-space: nowrap;
   --pvt-text-text-overflow: ellipsis;
 
-  position: relative;
-  float: left;
-  width: 100%;
   display: flex;
+  column-gap: var(--sizing-8);
 
   &--disabled {
     --pvt-text-opacity: 0.5;
@@ -31,12 +29,10 @@
   }
 
   &__component {
-    margin-right: var(--sizing-8);
     width: auto;
   }
 
   &__text {
-    float: left;
     max-width: calc(100% - var(--sizing-32));
     height: var(--pvt-text-height);
     line-height: var(--sizing-24);

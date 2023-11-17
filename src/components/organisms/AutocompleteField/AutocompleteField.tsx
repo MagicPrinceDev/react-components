@@ -6,10 +6,10 @@ import {
   useEffect,
   useState
 } from 'react';
-import { ReactControl, useListControl } from '../../../hooks';
+import { ReactHtmlControl, useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsIcon, RlsProgressBar } from '../../atoms';
+import { RlsErrorMessage, RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
 import './AutocompleteField.css';
@@ -20,7 +20,7 @@ const MAX_ELEMENTS = 6;
 interface AutocompleteField<T = unknown> extends RlsComponent {
   suggestions: ListFieldElement<T>[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?: ReactHtmlControl<T>;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
@@ -70,7 +70,7 @@ export function RlsAutocompleteField<T = unknown>({
     setVisible,
     navigationElement,
     navigationInput
-  } = useListControl(suggestions, true);
+  } = useListControl({ suggestions, formControl, ignoreHigher: true });
 
   const [changeInternal, setChangeInternal] = useState(false);
 
@@ -257,17 +257,19 @@ export function RlsAutocompleteField<T = unknown>({
   return (
     <div
       ref={boxContentRef}
-      className={
-        'rls-autocomplete-field rls-list-field ' +
-        renderClassStatus('rls-box-field', {
+      className={renderClassStatus(
+        'rls-box-field',
+        {
           disabled,
           active,
           selected: !!value
-        })
-      }
+        },
+        'rls-autocomplete-field rls-list-field'
+      )}
       rls-theme={rlsTheme}
     >
       {children && <label className="rls-box-field__label">{children}</label>}
+
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <label className="rls-list-field__control" onClick={onClickControl}>
@@ -291,6 +293,14 @@ export function RlsAutocompleteField<T = unknown>({
           </button>
         </div>
       </div>
+
+      {formControl?.touched && formControl?.error && (
+        <div className="rls-box-field__error">
+          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+            {formControl.error.message}
+          </RlsErrorMessage>
+        </div>
+      )}
 
       <div
         className={renderClassStatus('rls-list-field__suggestions', {
@@ -354,9 +364,9 @@ export function RlsAutocompleteField<T = unknown>({
                   <label className="label-bold truncate">
                     Selección no disponible
                   </label>
-                  <label className="caption-regular">
+                  <p className="caption-regular">
                     Lo sentimos, en el momento no hay elementos en el listado
-                  </label>
+                  </p>
                 </div>
               </li>
             )}
