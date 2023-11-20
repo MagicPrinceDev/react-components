@@ -5,10 +5,10 @@ import {
   useEffect,
   useState
 } from 'react';
-import { ReactHtmlControl, useListControl } from '../../../hooks';
+import { ReactControl, useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsErrorMessage, RlsIcon } from '../../atoms';
+import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
 import './SelectField.css';
@@ -17,7 +17,7 @@ interface SelectField<T = unknown> extends RlsComponent {
   suggestions: ListFieldElement<T>[];
   children?: any;
   disabled?: boolean;
-  formControl?: ReactHtmlControl<T>;
+  formControl?: ReactControl<HTMLElement, T>;
   onSelect?: (value: T) => void;
   onValue?: (value: T) => void;
   placeholder?: string;
@@ -199,9 +199,9 @@ export function RlsSelectField<T = unknown>({
 
       {formControl?.touched && formControl?.error && (
         <div className="rls-box-field__error">
-          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
             {formControl.error.message}
-          </RlsErrorMessage>
+          </RlsMessageIcon>
         </div>
       )}
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { ReactInputControl } from '../../../hooks';
+import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import {
   RlsButtonAction,
-  RlsErrorMessage,
+  RlsMessageIcon,
   RlsInputPassword
 } from '../../atoms';
 import { RlsComponent } from '../../definitions';
@@ -11,7 +11,7 @@ import './PasswordField.css';
 
 interface PasswordFieldProps extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactInputControl<string>;
+  formControl?: ReactControl<HTMLInputElement, string>;
   placeholder?: string;
 }
 
@@ -61,9 +61,9 @@ export function RlsPasswordField({
 
       {formControl?.touched && formControl?.error && (
         <div className="rls-box-field__error">
-          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
             {formControl.error.message}
-          </RlsErrorMessage>
+          </RlsMessageIcon>
         </div>
       )}
     </div>

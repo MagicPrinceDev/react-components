@@ -1,12 +1,12 @@
 import { HTMLInputTypeAttribute, useState } from 'react';
-import { ReactInputControl } from '../../../hooks';
+import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './Input.css';
 
 interface Input extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactInputControl;
+  formControl?: ReactControl<HTMLInputElement>;
   onValue?: (value: any) => void;
   placeholder?: string;
   type?: HTMLInputTypeAttribute;

@@ -24,7 +24,7 @@ function calculateDuration({ length }: string): number {
 
 interface SnackbarBasic {
   content?: ReactNode;
-  title?: string;
+  title?: ReactNode;
 }
 
 export interface SnackbarConfig extends SnackbarBasic {
@@ -62,8 +62,8 @@ export function RlsSnackbar({
       )}
 
       <div className="rls-snackbar__component">
-        {title && <label className="rls-snackbar__title">{title}</label>}
-        <div className="rls-snackbar__message">{content}</div>
+        {title && <div className="rls-snackbar__title">{title}</div>}
+        <div className="rls-snackbar__content">{content}</div>
       </div>
     </div>
   );
@@ -72,7 +72,7 @@ export function RlsSnackbar({
 export function useSnackbarService(): SnackbarService {
   const [config, setConfig] = useState<SnackbarConfig>({});
   const [duration, setDuration] = useState(4000);
-  const [timeoutId, setTimeoutId] = useState<any>();
+  const [timeoutId, setTimeoutId] = useState<number>();
   const [visible, setVisible] = useState(false);
 
   const rlsSnackbar = <RlsSnackbar {...config} visible={visible} />;

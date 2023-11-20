@@ -1,12 +1,12 @@
-import { ReactInputControl } from '../../../hooks';
+import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsErrorMessage, RlsInputText } from '../../atoms';
+import { RlsMessageIcon, RlsInputText } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './TextField.css';
 
 interface TextField extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactInputControl<string>;
+  formControl?: ReactControl<HTMLInputElement, string>;
   onValue?: (value: string) => void;
   placeholder?: string;
   value?: string;
@@ -50,9 +50,9 @@ export function RlsTextField({
 
       {formControl?.touched && formControl?.error && (
         <div className="rls-box-field__error">
-          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
             {formControl.error.message}
-          </RlsErrorMessage>
+          </RlsMessageIcon>
         </div>
       )}
     </div>

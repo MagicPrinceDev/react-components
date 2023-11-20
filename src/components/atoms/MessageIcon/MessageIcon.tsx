@@ -1,14 +1,14 @@
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
-import './ErrorMessage.css';
+import './MessageIcon.css';
 
-interface ErrorMessage extends RlsComponent {
+interface IconMessage extends RlsComponent {
   icon?: string;
 }
 
-export function RlsErrorMessage({ icon, children, rlsTheme }: ErrorMessage) {
+export function RlsMessageIcon({ icon, children, rlsTheme }: IconMessage) {
   return (
-    <div className="rls-error-message" rls-theme={rlsTheme}>
+    <div className="rls-message-icon" rls-theme={rlsTheme}>
       {icon && <RlsIcon value={icon} />}
       <span className="caption-regular truncate">{children}</span>
     </div>

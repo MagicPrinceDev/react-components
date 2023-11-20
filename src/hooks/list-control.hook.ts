@@ -8,7 +8,7 @@ import {
   useState
 } from 'react';
 import { ListFieldElement, ListFieldCollection } from '../models';
-import { ReactHtmlControl } from './types';
+import { ReactControl } from './types';
 
 type Elements = NodeListOf<HTMLLIElement> | undefined;
 
@@ -39,7 +39,7 @@ interface ListControl<T = unknown> {
 
 interface ListControlProps<T = unknown> {
   suggestions: ListFieldElement<T>[];
-  formControl?: ReactHtmlControl<T>;
+  formControl?: ReactControl<HTMLElement, T>;
   ignoreHigher?: boolean;
 }
 

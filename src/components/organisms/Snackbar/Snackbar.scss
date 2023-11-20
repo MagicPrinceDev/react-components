@@ -1,14 +1,14 @@
-
 // Rolster Technology Snackbar Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 12/Sep/2023
+// Updated: 17/Nov/2023
 
 .rls-snackbar {
   position: fixed;
   display: flex;
+  column-gap: var(--sizing-12);
   bottom: 0rem;
   left: var(--rls-snackbar-left);
   z-index: 32;
@@ -18,7 +18,7 @@
   padding: var(--sizing-12);
   box-sizing: border-box;
   border-radius: var(--sizing-8);
-  background: var(--color-rolster-100);
+  background: var(--background-theme-500);
   box-shadow: var(--shadow-bottom-light-4);
   border: var(--border-1-rolster-300);
   will-change: transform;
@@ -30,47 +30,46 @@
   }
 
   &__avatar {
-    background: var(--color-rolster-500);
-    width: var(--sizing-32);
-    height: var(--sizing-32);
+    --rls-icon-color: var(--color-light-500);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
+    background: var(--color-rolster-500);
+    width: var(--sizing-36);
+    height: var(--sizing-36);
     border-radius: var(--sizing-8);
 
-    .rls-icon {
-      color: var(--color-light-500);
-      margin: var(--sizing-4);
-    }
-
     & + .rls-snackbar__component {
-      width: calc(100% - var(--sizing-40));
-      margin-left: var(--sizing-12);
+      width: calc(100% - var(--sizing-36));
     }
   }
 
   &__component {
-    margin: auto 0rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--sizing-4);
   }
 
   &__title {
-    display: block;
-    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin-bottom: var(--sizing-4);
     color: var(--color-rolster-500);
     font-size: var(--body-font-size);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--body-letter-spacing);
   }
 
-  &__message {
-    display: block;
-    line-height: var(--sizing-20);
-    color: var(--color-theme-300);
-    font-size: var(--label-font-size);
-    font-weight: var(--font-weight-medium);
-    letter-spacing: var(--label-letter-spacing);
+  &__content {
+    p {
+      line-height: var(--sizing-20);
+      color: var(--color-theme-300);
+      font-size: var(--label-font-size);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--label-letter-spacing);
+    }
   }
 }
 

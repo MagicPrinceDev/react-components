@@ -1,13 +1,13 @@
-import { ReactInputControl } from '../../../hooks';
+import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsErrorMessage, RlsInputMoney } from '../../atoms';
+import { RlsMessageIcon, RlsInputMoney } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './MoneyField.css';
 
 interface MoneyField extends RlsComponent {
   decimals?: boolean;
   disabled?: boolean;
-  formControl?: ReactInputControl<number>;
+  formControl?: ReactControl<HTMLInputElement, number>;
   onValue?: (value: number) => void;
   placeholder?: string;
   symbol?: string;
@@ -56,9 +56,9 @@ export function RlsMoneyField({
 
       {formControl?.touched && formControl?.error && (
         <div className="rls-box-field__error">
-          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
             {formControl.error.message}
-          </RlsErrorMessage>
+          </RlsMessageIcon>
         </div>
       )}
     </div>

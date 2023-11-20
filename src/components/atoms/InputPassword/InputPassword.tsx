@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ReactInputControl } from '../../../hooks';
+import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './InputPassword.css';
@@ -8,7 +8,7 @@ type InputPasswordType = 'password' | 'text';
 
 interface InputPassword extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactInputControl<string>;
+  formControl?: ReactControl<HTMLInputElement, string>;
   onValue?: (value: string) => void;
   placeholder?: string;
   type?: InputPasswordType;

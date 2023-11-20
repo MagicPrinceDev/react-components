@@ -6,10 +6,10 @@ import {
   useEffect,
   useState
 } from 'react';
-import { ReactHtmlControl, useListControl } from '../../../hooks';
+import { ReactControl, useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsErrorMessage, RlsIcon, RlsProgressBar } from '../../atoms';
+import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
 import './AutocompleteField.css';
@@ -20,7 +20,8 @@ const MAX_ELEMENTS = 6;
 interface AutocompleteField<T = unknown> extends RlsComponent {
   suggestions: ListFieldElement<T>[];
   disabled?: boolean;
-  formControl?: ReactHtmlControl<T>;
+  formControl?: ReactControl<HTMLElement, T>;
+  hiddenIcon?: boolean;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
@@ -41,6 +42,7 @@ export function RlsAutocompleteField<T = unknown>({
   children,
   disabled,
   formControl,
+  hiddenIcon,
   onSearch,
   onSelect,
   onValue,
@@ -134,22 +136,16 @@ export function RlsAutocompleteField<T = unknown>({
   }
 
   function onClickAction(): void {
-    if (value) {
-      setVisible(false);
-      setValue('');
+    setVisible(false);
+    setValue('');
 
-      if (formControl) {
-        setChangeInternal(true);
-        formControl.setState(undefined);
-      }
+    if (formControl) {
+      setChangeInternal(true);
+      formControl.setState(undefined);
+    }
 
-      if (onValue) {
-        onValue(undefined);
-      }
-    } else {
-      setVisible(true);
-
-      setTimeout(() => inputRef?.current?.focus(), DURATION_ANIMATION);
+    if (onValue) {
+      onValue(undefined);
     }
   }
 
@@ -284,21 +280,23 @@ export function RlsAutocompleteField<T = unknown>({
             )}
           </label>
 
-          <button
-            className="rls-list-field__action"
-            disabled={disabled}
-            onClick={onClickAction}
-          >
-            <RlsIcon value={value ? 'trash-2' : 'list'} />
-          </button>
+          {!hiddenIcon && value && (
+            <button
+              className="rls-list-field__action"
+              disabled={disabled}
+              onClick={onClickAction}
+            >
+              <RlsIcon value="trash-2" />
+            </button>
+          )}
         </div>
       </div>
 
       {formControl?.touched && formControl?.error && (
         <div className="rls-box-field__error">
-          <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
             {formControl.error.message}
-          </RlsErrorMessage>
+          </RlsMessageIcon>
         </div>
       )}
 

@@ -1,8 +1,8 @@
 import { formatDate } from '@rolster/helpers-date';
 import { useEffect, useState } from 'react';
-import { ReactHtmlControl } from '../../../hooks';
+import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
-import { RlsErrorMessage, RlsIcon } from '../../atoms';
+import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsDatePicker } from '../DatePicker/DatePicker';
 import { RlsModal } from '../Modal/Modal';
@@ -11,7 +11,7 @@ import './DateField.css';
 interface DateField extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactHtmlControl<Date>;
+  formControl?: ReactControl<HTMLElement, Date>;
   maxDate?: Date;
   minDate?: Date;
   placeholder?: string;
@@ -83,9 +83,9 @@ export function RlsDateField({
 
         {formControl?.touched && formControl?.error && (
           <div className="rls-box-field__error">
-            <RlsErrorMessage icon="alert-triangle" rlsTheme="danger">
+            <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
               {formControl.error.message}
-            </RlsErrorMessage>
+            </RlsMessageIcon>
           </div>
         )}
       </div>
