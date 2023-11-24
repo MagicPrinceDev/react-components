@@ -1,4 +1,3 @@
-import { isDefined } from '@rolster/helpers-advanced';
 import {
   FormControlProps,
   FormState,
@@ -34,8 +33,8 @@ export function useReactControl<E extends HTMLElement, T = any>(
   const invalid = (() => !valid)();
 
   useEffect(() => {
-    if (isDefined(state)) {
-      setValue(state as T);
+    if (state !== null && state !== undefined) {
+      setValue(state);
     }
 
     subscribers.next(state);
