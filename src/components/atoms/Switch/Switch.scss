@@ -1,33 +1,25 @@
 // Rolster Technology Switch Component
-// v1.0.1
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/Mar/2018
-// Updated: 12/Sep/2023
+// Updated: 24/Nov/2023
 
 .rls-switch {
-  --pvt-component-background: var(--border-theme-300);
-  --pvt-component-left: calc(var(--sizing-2) + 1px);
+  --pvt-element-left: var(--sizing-2);
+  --pvt-element-background: var(--background-theme-500);
 
-  position: relative;
-  float: left;
-  outline: none;
-  box-sizing: border-box;
-  width: var(--sizing-40);
-  height: var(--sizing-24);
-  box-sizing: border-box;
-  border-radius: var(--sizing-12);
-  border: var(--border-1-theme-300);
+  max-width: var(--sizing-40);
 
   &:hover {
     cursor: pointer;
   }
 
   &--checked {
-    --pvt-component-background: var(--gradient-rolster-500);
-    --pvt-component-left: 1.125rem;
-
-    border: var(--border-1-rolster-500);
+    --pvt-element-background: var(--gradient-rolster-500);
+    --pvt-element-left: calc(
+      100% - var(--rls-switch-element-size) - var(--sizing-2)
+    );
   }
 
   &--disabled {
@@ -36,13 +28,30 @@
   }
 
   &__component {
-    position: absolute;
-    top: calc(var(--sizing-2) + 1px);
-    left: var(--pvt-component-left);
-    width: var(--sizing-16);
-    height: var(--sizing-16);
-    background: var(--pvt-component-background);
-    transition: left 160ms 0ms var(--standard-curve);
-    border-radius: var(--sizing-12);
+    position: relative;
+    width: 100%;
+    padding: var(--sizing-6) var(--sizing-2);
+    box-sizing: border-box;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0rem;
+      left: var(--pvt-element-left);
+      width: var(--rls-switch-element-size);
+      height: var(--rls-switch-element-size);
+      z-index: var(--z-index-2);
+      border-radius: 50%;
+      background: var(--pvt-element-background);
+      box-shadow: 0 0 0.375rem 0 rgba(37, 38, 65, 0.38);
+      transition: left 240ms var(--standard-curve);
+    }
+
+    &__element {
+      background: var(--background-theme-100);
+      width: 100%;
+      height: var(--rls-switch-bar-height);
+      border-radius: var(--rls-switch-bar-radius);
+    }
   }
 }

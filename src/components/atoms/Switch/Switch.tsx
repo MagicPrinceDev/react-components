@@ -21,7 +21,9 @@ export function RlsSwitch({ checked, disabled, onClick, rlsTheme }: Switch) {
       onClick={onClick}
       rls-theme={rlsTheme}
     >
-      <div className="rls-switch__component"></div>
+      <div className="rls-switch__component">
+        <div className="rls-switch__component__element"></div>
+      </div>
     </div>
   );
 }
