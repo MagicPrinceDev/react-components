@@ -1,5 +1,5 @@
+import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
-import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './InputPassword.css';

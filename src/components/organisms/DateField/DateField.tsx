@@ -1,6 +1,6 @@
 import { formatDate } from '@rolster/helpers-date';
+import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';

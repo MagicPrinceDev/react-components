@@ -1,5 +1,5 @@
+import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
-import { ReactControl } from '../../../hooks';
 import { RlsInput } from '../Input/Input';
 import './InputNumber.css';
 

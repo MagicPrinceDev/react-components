@@ -1,3 +1,4 @@
+import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
   KeyboardEventHandler,
@@ -5,7 +6,7 @@ import {
   useEffect,
   useState
 } from 'react';
-import { ReactControl, useListControl } from '../../../hooks';
+import { useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
@@ -172,7 +173,7 @@ export function RlsSelectField<T = unknown>({
       rls-theme={rlsTheme}
     >
       {children && <label className="rls-box-field__label">{children}</label>}
-      
+
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <input

@@ -1,4 +1,4 @@
-import { ReactInputControl } from '../../../hooks';
+import { ReactInputControl } from '@rolster/react-forms';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
 import { RlsInput } from '../Input/Input';
 import './SearchInput.css';

@@ -1,5 +1,5 @@
+import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsRadioButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';

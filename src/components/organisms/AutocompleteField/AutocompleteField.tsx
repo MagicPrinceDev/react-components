@@ -1,4 +1,5 @@
 import { hasPattern } from '@rolster/helpers-string';
+import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
   KeyboardEventHandler,
@@ -6,7 +7,7 @@ import {
   useEffect,
   useState
 } from 'react';
-import { ReactControl, useListControl } from '../../../hooks';
+import { useListControl } from '../../../hooks';
 import { ListFieldElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';

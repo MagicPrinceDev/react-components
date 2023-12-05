@@ -1,3 +1,4 @@
+import { ReactControl } from '@rolster/react-forms';
 import {
   Dispatch,
   KeyboardEvent,
@@ -8,7 +9,6 @@ import {
   useState
 } from 'react';
 import { ListFieldElement, ListFieldCollection } from '../models';
-import { ReactControl } from './types';
 
 type Elements = NodeListOf<HTMLLIElement> | undefined;
 

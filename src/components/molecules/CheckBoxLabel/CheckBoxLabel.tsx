@@ -1,6 +1,6 @@
+import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../utils/css';
-import { ReactControl } from '../../../hooks';
 import { RlsCheckBox } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './CheckBoxLabel.css';

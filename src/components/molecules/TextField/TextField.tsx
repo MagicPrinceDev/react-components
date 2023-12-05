@@ -1,4 +1,4 @@
-import { ReactControl } from '../../../hooks';
+import { ReactControl } from '@rolster/react-forms';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsInputText } from '../../atoms';
 import { RlsComponent } from '../../definitions';

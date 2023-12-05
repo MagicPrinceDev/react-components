@@ -2,17 +2,19 @@ import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import css from 'rollup-plugin-import-css';
 import resolve from '@rollup/plugin-node-resolve';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 const plugins = [
-  resolve(),
   commonjs(),
+  resolve(),
+  peerDepsExternal(),
+  css(),
   typescript({
     tsconfig: './tsconfig.json',
     declaration: true,
     declarationDir: 'dist',
     include: ['node_modules/@rolster/typescript-types/index.d.ts']
-  }),
-  css()
+  })
 ];
 
 const rollupTs = (file) => {
@@ -38,7 +40,6 @@ const rollupTs = (file) => {
       '@rolster/helpers-forms',
       '@rolster/helpers-string',
       '@rolster/validators',
-      'react',
       'rxjs',
       'uuid'
     ],

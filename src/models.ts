@@ -6,7 +6,7 @@ import {
   timeDifference
 } from '@rolster/helpers-date';
 
-const FORMAT_DESCRIPTION = 'dd/mm/aa';
+const FORMAT_DESCRIPTION = '{dd}/{mm}/{aa}';
 
 export interface ListFieldElement<T = unknown> {
   description: string;

@@ -3,9 +3,9 @@ import {
   normalizeMinTime,
   refactorDay
 } from '@rolster/helpers-date';
+import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { DateRange, WeekRangeState } from '../../../models';
-import { ReactControl } from '../../../hooks';
 import { createRangePicker } from '../../../utils/date-range-picker';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
