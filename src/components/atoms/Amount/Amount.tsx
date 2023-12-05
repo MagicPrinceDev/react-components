@@ -1,7 +1,7 @@
 import { currencyFormat } from '@rolster/helpers-advanced';
+import { RlsTheme } from '../../definitions';
 import { RlsTabularText } from '../TabularText/TabularText';
 import './Amount.css';
-import { RlsTheme } from '../../definitions';
 
 interface Amount {
   value: number;

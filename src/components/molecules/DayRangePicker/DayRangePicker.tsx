@@ -54,7 +54,7 @@ export function RlsDayRangePicker({
   return (
     <div className="rls-day-range-picker" rls-theme={rlsTheme}>
       <div className="rls-day-range-picker__header">
-        {DAY_LABELS.map((title, index) => (
+        {DAY_LABELS().map((title, index) => (
           <label key={index} className="rls-day-range-picker__label">
             {title}
           </label>

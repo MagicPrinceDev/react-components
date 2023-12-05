@@ -50,7 +50,7 @@ class Factory {
   public createMonth(value: number): MonthState {
     return {
       value,
-      label: MONTH_NAMES[value],
+      label: MONTH_NAMES()[value],
       disabled: this.overflowMonth(value),
       selected: value === this.value
     };

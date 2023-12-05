@@ -15,7 +15,7 @@ export function useReactControl<E extends HTMLElement, T = any>(
   const [value, setValue] = useState<T>(props.state as T);
   const [touched, setTouched] = useState<boolean>(false);
   const [dirty, setDirty] = useState<boolean>(false);
-  const [active, setActive] = useState<boolean>(false);
+  const [focused, setFocused] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [initialValue] = useState<FormState<T>>(props.state);
   const [validators, setValidators] = useState(props.validators);
@@ -30,7 +30,6 @@ export function useReactControl<E extends HTMLElement, T = any>(
 
   const error = (() => errors[0])();
   const valid = (() => errors.length === 0)();
-  const invalid = (() => !valid)();
 
   useEffect(() => {
     if (state !== null && state !== undefined) {
@@ -39,6 +38,30 @@ export function useReactControl<E extends HTMLElement, T = any>(
 
     subscribers.next(state);
   }, [state]);
+
+  function focus(): void {
+    setFocused(true);
+  }
+
+  function blur(): void {
+    setFocused(false);
+  }
+
+  function disable(): void {
+    setDisabled(true);
+  }
+
+  function enable(): void {
+    setDisabled(false);
+  }
+
+  function touch(): void {
+    setTouched(true);
+  }
+
+  function untouch(): void {
+    setTouched(false);
+  }
 
   function setState(state?: FormState<T>): void {
     setDirty(true);
@@ -56,26 +79,30 @@ export function useReactControl<E extends HTMLElement, T = any>(
   }
 
   return {
-    active,
-    dirty,
-    disabled,
     elementRef,
-    enabled: !disabled,
     error,
     errors,
-    invalid,
+    focused,
+    unfocused: !focused,
+    dirty,
     pristine: !dirty,
-    reset,
-    setActive,
-    setDisabled,
-    setValidators,
-    setState,
-    setTouched,
-    state,
-    subscribe,
+    disabled,
+    enabled: !disabled,
+    valid,
+    invalid: !valid,
     touched,
     untouched: !touched,
-    valid,
+    reset,
+    focus,
+    blur,
+    disable,
+    enable,
+    touch,
+    untouch,
+    setState,
+    setValidators,
+    state,
+    subscribe,
     value
   };
 }

@@ -1,7 +1,7 @@
 import { FormGroupProps } from '@rolster/helpers-forms';
 import {
   controlsAllChecked,
-  controlsSomeChecked,
+  controlsPartialChecked,
   controlsToState,
   controlsToValue,
   groupIsValid
@@ -24,9 +24,9 @@ export function useFormGroup<T extends ReactControls>(
     errors.length === 0 && controlsAllChecked(controls, 'valid'))();
   const invalid = (() => !valid)();
 
-  const touched = (() => controlsSomeChecked(controls, 'touched'))();
+  const touched = (() => controlsPartialChecked(controls, 'touched'))();
   const toucheds = (() => controlsAllChecked(controls, 'touched'))();
-  const dirty = (() => controlsSomeChecked(controls, 'dirty'))();
+  const dirty = (() => controlsPartialChecked(controls, 'dirty'))();
   const dirties = (() => controlsAllChecked(controls, 'dirty'))();
 
   const state = (() => controlsToState(controls))();

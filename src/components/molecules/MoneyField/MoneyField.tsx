@@ -30,7 +30,7 @@ export function RlsMoneyField({
       className={renderClassStatus(
         'rls-box-field',
         {
-          active: formControl?.active,
+          focused: formControl?.focused,
           error: formControl?.touched && !formControl?.valid,
           disabled: formControl?.disabled || disabled
         },

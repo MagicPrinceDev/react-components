@@ -1,3 +1,4 @@
+import { ValidatorError, ValidatorFn } from '@rolster/validators';
 import {
   ArrayStateGroup,
   ArrayValueGroup,
@@ -5,20 +6,18 @@ import {
   FormArrayGroupProps,
   FormArrayProps,
   FormState,
-  ValidatorError,
-  ValidatorFn,
   ValidatorGroupFn
 } from '@rolster/helpers-forms';
 import {
   arrayIsValid,
   controlIsValid,
   controlsAllChecked,
-  controlsSomeChecked,
+  controlsPartialChecked,
   controlsToState,
   controlsToValue,
   groupAllChecked,
   groupIsValid,
-  groupSomeChecked
+  groupPartialChecked
 } from '@rolster/helpers-forms/helpers';
 import { LegacyRef, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
@@ -30,7 +29,7 @@ import {
 } from './types';
 
 interface ReactFormArrayControlProps<T = any> extends FormArrayControlProps<T> {
-  active?: boolean;
+  focused?: boolean;
   dirty?: boolean;
   disabled?: boolean;
   touched?: boolean;
@@ -54,17 +53,18 @@ class RolsterArrayControl<
 > implements AbstractRolsterArrayControl<T, C, E>
 {
   public readonly uuid: string;
-  public readonly active: boolean;
+  public readonly focused: boolean;
+  public readonly unfocused: boolean;
   public readonly disabled: boolean;
+  public readonly enabled: boolean;
   public readonly touched: boolean;
   public readonly untouched: boolean;
   public readonly dirty: boolean;
   public readonly pristine: boolean;
-  public readonly invalid: boolean;
-  public readonly enabled: boolean;
   public readonly valid: boolean;
+  public readonly invalid: boolean;
   public readonly value: T;
-  public readonly errors: ValidatorError<T>[];
+  public readonly errors: ValidatorError<any>[];
   public readonly error?: ValidatorError<T> | undefined;
   public readonly state?: FormState<T>;
   public readonly validators?: ValidatorFn<T>[] | undefined;
@@ -73,10 +73,12 @@ class RolsterArrayControl<
   elementRef?: LegacyRef<E> | undefined;
 
   constructor(props: ReactFormArrayControlProps<T>) {
-    const { uuid, active, dirty, disabled, state, touched, validators } = props;
+    const { uuid, focused, dirty, disabled, state, touched, validators } =
+      props;
 
     this.uuid = uuid;
-    this.active = active || false;
+    this.focused = focused || false;
+    this.unfocused = !this.focused;
     this.touched = touched || false;
     this.untouched = !this.touched;
     this.dirty = dirty || false;
@@ -95,21 +97,39 @@ class RolsterArrayControl<
     this.value = state as T;
   }
 
-  public setActive(active: boolean): void {
-    if (active !== this.active) {
-      this.parentGroup?.parentArray?.update(this, { active });
+  public focus(): void {
+    if (!this.focused) {
+      this.parentGroup?.parentArray?.update(this, { focused: true });
     }
   }
 
-  public setTouched(touched: boolean): void {
-    if (touched !== this.touched) {
-      this.parentGroup?.parentArray?.update(this, { touched });
+  public blur(): void {
+    if (this.focused) {
+      this.parentGroup?.parentArray?.update(this, { focused: false });
     }
   }
 
-  public setDisabled(disabled: boolean): void {
-    if (disabled !== this.disabled) {
-      this.parentGroup?.parentArray?.update(this, { disabled });
+  public touch(): void {
+    if (!this.touched) {
+      this.parentGroup?.parentArray?.update(this, { touched: true });
+    }
+  }
+
+  public untouch(): void {
+    if (this.touched) {
+      this.parentGroup?.parentArray?.update(this, { touched: false });
+    }
+  }
+
+  public disable(): void {
+    if (!this.disabled) {
+      this.parentGroup?.parentArray?.update(this, { disabled: true });
+    }
+  }
+
+  public enable(): void {
+    if (this.disabled) {
+      this.parentGroup?.parentArray?.update(this, { disabled: false });
     }
   }
 
@@ -175,11 +195,11 @@ class RolsterArrayGroup<
       this.errors.length === 0 && controlsAllChecked(controls, 'valid'))();
     this.invalid = (() => !this.valid)();
 
-    this.touched = (() => controlsSomeChecked(controls, 'touched'))();
+    this.touched = (() => controlsPartialChecked(controls, 'touched'))();
     this.untouched = !this.touched;
     this.toucheds = (() => controlsAllChecked(controls, 'touched'))();
     this.untoucheds = !this.toucheds;
-    this.dirty = (() => controlsSomeChecked(controls, 'dirty'))();
+    this.dirty = (() => controlsPartialChecked(controls, 'dirty'))();
     this.pristine = !this.dirty;
     this.dirties = (() => controlsAllChecked(controls, 'dirty'))();
     this.pristines = !this.dirties;
@@ -278,9 +298,9 @@ export function useFormArray<T extends ReactArrayControls, R = any>(
     errors.length === 0 && groupAllChecked(groups, 'valid'))();
   const invalid = (() => !valid)();
 
-  const touched = (() => groupSomeChecked(groups, 'touched'))();
+  const touched = (() => groupPartialChecked(groups, 'touched'))();
   const toucheds = (() => groupAllChecked(groups, 'touched'))();
-  const dirty = (() => groupSomeChecked(groups, 'dirty'))();
+  const dirty = (() => groupPartialChecked(groups, 'dirty'))();
   const dirties = (() => groupAllChecked(groups, 'dirty'))();
 
   function push(group: AbstractRolsterArrayGroup<T, R>): void {

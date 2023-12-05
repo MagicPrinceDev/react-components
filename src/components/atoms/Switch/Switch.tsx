@@ -23,6 +23,7 @@ export function RlsSwitch({ checked, disabled, onClick, rlsTheme }: Switch) {
     >
       <div className="rls-switch__component">
         <div className="rls-switch__component__element"></div>
+        <div className="rls-switch__component__bar"></div>
       </div>
     </div>
   );

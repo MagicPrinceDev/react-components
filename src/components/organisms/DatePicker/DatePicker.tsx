@@ -19,7 +19,7 @@ import {
 } from '../../molecules';
 import './DatePicker.css';
 
-const FORMAT_DESCRIPTION = 'dw, mx dd de aa';
+const FORMAT_DESCRIPTION = '{dw}, {mx} {dd} de {aa}';
 
 interface DatePicker extends RlsComponent {
   automatic?: boolean;

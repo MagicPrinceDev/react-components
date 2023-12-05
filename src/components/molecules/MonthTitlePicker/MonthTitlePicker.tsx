@@ -33,7 +33,7 @@ export function RlsMonthTitlePicker({
   const [limitMinMonth, setLimitMinMonth] = useState(false);
   const [limitMaxMonth, setLimitMaxMonth] = useState(false);
 
-  const monthName = MONTH_NAMES[month || 0];
+  const monthName = MONTH_NAMES()[month || 0];
 
   useEffect(() => {
     if (typeof month === 'number' && date) {

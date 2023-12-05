@@ -34,7 +34,7 @@ export function RlsDateField({
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    setDescription(value ? formatDate(value, 'dd/mx/aa') : '');
+    setDescription(value ? formatDate(value, '{dd}/{mx}/{aa}') : '');
   }, [value]);
 
   function onClickInput(): void {
@@ -47,7 +47,7 @@ export function RlsDateField({
       setValue(undefined);
 
       if (formControl && !formControl.touched) {
-        formControl.setTouched(true);
+        formControl.touch();
       }
     } else {
       setShow(true);
@@ -105,7 +105,7 @@ export function RlsDateField({
             setShow(false);
 
             if (formControl && !formControl.touched) {
-              formControl.setTouched(true);
+              formControl.touch();
             }
           }}
         />

@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { ReactControl } from '../../../hooks';
 import { renderClassStatus } from '../../../utils/css';
-import {
-  RlsButtonAction,
-  RlsMessageIcon,
-  RlsInputPassword
-} from '../../atoms';
+import { RlsButtonAction, RlsMessageIcon, RlsInputPassword } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './PasswordField.css';
 
@@ -33,7 +29,7 @@ export function RlsPasswordField({
       className={renderClassStatus(
         ' rls-box-field',
         {
-          active: formControl?.active,
+          focused: formControl?.focused,
           error: formControl?.touched && !formControl?.valid,
           disabled: formControl?.disabled || disabled
         },

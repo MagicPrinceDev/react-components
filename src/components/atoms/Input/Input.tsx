@@ -22,7 +22,7 @@ export function RlsInput({
   type,
   value
 }: Input) {
-  const [active, setActive] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   function onChange(event: any): void {
     switch (type) {
@@ -44,23 +44,23 @@ export function RlsInput({
   }
 
   function onFocus(): void {
-    formControl?.setActive(true);
-    setActive(true);
+    formControl?.focus();
+    setFocused(true);
   }
 
   function onBlur(): void {
     if (formControl && !formControl.touched) {
-      formControl.setTouched(true);
+      formControl.touch();
     }
 
-    formControl?.setActive(false);
-    setActive(false);
+    formControl?.blur();
+    setFocused(false);
   }
 
   return (
     <div
       className={renderClassStatus('rls-input', {
-        active: formControl?.active || active,
+        focused: formControl?.focused || focused,
         disabled: formControl?.disabled || disabled
       })}
     >

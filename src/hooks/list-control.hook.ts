@@ -82,7 +82,7 @@ export function useListControl<T = unknown>({
     }
 
     if (!visible && opened && formControl && !formControl.touched) {
-      formControl.setTouched(true);
+      formControl.touch();
     }
 
     setLocationList();

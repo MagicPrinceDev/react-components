@@ -21,7 +21,7 @@ export function RlsInputPassword({
   placeholder,
   type
 }: InputPassword) {
-  const [active, setActive] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   function onChange(event: any): void {
     formControl?.setState(event.target.value);
@@ -32,23 +32,23 @@ export function RlsInputPassword({
   }
 
   function onFocus() {
-    formControl?.setActive(true);
-    setActive(true);
+    formControl?.focus();
+    setFocused(true);
   }
 
   function onBlur() {
     if (formControl && !formControl.touched) {
-      formControl.setTouched(true);
+      formControl.touch();
     }
 
-    formControl?.setActive(false);
-    setActive(false);
+    formControl?.blur();
+    setFocused(false);
   }
 
   return (
     <div
       className={renderClassStatus('rls-input-password', {
-        active: formControl?.active || active,
+        focused: formControl?.focused || focused,
         disabled
       })}
     >

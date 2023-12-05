@@ -54,7 +54,7 @@ export function RlsDayPicker({
   return (
     <div className="rls-day-picker" rls-theme={rlsTheme}>
       <div className="rls-day-picker__header">
-        {DAY_LABELS.map((title, index) => (
+        {DAY_LABELS().map((title, index) => (
           <label key={index} className="rls-day-picker__label">
             {title}
           </label>
