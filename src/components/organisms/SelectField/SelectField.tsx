@@ -1,173 +1,69 @@
 import { ReactControl } from '@rolster/react-forms';
-import {
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  useEffect,
-  useState
-} from 'react';
-import { useListControl } from '../../../hooks';
-import { ListElement } from '../../../models';
+import { ReactNode } from 'react';
+import reactI18n from '../../../i18n';
+import { AbstractListElement as Element, ListElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
+import { useSelectField } from './select-field.hook';
 import './SelectField.css';
 
-interface SelectField<T = unknown> extends RlsComponent {
-  suggestions: ListElement<T>[];
-  children?: any;
+interface SelectFieldProps<T = unknown, E extends Element<T> = Element<T>>
+  extends RlsComponent {
+  suggestions: E[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T>;
-  onSelect?: (value: T) => void;
-  onValue?: (value: T) => void;
   placeholder?: string;
+  onSelect?: (value: T) => void;
+  onValue?: (value?: T) => void;
 }
 
-export function RlsSelectField<T = unknown>({
+interface SelectFieldTemplateProps<
+  T = unknown,
+  E extends Element<T> = Element<T>
+> extends SelectFieldProps<T, E> {
+  render: (element: E) => ReactNode;
+}
+
+export function RlsSelectFieldTemplate<
+  T = unknown,
+  E extends Element<T> = Element<T>
+>({
   suggestions,
   children,
   disabled,
   formControl,
+  placeholder,
+  rlsTheme,
   onSelect,
   onValue,
-  placeholder,
-  rlsTheme
-}: SelectField<T>) {
+  render
+}: SelectFieldTemplateProps<T, E>) {
   const {
-    boxContentRef,
-    collection,
-    focused,
-    higher,
-    inputRef,
-    listRef,
-    value,
-    visible,
-    setFocused,
-    setValue,
-    setVisible,
-    navigationElement,
-    navigationInput
-  } = useListControl({ suggestions, formControl });
-
-  const [changeInternal, setChangeInternal] = useState(false);
-
-  useEffect(() => {
-    if (!changeInternal) {
-      redefineDescription();
-    }
-
-    setChangeInternal(false);
-  }, [formControl?.state]);
-
-  useEffect(() => {
-    redefineDescription();
-  }, [collection]);
-
-  function redefineDescription(): void {
-    const element =
-      formControl?.state && collection.find(formControl?.state);
-
-    setValue(element?.description || '');
-  }
-
-  function onFocusInput(): void {
-    setFocused(true);
-  }
-
-  function onBlurInput(): void {
-    setFocused(false);
-  }
-
-  function onClickInput(): void {
-    setVisible(true);
-  }
-
-  function onKeydownInput(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'Space':
-        setVisible(true);
-        break;
-
-      case 'Enter':
-        setVisible(true);
-        break;
-
-      case 'Escape':
-        setVisible(false);
-        break;
-
-      case 'Tab':
-        setVisible(false);
-        break;
-
-      default:
-        navigationInput(event);
-        break;
-    }
-  }
-
-  function onClickAction(): void {
-    const newVisible = !visible;
-
-    setVisible(newVisible);
-
-    if (newVisible) {
-      inputRef?.current?.focus();
-    }
-  }
-
-  function onClickBackdrop(): void {
-    setVisible(false);
-  }
-
-  function onClickItem(element: ListElement<T>): MouseEventHandler {
-    return () => {
-      onChange(element);
-    };
-  }
-
-  function onKeydownItem(element: ListElement<T>): KeyboardEventHandler {
-    return (event) => {
-      switch (event.code) {
-        case 'Enter':
-          onChange(element);
-          break;
-
-        default:
-          navigationElement(event);
-          break;
-      }
-    };
-  }
-
-  function onChange({ description, value }: ListElement<T>): void {
-    inputRef?.current?.focus();
-
-    setVisible(false);
-
-    if (onSelect) {
-      onSelect(value);
-    } else {
-      if (formControl) {
-        setChangeInternal(true);
-        formControl.setState(value);
-      }
-
-      setValue(description);
-    }
-
-    if (onValue) {
-      onValue(value);
-    }
-  }
+    listControl,
+    onBlurInput,
+    onClickAction,
+    onClickBackdrop,
+    onClickElement,
+    onClickInput,
+    onFocusInput,
+    onKeydownElement,
+    onKeydownInput
+  } = useSelectField({
+    suggestions,
+    disabled,
+    formControl,
+    onSelect,
+    onValue
+  });
 
   return (
     <div
-      ref={boxContentRef}
+      ref={listControl.boxContentRef}
       className={renderClassStatus(
         'rls-box-field',
-        { active: focused, disabled },
+        { focused: listControl.focused, disabled },
         'rls-select-field rls-list-field'
       )}
       rls-theme={rlsTheme}
@@ -177,19 +73,21 @@ export function RlsSelectField<T = unknown>({
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <input
-            ref={inputRef}
+            ref={listControl.inputRef}
             className="rls-list-field__control"
             readOnly={true}
             disabled={disabled}
             placeholder={placeholder}
-            value={value}
+            value={listControl.value}
             onFocus={onFocusInput}
             onBlur={onBlurInput}
             onClick={onClickInput}
             onKeyDown={onKeydownInput}
           />
           <button
-            className={renderClassStatus('rls-list-field__action', { visible })}
+            className={renderClassStatus('rls-list-field__action', {
+              visible: listControl.visible
+            })}
             disabled={disabled}
             onClick={onClickAction}
           >
@@ -208,28 +106,22 @@ export function RlsSelectField<T = unknown>({
 
       <div
         className={renderClassStatus('rls-list-field__suggestions', {
-          visible,
-          hide: !visible,
-          higher
+          visible: listControl.visible,
+          hide: !listControl.visible,
+          higher: listControl.higher
         })}
       >
         <div className="rls-list-field__suggestions__body">
-          <ul ref={listRef} className="rls-list-field__ul">
+          <ul ref={listControl.listRef} className="rls-list-field__ul">
             {suggestions.map((element, index) => (
               <li
                 key={index}
                 className="rls-list-field__element"
                 tabIndex={-1}
-                onClick={onClickItem(element)}
-                onKeyDown={onKeydownItem(element)}
+                onClick={onClickElement(element)}
+                onKeyDown={onKeydownElement(element)}
               >
-                <RlsBallot
-                  subtitle={element.subtitle}
-                  img={element.img}
-                  initials={element.initials}
-                >
-                  {element.title}
-                </RlsBallot>
+                {render(element)}
               </li>
             ))}
 
@@ -237,10 +129,10 @@ export function RlsSelectField<T = unknown>({
               <li className="rls-list-field__empty">
                 <div className="rls-list-field__empty__description">
                   <label className="label-bold truncate">
-                    Selección no disponible
+                    {reactI18n('listEmptyTitle')}
                   </label>
                   <p className="caption-regular">
-                    Lo sentimos, en el momento no hay elementos en el listado
+                    {reactI18n('listEmptyDescription')}
                   </p>
                 </div>
               </li>
@@ -254,5 +146,24 @@ export function RlsSelectField<T = unknown>({
         ></div>
       </div>
     </div>
+  );
+}
+
+export function RlsSelectField<T = unknown>(
+  props: SelectFieldProps<T, ListElement<T>>
+) {
+  return (
+    <RlsSelectFieldTemplate
+      {...props}
+      render={(element) => (
+        <RlsBallot
+          subtitle={element.subtitle}
+          img={element.img}
+          initials={element.initials}
+        >
+          {element.title}
+        </RlsBallot>
+      )}
+    />
   );
 }

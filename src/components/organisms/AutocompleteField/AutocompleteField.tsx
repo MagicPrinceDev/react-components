@@ -2,20 +2,18 @@ import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
 import reactI18n from '../../../i18n';
 import {
-  AbstractAutocompleteElement,
+  AbstractAutocompleteElement as Element,
   AutocompleteElement
 } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
-import { useAutocomplete } from './autocomplete-field.hook';
+import { useAutocompleteField } from './autocomplete-field.hook';
 import './AutocompleteField.css';
 
-interface AutocompleteFieldProps<
-  T = unknown,
-  E extends AbstractAutocompleteElement<T> = AbstractAutocompleteElement<T>
-> extends RlsComponent {
+interface AutocompleteFieldProps<T = unknown, E extends Element<T> = Element<T>>
+  extends RlsComponent {
   suggestions: E[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T>;
@@ -29,14 +27,14 @@ interface AutocompleteFieldProps<
 
 interface AutocompleteFieldTemplateProps<
   T = unknown,
-  E extends AbstractAutocompleteElement<T> = AbstractAutocompleteElement<T>
+  E extends Element<T> = Element<T>
 > extends AutocompleteFieldProps<T, E> {
   render: (element: E) => ReactNode;
 }
 
 export function RlsAutocompleteFieldTemplate<
   T = unknown,
-  E extends AbstractAutocompleteElement<T> = AbstractAutocompleteElement<T>
+  E extends Element<T> = Element<T>
 >({
   suggestions,
   children,
@@ -64,7 +62,7 @@ export function RlsAutocompleteFieldTemplate<
     onKeydownElement,
     onKeydownInput,
     setPattern
-  } = useAutocomplete({
+  } = useAutocompleteField({
     suggestions,
     disabled,
     formControl,

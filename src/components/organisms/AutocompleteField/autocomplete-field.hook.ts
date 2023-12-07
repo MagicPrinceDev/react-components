@@ -47,7 +47,7 @@ interface AutocompleteProps<T = unknown, E extends Element<T> = Element<T>> {
   onValue?: (value?: T) => void;
 }
 
-export function useAutocomplete<
+export function useAutocompleteField<
   T = unknown,
   E extends Element<T> = Element<T>
 >({
