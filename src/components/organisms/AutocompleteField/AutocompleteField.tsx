@@ -136,6 +136,7 @@ export function RlsAutocompleteFieldTemplate<
                 ref={listControl.inputRef}
                 className="rls-list-field__ul__control"
                 type="text"
+                placeholder={reactI18n('listInputPlaceholder')}
                 value={pattern}
                 onChange={({ target: { value } }) => {
                   setPattern(value);
@@ -168,7 +169,7 @@ export function RlsAutocompleteFieldTemplate<
                 onClick={onClickElement(element)}
                 onKeyDown={onKeydownElement(element)}
               >
-                {render(element as E)}
+                {render(element)}
               </li>
             ))}
 
@@ -199,17 +200,18 @@ export function RlsAutocompleteFieldTemplate<
 export function RlsAutocompleteField<T = unknown>(
   props: AutocompleteFieldProps<T, AutocompleteElement<T>>
 ) {
-  function render(element: AutocompleteElement<T>): ReactNode {
-    return (
-      <RlsBallot
-        subtitle={element.subtitle}
-        img={element.img}
-        initials={element.initials}
-      >
-        {element.title}
-      </RlsBallot>
-    );
-  }
-
-  return <RlsAutocompleteFieldTemplate {...props} render={render} />;
+  return (
+    <RlsAutocompleteFieldTemplate
+      {...props}
+      render={(element) => (
+        <RlsBallot
+          subtitle={element.subtitle}
+          img={element.img}
+          initials={element.initials}
+        >
+          {element.title}
+        </RlsBallot>
+      )}
+    />
+  );
 }

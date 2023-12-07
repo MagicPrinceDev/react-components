@@ -13,47 +13,53 @@ import { ListControl, useListControl } from '../../../hooks';
 const DURATION_ANIMATION = 240;
 const MAX_ELEMENTS = 6;
 
-interface Store<T> {
-  coincidences?: Element<T>[];
+interface Store<T, E extends Element<T> = Element<T>> {
+  coincidences?: E[];
   pattern: string;
-  previous: Store<T> | null;
+  previous: Store<T, E> | null;
 }
 
-type StoreNulleable<T> = Store<T> | null;
+type StoreNulleable<T, E extends Element<T> = Element<T>> = Store<T, E> | null;
 
-export interface AutocompleteControl<T = unknown> {
-  coincidences: Element<T>[];
+export interface AutocompleteControl<
+  T = unknown,
+  E extends Element<T> = Element<T>
+> {
+  coincidences: E[];
   listControl: ListControl<T>;
   pattern: string;
   onBlurInput: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
   onClickControl: () => void;
-  onClickElement: (element: Element<T>) => MouseEventHandler;
+  onClickElement: (element: E) => MouseEventHandler;
   onFocusInput: () => void;
-  onKeydownElement: (element: Element<T>) => KeyboardEventHandler;
+  onKeydownElement: (element: E) => KeyboardEventHandler;
   onKeydownInput: (event: KeyboardEvent) => void;
   setPattern: (value: string) => void;
 }
 
-interface AutocompleteProps<T = unknown> {
-  suggestions: Element<T>[];
+interface AutocompleteProps<T = unknown, E extends Element<T> = Element<T>> {
+  suggestions: E[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T>;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
 }
 
-export function useAutocomplete<T = unknown>({
+export function useAutocomplete<
+  T = unknown,
+  E extends Element<T> = Element<T>
+>({
   suggestions,
   disabled,
   formControl,
   onSelect,
   onValue
-}: AutocompleteProps<T>): AutocompleteControl<T> {
+}: AutocompleteProps<T, E>): AutocompleteControl<T, E> {
   const [pattern, setPattern] = useState('');
-  const [coincidences, setCoincidences] = useState<Element<T>[]>([]);
-  const [store, setStore] = useState<Store<T>>({
+  const [coincidences, setCoincidences] = useState<E[]>([]);
+  const [store, setStore] = useState<Store<T, E>>({
     pattern: '',
     coincidences: [],
     previous: null
@@ -215,12 +221,12 @@ export function useAutocomplete<T = unknown>({
     }
   }
 
-  function searchForPattern(value: string): StoreNulleable<T> {
+  function searchForPattern(value: string): StoreNulleable<T, E> {
     if (!store.pattern) {
       return null;
     }
 
-    let newStore: StoreNulleable<T> = store;
+    let newStore: StoreNulleable<T, E> = store;
     let search = false;
 
     while (!search && newStore) {
@@ -234,7 +240,7 @@ export function useAutocomplete<T = unknown>({
     return newStore || rebootStore();
   }
 
-  function rebootStore(): Store<T> {
+  function rebootStore(): Store<T, E> {
     const store = createStoreEmpty();
 
     setStore(store);
@@ -242,7 +248,7 @@ export function useAutocomplete<T = unknown>({
     return store;
   }
 
-  function createStoreEmpty(): Store<T> {
+  function createStoreEmpty(): Store<T, E> {
     return {
       coincidences: undefined,
       pattern: '',
