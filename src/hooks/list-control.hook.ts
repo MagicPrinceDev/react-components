@@ -8,7 +8,7 @@ import {
   useRef,
   useState
 } from 'react';
-import { ListFieldElement, ListFieldCollection } from '../models';
+import { AbstractListElement, ListCollection } from '../models';
 
 type Elements = NodeListOf<HTMLLIElement> | undefined;
 
@@ -21,43 +21,43 @@ const BASE_SIZE_PX = 16;
 const ELEMENT_SIZE_PX = BASE_SIZE_PX * ELEMENT_SIZE_REM;
 const MAZ_LIST_SIZE_PX = BASE_SIZE_PX * LIST_SIZE_REM;
 
-interface ListControl<T = unknown> {
-  active: boolean;
+export interface ListControl<T = unknown> {
   boxContentRef: RefObject<HTMLDivElement>;
-  collection: ListFieldCollection<T>;
+  collection: ListCollection<T>;
+  focused: boolean;
   higher: boolean;
   inputRef: RefObject<HTMLInputElement>;
   listRef: RefObject<HTMLUListElement>;
-  navigationElement: (event: KeyboardEvent) => void;
-  navigationInput: (event: KeyboardEvent) => void;
-  setActive: Dispatch<SetStateAction<boolean>>;
-  setValue: Dispatch<SetStateAction<string>>;
-  setVisible: Dispatch<SetStateAction<boolean>>;
   value: string;
   visible: boolean;
+  navigationElement: (event: KeyboardEvent) => void;
+  navigationInput: (event: KeyboardEvent) => void;
+  setFocused: Dispatch<SetStateAction<boolean>>;
+  setValue: Dispatch<SetStateAction<string>>;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 interface ListControlProps<T = unknown> {
-  suggestions: ListFieldElement<T>[];
+  suggestions: AbstractListElement<T>[];
   formControl?: ReactControl<HTMLElement, T>;
-  ignoreHigher?: boolean;
+  withHigher?: boolean;
 }
 
 export function useListControl<T = unknown>({
   suggestions,
   formControl,
-  ignoreHigher = false
-}: ListControlProps<T>): ListControl {
+  withHigher = false
+}: ListControlProps<T>): ListControl<T> {
   const boxContentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [collection, setCollection] = useState(new ListFieldCollection([]));
-  const [active, setActive] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [opened, setOpened] = useState(false);
+  const [collection, setCollection] = useState(new ListCollection<T>([]));
   const [value, setValue] = useState('');
+  const [opened, setOpened] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [higher, setHigher] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   const [positionElement, setPositionElement] = useState(0);
   const [listElements, setListElements] = useState<Elements>(undefined);
@@ -89,7 +89,7 @@ export function useListControl<T = unknown>({
   }, [visible]);
 
   useEffect(() => {
-    setCollection(new ListFieldCollection(suggestions));
+    setCollection(new ListCollection(suggestions));
   }, [suggestions]);
 
   function setLocationList(): void {
@@ -112,7 +112,7 @@ export function useListControl<T = unknown>({
         break;
 
       case 'ArrowDown':
-        if (visible && (ignoreHigher || !higher)) {
+        if (visible && (withHigher || !higher)) {
           navigationInputDown();
         }
         break;
@@ -182,7 +182,7 @@ export function useListControl<T = unknown>({
       setPositionElement(newPosition);
 
       listElements?.item(newPosition).focus();
-    } else if (ignoreHigher || !higher) {
+    } else if (withHigher || !higher) {
       inputRef?.current?.focus();
     }
   }
@@ -195,24 +195,24 @@ export function useListControl<T = unknown>({
       setPositionElement(newPosition);
 
       listElements?.item(newPosition).focus();
-    } else if (higher && !ignoreHigher) {
+    } else if (higher && !withHigher) {
       inputRef?.current?.focus();
     }
   }
 
   return {
-    active,
     boxContentRef,
     collection,
+    focused,
     higher,
     inputRef,
     listRef,
+    value,
+    visible,
     navigationElement,
     navigationInput,
-    setActive,
+    setFocused,
     setValue,
-    setVisible,
-    value,
-    visible
+    setVisible
   };
 }

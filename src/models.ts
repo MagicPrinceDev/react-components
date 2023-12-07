@@ -6,27 +6,41 @@ import {
   timeDifference
 } from '@rolster/helpers-date';
 
-const FORMAT_DESCRIPTION = '{dd}/{mm}/{aa}';
+const DATE_FORMAT = '{dd}/{mm}/{aa}';
 
-export interface ListFieldElement<T = unknown> {
+export interface AbstractListElement<T = unknown> {
   description: string;
-  title: string;
   value: T;
+  compareTo(value: T): boolean;
+}
+
+export interface AbstractAutocompleteElement<T = unknown>
+  extends AbstractListElement<T> {
+  hasCoincidence(pattern: string): boolean;
+}
+
+export interface ListElement<T = unknown> extends AbstractListElement<T> {
+  title: string;
   code?: string;
   img?: string;
   initials?: string;
   subtitle?: string;
-
-  compareTo(value: T): boolean;
-
-  hasCoincidence(pattern: string): boolean;
 }
 
-export class ListFieldCollection<T = unknown> {
-  constructor(public readonly value: ListFieldElement<T>[]) {}
+export interface AutocompleteElement<T = unknown>
+  extends AbstractAutocompleteElement<T> {
+  title: string;
+  code?: string;
+  img?: string;
+  initials?: string;
+  subtitle?: string;
+}
 
-  public findElement(value: T): Undefined<ListFieldElement<T>> {
-    return this.value.find((element) => element.compareTo(value));
+export class ListCollection<T = unknown> {
+  constructor(public readonly value: AbstractListElement<T>[]) {}
+
+  public find(element: T): Undefined<AbstractListElement<T>> {
+    return this.value.find((current) => current.compareTo(element));
   }
 }
 
@@ -82,8 +96,8 @@ export class DateRange {
       this.maxDate = normalizeMinTime(minDate);
     }
 
-    const minFormat = formatDate(this.minDate, FORMAT_DESCRIPTION);
-    const maxFormat = formatDate(this.maxDate, FORMAT_DESCRIPTION);
+    const minFormat = formatDate(this.minDate, DATE_FORMAT);
+    const maxFormat = formatDate(this.maxDate, DATE_FORMAT);
 
     this.description = `${minFormat} - ${maxFormat}`;
   }

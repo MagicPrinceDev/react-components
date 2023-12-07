@@ -39,6 +39,7 @@ const rollupTs = (file) => {
       '@rolster/helpers-date',
       '@rolster/helpers-forms',
       '@rolster/helpers-string',
+      '@rolster/i18n',
       '@rolster/validators',
       'rxjs',
       'uuid'

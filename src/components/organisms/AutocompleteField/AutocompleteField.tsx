@@ -1,265 +1,86 @@
-import { hasPattern } from '@rolster/helpers-string';
 import { ReactControl } from '@rolster/react-forms';
+import { ReactNode } from 'react';
+import reactI18n from '../../../i18n';
 import {
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  useEffect,
-  useState
-} from 'react';
-import { useListControl } from '../../../hooks';
-import { ListFieldElement } from '../../../models';
+  AbstractAutocompleteElement,
+  AutocompleteElement
+} from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
+import { useAutocomplete } from './autocomplete-field.hook';
 import './AutocompleteField.css';
 
-const DURATION_ANIMATION = 240;
-const MAX_ELEMENTS = 6;
-
-interface AutocompleteField<T = unknown> extends RlsComponent {
-  suggestions: ListFieldElement<T>[];
+interface AutocompleteFieldProps<
+  T = unknown,
+  E extends AbstractAutocompleteElement<T> = AbstractAutocompleteElement<T>
+> extends RlsComponent {
+  suggestions: E[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T>;
   hiddenIcon?: boolean;
+  placeholder?: string;
+  searching?: boolean;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
-  placeholder?: string;
-  searching?: boolean;
 }
 
-interface Store<T> {
-  coincidences?: ListFieldElement<T>[];
-  pattern: string;
-  previous: Store<T> | null;
+interface AutocompleteFieldTemplateProps<
+  T = unknown,
+  E extends AbstractAutocompleteElement<T> = AbstractAutocompleteElement<T>
+> extends AutocompleteFieldProps<T, E> {
+  render: (element: E) => ReactNode;
 }
 
-type StoreNulleable<T> = Store<T> | null;
-
-export function RlsAutocompleteField<T = unknown>({
+export function RlsAutocompleteFieldTemplate<
+  T = unknown,
+  E extends AbstractAutocompleteElement<T> = AbstractAutocompleteElement<T>
+>({
   suggestions,
   children,
   disabled,
   formControl,
   hiddenIcon,
+  placeholder,
+  searching,
+  rlsTheme,
   onSearch,
   onSelect,
   onValue,
-  placeholder,
-  searching,
-  rlsTheme
-}: AutocompleteField<T>) {
-  const [pattern, setPattern] = useState('');
-  const [coincidences, setCoincidences] = useState<ListFieldElement<T>[]>([]);
-  const [store, setStore] = useState<Store<T>>({
-    pattern: '',
-    coincidences: [],
-    previous: null
-  });
-
+  render
+}: AutocompleteFieldTemplateProps<T, E>) {
   const {
-    active,
-    boxContentRef,
-    higher,
-    inputRef,
-    listRef,
-    collection,
-    value,
-    visible,
-    setActive,
-    setValue,
-    setVisible,
-    navigationElement,
-    navigationInput
-  } = useListControl({ suggestions, formControl, ignoreHigher: true });
-
-  const [changeInternal, setChangeInternal] = useState(false);
-
-  useEffect(() => {
-    filterSuggestions(pattern, true);
-  }, [suggestions]);
-
-  useEffect(() => {
-    filterSuggestions(pattern);
-  }, [pattern]);
-
-  useEffect(() => {
-    if (!changeInternal) {
-      redefineDescription();
-    }
-
-    setChangeInternal(false);
-  }, [formControl?.state]);
-
-  useEffect(() => {
-    redefineDescription();
-  }, [collection]);
-
-  function redefineDescription(): void {
-    const element =
-      formControl?.state && collection.findElement(formControl?.state);
-
-    setValue(element?.description || '');
-  }
-
-  function onClickControl(): void {
-    if (!disabled) {
-      setVisible(true);
-
-      setTimeout(() => inputRef?.current?.focus(), DURATION_ANIMATION);
-    }
-  }
-
-  function onFocusInput(): void {
-    setActive(true);
-  }
-
-  function onBlurInput(): void {
-    setActive(false);
-  }
-
-  function onKeydownInput(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'Escape':
-        setVisible(false);
-        break;
-
-      case 'Tab':
-        setVisible(false);
-        break;
-
-      default:
-        navigationInput(event);
-        break;
-    }
-  }
-
-  function onClickAction(): void {
-    setVisible(false);
-    setValue('');
-
-    if (formControl) {
-      setChangeInternal(true);
-      formControl.setState(undefined);
-    }
-
-    if (onValue) {
-      onValue(undefined);
-    }
-  }
-
-  function onClickBackdrop(): void {
-    setVisible(false);
-  }
-
-  function onClickItem(element: ListFieldElement<T>): MouseEventHandler {
-    return () => {
-      onChange(element);
-    };
-  }
-
-  function onKeydownItem(element: ListFieldElement<T>): KeyboardEventHandler {
-    return (event) => {
-      switch (event.code) {
-        case 'Enter':
-          onChange(element);
-          break;
-
-        default:
-          navigationElement(event);
-          break;
-      }
-    };
-  }
-
-  function onChange({ description, value }: ListFieldElement<T>): void {
-    setVisible(false);
-
-    if (onSelect) {
-      onSelect(value);
-    } else {
-      if (formControl) {
-        setChangeInternal(true);
-        formControl.setState(value);
-      }
-
-      setValue(description);
-    }
-
-    if (onValue) {
-      onValue(value);
-    }
-  }
-
-  function filterSuggestions(pattern: string | null, reboot = false): void {
-    if (pattern) {
-      const store = reboot ? createStoreEmpty() : searchForPattern(pattern);
-
-      const filters = store?.coincidences || suggestions;
-
-      const coincidences = filters.filter((element) =>
-        element.hasCoincidence(pattern)
-      );
-
-      setCoincidences(coincidences.slice(0, MAX_ELEMENTS));
-
-      setStore({
-        coincidences,
-        pattern,
-        previous: store
-      });
-    } else {
-      setCoincidences(suggestions.slice(0, MAX_ELEMENTS));
-      rebootStore();
-    }
-  }
-
-  function searchForPattern(value: string): StoreNulleable<T> {
-    if (!store.pattern) {
-      return null;
-    }
-
-    let newStore: StoreNulleable<T> = store;
-    let search = false;
-
-    while (!search && newStore) {
-      search = hasPattern(value, newStore.pattern, true);
-
-      if (!search) {
-        newStore = newStore.previous;
-      }
-    }
-
-    return newStore || rebootStore();
-  }
-
-  function rebootStore(): Store<T> {
-    const newStore = createStoreEmpty();
-
-    setStore(newStore);
-
-    return newStore;
-  }
-
-  function createStoreEmpty(): Store<T> {
-    return {
-      coincidences: undefined,
-      pattern: '',
-      previous: null
-    };
-  }
+    coincidences,
+    listControl,
+    pattern,
+    onBlurInput,
+    onClickAction,
+    onClickBackdrop,
+    onClickControl,
+    onClickElement,
+    onFocusInput,
+    onKeydownElement,
+    onKeydownInput,
+    setPattern
+  } = useAutocomplete({
+    suggestions,
+    disabled,
+    formControl,
+    onSelect,
+    onValue
+  });
 
   return (
     <div
-      ref={boxContentRef}
+      ref={listControl.boxContentRef}
       className={renderClassStatus(
         'rls-box-field',
         {
           disabled,
-          active,
-          selected: !!value
+          focused: listControl.focused,
+          selected: !!listControl.value
         },
         'rls-autocomplete-field rls-list-field'
       )}
@@ -270,9 +91,9 @@ export function RlsAutocompleteField<T = unknown>({
       <div className="rls-box-field__component">
         <div className="rls-box-field__body">
           <label className="rls-list-field__control" onClick={onClickControl}>
-            {value ? (
+            {listControl.value ? (
               <span className="rls-list-field__control__description">
-                {value}
+                {listControl.value}
               </span>
             ) : (
               <span className="rls-list-field__control__placeholder">
@@ -281,7 +102,7 @@ export function RlsAutocompleteField<T = unknown>({
             )}
           </label>
 
-          {!hiddenIcon && value && (
+          {!hiddenIcon && listControl.value && (
             <button
               className="rls-list-field__action"
               disabled={disabled}
@@ -303,16 +124,16 @@ export function RlsAutocompleteField<T = unknown>({
 
       <div
         className={renderClassStatus('rls-list-field__suggestions', {
-          visible,
-          hide: !visible,
-          higher
+          visible: listControl.visible,
+          hide: !listControl.visible,
+          higher: listControl.higher
         })}
       >
         <div className="rls-list-field__suggestions__body">
-          <ul ref={listRef} className="rls-list-field__ul">
+          <ul ref={listControl.listRef} className="rls-list-field__ul">
             <div className="rls-list-field__ul__search">
               <input
-                ref={inputRef}
+                ref={listControl.inputRef}
                 className="rls-list-field__ul__control"
                 type="text"
                 value={pattern}
@@ -344,16 +165,10 @@ export function RlsAutocompleteField<T = unknown>({
                 key={index}
                 className="rls-list-field__element"
                 tabIndex={-1}
-                onClick={onClickItem(element)}
-                onKeyDown={onKeydownItem(element)}
+                onClick={onClickElement(element)}
+                onKeyDown={onKeydownElement(element)}
               >
-                <RlsBallot
-                  subtitle={element.subtitle}
-                  img={element.img}
-                  initials={element.initials}
-                >
-                  {element.title}
-                </RlsBallot>
+                {render(element as E)}
               </li>
             ))}
 
@@ -361,10 +176,10 @@ export function RlsAutocompleteField<T = unknown>({
               <li className="rls-list-field__empty">
                 <div className="rls-list-field__empty__description">
                   <label className="label-bold truncate">
-                    Selección no disponible
+                    {reactI18n('listEmptyTitle')}
                   </label>
                   <p className="caption-regular">
-                    Lo sentimos, en el momento no hay elementos en el listado
+                    {reactI18n('listEmptyDescription')}
                   </p>
                 </div>
               </li>
@@ -379,4 +194,22 @@ export function RlsAutocompleteField<T = unknown>({
       </div>
     </div>
   );
+}
+
+export function RlsAutocompleteField<T = unknown>(
+  props: AutocompleteFieldProps<T, AutocompleteElement<T>>
+) {
+  function render(element: AutocompleteElement<T>): ReactNode {
+    return (
+      <RlsBallot
+        subtitle={element.subtitle}
+        img={element.img}
+        initials={element.initials}
+      >
+        {element.title}
+      </RlsBallot>
+    );
+  }
+
+  return <RlsAutocompleteFieldTemplate {...props} render={render} />;
 }

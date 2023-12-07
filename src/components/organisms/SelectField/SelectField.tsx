@@ -7,7 +7,7 @@ import {
   useState
 } from 'react';
 import { useListControl } from '../../../hooks';
-import { ListFieldElement } from '../../../models';
+import { ListElement } from '../../../models';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
@@ -15,7 +15,7 @@ import { RlsBallot } from '../../molecules';
 import './SelectField.css';
 
 interface SelectField<T = unknown> extends RlsComponent {
-  suggestions: ListFieldElement<T>[];
+  suggestions: ListElement<T>[];
   children?: any;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T>;
@@ -35,15 +35,15 @@ export function RlsSelectField<T = unknown>({
   rlsTheme
 }: SelectField<T>) {
   const {
-    active,
     boxContentRef,
+    collection,
+    focused,
     higher,
     inputRef,
     listRef,
-    collection,
     value,
     visible,
-    setActive,
+    setFocused,
     setValue,
     setVisible,
     navigationElement,
@@ -66,17 +66,17 @@ export function RlsSelectField<T = unknown>({
 
   function redefineDescription(): void {
     const element =
-      formControl?.state && collection.findElement(formControl?.state);
+      formControl?.state && collection.find(formControl?.state);
 
     setValue(element?.description || '');
   }
 
   function onFocusInput(): void {
-    setActive(true);
+    setFocused(true);
   }
 
   function onBlurInput(): void {
-    setActive(false);
+    setFocused(false);
   }
 
   function onClickInput(): void {
@@ -121,13 +121,13 @@ export function RlsSelectField<T = unknown>({
     setVisible(false);
   }
 
-  function onClickItem(element: ListFieldElement<T>): MouseEventHandler {
+  function onClickItem(element: ListElement<T>): MouseEventHandler {
     return () => {
       onChange(element);
     };
   }
 
-  function onKeydownItem(element: ListFieldElement<T>): KeyboardEventHandler {
+  function onKeydownItem(element: ListElement<T>): KeyboardEventHandler {
     return (event) => {
       switch (event.code) {
         case 'Enter':
@@ -141,7 +141,7 @@ export function RlsSelectField<T = unknown>({
     };
   }
 
-  function onChange({ description, value }: ListFieldElement<T>): void {
+  function onChange({ description, value }: ListElement<T>): void {
     inputRef?.current?.focus();
 
     setVisible(false);
@@ -167,7 +167,7 @@ export function RlsSelectField<T = unknown>({
       ref={boxContentRef}
       className={renderClassStatus(
         'rls-box-field',
-        { active, disabled },
+        { active: focused, disabled },
         'rls-select-field rls-list-field'
       )}
       rls-theme={rlsTheme}
