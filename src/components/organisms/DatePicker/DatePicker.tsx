@@ -6,6 +6,7 @@ import {
 } from '@rolster/helpers-date';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
+import reactI18n from '../../../i18n';
 import { PickerListener, PickerListenerType } from '../../../types';
 import { renderClassStatus } from '../../../utils/css';
 import { verifyDateRange } from '../../../utils/date-picker';
@@ -220,19 +221,19 @@ export function RlsDatePicker({
         <div className="rls-date-picker__actions">
           <div className="rls-date-picker__actions--cancel">
             <RlsButton type="ghost" onClick={onCancel}>
-              Cancelar
+              {reactI18n('dateActionCancel')}
             </RlsButton>
           </div>
 
           <div className="rls-date-picker__actions--today">
             <RlsButton type="ghost" onClick={onToday}>
-              Hoy
+              {reactI18n('dateActionToday')}
             </RlsButton>
           </div>
 
           <div className="rls-date-picker__actions--ok">
             <RlsButton type="raised" onClick={onSelect}>
-              Establecer
+              {reactI18n('dateActionSelect')}
             </RlsButton>
           </div>
         </div>

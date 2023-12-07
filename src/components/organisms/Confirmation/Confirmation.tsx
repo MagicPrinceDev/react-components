@@ -1,6 +1,7 @@
 import { PartialSealed } from '@rolster/helpers-advanced';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
+import reactI18n from '../../../i18n';
 import { renderClassStatus } from '../../../utils/css';
 import { RlsButton } from '../../atoms';
 import { RlsTheme } from '../../definitions';
@@ -142,7 +143,7 @@ export function useConfirmationService(): ConfirmationService {
         subtitle,
         title,
         approved: {
-          label: approved || 'Aceptar',
+          label: approved || reactI18n('confirmationActionApproved'),
           onClick: () => {
             setVisible(false);
             resolve(ConfirmationResult.approved());
