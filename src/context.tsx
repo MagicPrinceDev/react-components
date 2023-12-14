@@ -1,16 +1,16 @@
 import { createContext } from 'react';
 import {
   ConfirmationResult,
-  FnConfirmation,
-  FnSnackbar,
+  Confirmation,
+  Snackbar,
   useConfirmationService,
   useSnackbarService
 } from './components';
 import { RlsComponent } from './components/definitions';
 
 interface State {
-  confirmation: FnConfirmation;
-  snackbar: FnSnackbar;
+  confirmation: Confirmation;
+  snackbar: Snackbar;
 }
 
 export const RlsContext = createContext<State>({

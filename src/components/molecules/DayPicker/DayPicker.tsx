@@ -7,12 +7,13 @@ import { WeekState } from '../../../models';
 import { RlsComponent } from '../../definitions';
 import './DayPicker.css';
 
-interface DayPicker extends RlsComponent {
+interface DayPickerProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, number>;
   maxDate?: Date;
   minDate?: Date;
+  onValue?: (value: number) => void;
 }
 
 export function RlsDayPicker({
@@ -21,8 +22,9 @@ export function RlsDayPicker({
   formControl,
   maxDate,
   minDate,
-  rlsTheme
-}: DayPicker) {
+  rlsTheme,
+  onValue
+}: DayPickerProps) {
   const initialDate = date || new Date();
   const initialDay = formControl?.state || initialDate.getDate();
 
@@ -49,6 +51,10 @@ export function RlsDayPicker({
   function onChange(value: number): void {
     setValue(value);
     formControl?.setState(value);
+
+    if (onValue) {
+      onValue(value);
+    }
   }
 
   return (

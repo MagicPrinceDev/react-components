@@ -5,11 +5,11 @@ interface BreadcrumbLabel {
   onClick?: () => void;
 }
 
-interface Breadcrumb {
+interface BreadcrumbProps {
   labels: BreadcrumbLabel[];
 }
 
-export function RlsBreadcrumb({ labels }: Breadcrumb) {
+export function RlsBreadcrumb({ labels }: BreadcrumbProps) {
   return (
     <div className="rls-breadcrumb">
       {labels.map(({ label, onClick }, index) => (

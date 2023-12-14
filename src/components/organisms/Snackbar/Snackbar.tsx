@@ -32,15 +32,15 @@ export interface SnackbarConfig extends SnackbarBasic {
   rlsTheme?: RlsTheme;
 }
 
-interface Snackbar extends SnackbarConfig {
+interface SnackbarProps extends SnackbarConfig {
   visible?: boolean;
 }
 
-export type FnSnackbar = (config: SnackbarConfig) => void;
+export type Snackbar = (config: SnackbarConfig) => void;
 
 export interface SnackbarService {
   RlsSnackbar: JSX.Element;
-  snackbar: FnSnackbar;
+  snackbar: Snackbar;
 }
 
 export function RlsSnackbar({
@@ -49,7 +49,7 @@ export function RlsSnackbar({
   title,
   visible,
   rlsTheme
-}: Snackbar) {
+}: SnackbarProps) {
   return (
     <div
       className={renderClassStatus('rls-snackbar', { visible })}

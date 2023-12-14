@@ -3,7 +3,7 @@ import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import './ButtonAction.css';
 
-interface ButtonAction extends RlsComponent {
+interface ButtonActionProps extends RlsComponent {
   icon: string;
   disabled?: boolean;
   tooltip?: string;
@@ -15,7 +15,7 @@ export function RlsButtonAction({
   disabled,
   tooltip,
   onClick
-}: ButtonAction) {
+}: ButtonActionProps) {
   return (
     <button className="rls-button-action" onClick={onClick} disabled={disabled}>
       <div className="rls-button-action__content">

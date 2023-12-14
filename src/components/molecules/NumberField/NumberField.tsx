@@ -4,23 +4,23 @@ import { RlsMessageIcon, RlsInputNumber } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './NumberField.css';
 
-interface NumberField extends RlsComponent {
+interface NumberFieldProps extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
-  onValue?: (value: number) => void;
   placeholder?: string;
   value?: number;
+  onValue?: (value: number) => void;
 }
 
 export function RlsNumberField({
   children,
   disabled,
   formControl,
-  onValue,
   placeholder,
   rlsTheme,
-  value
-}: NumberField) {
+  value,
+  onValue
+}: NumberFieldProps) {
   return (
     <div
       className={renderClassStatus(

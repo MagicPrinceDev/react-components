@@ -2,7 +2,7 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './ProgressBar.css';
 
-interface ProgressBar extends RlsComponent {
+interface ProgressBarProps extends RlsComponent {
   indeterminate?: boolean;
   percentage?: number;
 }
@@ -11,7 +11,7 @@ export function RlsProgressBar({
   indeterminate,
   percentage,
   rlsTheme
-}: ProgressBar) {
+}: ProgressBarProps) {
   return (
     <div
       className={renderClassStatus('rls-progress-bar', { indeterminate })}

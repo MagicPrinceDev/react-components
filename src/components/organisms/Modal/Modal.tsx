@@ -3,11 +3,11 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './Modal.css';
 
-interface Modal extends RlsComponent {
+interface ModalProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsModal({ children, visible, rlsTheme }: Modal) {
+export function RlsModal({ children, visible, rlsTheme }: ModalProps) {
   return ReactDOM.createPortal(
     <div
       className={renderClassStatus('rls-modal', { visible })}

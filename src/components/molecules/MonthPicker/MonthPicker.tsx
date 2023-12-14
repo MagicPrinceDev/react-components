@@ -1,17 +1,18 @@
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { RlsComponent } from '../../definitions';
-import './MonthPicker.css';
 import { MonthState } from '../../../models';
 import { createMonthPicker } from '../../../utils/month-picker';
 import { renderClassStatus } from '../../../utils/css';
+import { RlsComponent } from '../../definitions';
+import './MonthPicker.css';
 
-interface MonthPicker extends RlsComponent {
+interface MonthPickerProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, number>;
   maxDate?: Date;
   minDate?: Date;
+  onValue?: (value: number) => void;
 }
 
 export function RlsMonthPicker({
@@ -20,8 +21,9 @@ export function RlsMonthPicker({
   disabled: disabledPicker,
   maxDate,
   minDate,
-  rlsTheme
-}: MonthPicker) {
+  rlsTheme,
+  onValue
+}: MonthPickerProps) {
   const initialDate = date || new Date();
   const initialMonth = formControl?.state || initialDate.getMonth();
 
@@ -39,6 +41,15 @@ export function RlsMonthPicker({
     );
   }, [value, date, minDate, maxDate]);
 
+  function onChange(value: number): void {
+    formControl?.setState(value);
+    setValue(value);
+
+    if (onValue) {
+      onValue(value);
+    }
+  }
+
   return (
     <div className="rls-month-picker" rls-theme={rlsTheme}>
       {months.map(({ label, value, disabled, selected }, index) => (
@@ -49,8 +60,9 @@ export function RlsMonthPicker({
             selected
           })}
           onClick={() => {
-            formControl?.setState(value);
-            setValue(value);
+            if (!disabled) {
+              onChange(value);
+            }
           }}
         >
           <span className="rls-month-picker__span">{label}</span>

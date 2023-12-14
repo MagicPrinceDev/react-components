@@ -5,7 +5,7 @@ import { RlsCheckBox } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './CheckBoxLabel.css';
 
-interface CheckBoxLabel extends RlsComponent {
+interface CheckBoxLabelProps extends RlsComponent {
   disabled?: boolean;
   extended?: boolean;
   formControl?: ReactControl<HTMLElement, boolean>;
@@ -17,7 +17,7 @@ export function RlsCheckBoxLabel({
   extended,
   formControl,
   rlsTheme
-}: CheckBoxLabel) {
+}: CheckBoxLabelProps) {
   const [checked, setChecked] = useState(formControl?.value || false);
 
   useEffect(() => {

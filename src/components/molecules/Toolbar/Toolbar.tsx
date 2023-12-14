@@ -2,12 +2,12 @@ import { ReactNode } from 'react';
 import { RlsComponent } from '../../definitions';
 import './Toolbar.css';
 
-interface Toolbar extends RlsComponent {
+interface ToolbarProps extends RlsComponent {
   actions?: ReactNode[];
   subtitle?: ReactNode;
 }
 
-export function RlsToolbar({ actions, children, subtitle }: Toolbar) {
+export function RlsToolbar({ actions, children, subtitle }: ToolbarProps) {
   return (
     <div className="rls-toolbar">
       <div className="rls-toolbar__description">

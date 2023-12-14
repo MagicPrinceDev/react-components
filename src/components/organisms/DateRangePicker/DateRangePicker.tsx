@@ -19,7 +19,7 @@ import {
 } from '../../molecules';
 import './DateRangePicker.css';
 
-interface DateRangePicker extends RlsComponent {
+interface DateRangePickerProps extends RlsComponent {
   automatic?: boolean;
   date?: Date;
   disabled?: boolean;
@@ -67,7 +67,7 @@ export function RlsDateRangePicker({
   minDate,
   rlsTheme,
   onListener
-}: DateRangePicker) {
+}: DateRangePickerProps) {
   const dateInitial = normalizeMinTime(datePicker || new Date());
   const rangeInitial = formControl?.state || DateRange.now();
 

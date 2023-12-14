@@ -2,11 +2,11 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './Card.css';
 
-interface Card extends RlsComponent {
+interface CardProps extends RlsComponent {
   outline?: boolean;
 }
 
-export function RlsCard({ children, outline, rlsTheme }: Card) {
+export function RlsCard({ children, outline, rlsTheme }: CardProps) {
   return (
     <div
       className={renderClassStatus('rls-card', { outline })}

@@ -10,7 +10,7 @@ import {
 import { RlsButtonAction } from '../../atoms';
 import './MonthTitlePicker.css';
 
-interface MonthTitlePicker {
+interface MonthTitlePickerProps {
   monthControl: ReactControl<HTMLElement, number>;
   yearControl: ReactControl<HTMLElement, number>;
   date?: Date;
@@ -26,7 +26,7 @@ export function RlsMonthTitlePicker({
   maxDate,
   minDate,
   onClick
-}: MonthTitlePicker) {
+}: MonthTitlePickerProps) {
   const { state: month } = monthControl;
   const { state: year } = yearControl;
 

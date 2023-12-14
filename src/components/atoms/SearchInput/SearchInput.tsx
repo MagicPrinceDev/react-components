@@ -3,7 +3,7 @@ import { RlsButtonAction } from '../ButtonAction/ButtonAction';
 import { RlsInput } from '../Input/Input';
 import './SearchInput.css';
 
-interface SearchInput {
+interface SearchInputProps {
   formControl?: ReactInputControl<string>;
   placeholder?: string;
   onSearch?: () => void;
@@ -13,7 +13,7 @@ export function RlsSearchInput({
   formControl,
   placeholder,
   onSearch
-}: SearchInput) {
+}: SearchInputProps) {
   return (
     <div className="rls-search-input">
       <RlsInput formControl={formControl} placeholder={placeholder} />

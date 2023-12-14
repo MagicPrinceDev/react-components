@@ -9,7 +9,7 @@ export interface ButtonToggleOption {
   value: string;
 }
 
-interface ButtonToggle extends RlsComponent {
+interface ButtonToggleProps extends RlsComponent {
   options: ButtonToggleOption[];
   type: ButtonType;
   disabled?: boolean;
@@ -22,7 +22,7 @@ export function RlsButtonToggle({
   disabled,
   rlsTheme,
   onAction
-}: ButtonToggle) {
+}: ButtonToggleProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const [firstAction] = options;

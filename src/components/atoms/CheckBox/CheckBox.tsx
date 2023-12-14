@@ -3,13 +3,13 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './CheckBox.css';
 
-interface CheckBox extends RlsComponent {
+interface CheckBoxProps extends RlsComponent {
   checked: boolean;
   disabled?: boolean;
   onClick?: () => void;
 }
 
-interface CheckBoxControl extends RlsComponent {
+interface CheckBoxControlProps extends RlsComponent {
   disabled?: boolean;
   formControl: ReactControl<HTMLElement, boolean>;
 }
@@ -19,7 +19,7 @@ export function RlsCheckBox({
   disabled,
   onClick,
   rlsTheme
-}: CheckBox) {
+}: CheckBoxProps) {
   return (
     <div
       className={renderClassStatus('rls-checkbox', { checked, disabled })}
@@ -35,7 +35,7 @@ export function RlsCheckBoxControl({
   formControl,
   disabled,
   rlsTheme
-}: CheckBoxControl) {
+}: CheckBoxControlProps) {
   return (
     <RlsCheckBox
       checked={formControl.state || false}

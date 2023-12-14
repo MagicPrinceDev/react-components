@@ -4,14 +4,14 @@ import { RlsMessageIcon, RlsInputMoney } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './MoneyField.css';
 
-interface MoneyField extends RlsComponent {
+interface MoneyFieldProps extends RlsComponent {
   decimals?: boolean;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
-  onValue?: (value: number) => void;
   placeholder?: string;
   symbol?: string;
   value?: number;
+  onValue?: (value: number) => void;
 }
 
 export function RlsMoneyField({
@@ -19,12 +19,12 @@ export function RlsMoneyField({
   decimals,
   disabled,
   formControl,
-  onValue,
   placeholder,
   symbol,
   rlsTheme,
-  value
-}: MoneyField) {
+  value,
+  onValue
+}: MoneyFieldProps) {
   return (
     <div
       className={renderClassStatus(

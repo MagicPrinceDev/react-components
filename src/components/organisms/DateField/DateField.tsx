@@ -7,14 +7,16 @@ import { RlsComponent } from '../../definitions';
 import { RlsDatePicker } from '../DatePicker/DatePicker';
 import { RlsModal } from '../Modal/Modal';
 import './DateField.css';
+import { PickerListenerType } from '../../../types';
 
-interface DateField extends RlsComponent {
+interface DateFieldProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, Date>;
   maxDate?: Date;
   minDate?: Date;
   placeholder?: string;
+  onValue?: (value?: Date) => void;
 }
 
 export function RlsDateField({
@@ -25,8 +27,9 @@ export function RlsDateField({
   maxDate,
   minDate,
   placeholder,
-  rlsTheme
-}: DateField) {
+  rlsTheme,
+  onValue
+}: DateFieldProps) {
   const dateInitial = formControl?.state || date || new Date();
 
   const [value, setValue] = useState<Date | undefined>(dateInitial);
@@ -41,10 +44,21 @@ export function RlsDateField({
     setShow(true);
   }
 
+  function onChange(value?: Date, ignoreControl = false): void {
+    if (!ignoreControl) {
+      formControl?.setState(undefined);
+    }
+
+    setValue(undefined);
+
+    if (onValue) {
+      onValue(value);
+    }
+  }
+
   function onClean(): void {
     if (value) {
-      formControl?.setState(undefined);
-      setValue(undefined);
+      onChange(undefined);
 
       if (formControl && !formControl.touched) {
         formControl.touch();
@@ -97,9 +111,9 @@ export function RlsDateField({
           disabled={disabled}
           maxDate={maxDate}
           minDate={minDate}
-          onListener={({ value }) => {
-            if (value) {
-              setValue(value);
+          onListener={({ value, type }) => {
+            if (type !== PickerListenerType.Cancel) {
+              onChange(value, true);
             }
 
             setShow(false);

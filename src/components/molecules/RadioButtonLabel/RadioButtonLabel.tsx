@@ -5,7 +5,7 @@ import { RlsRadioButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './RadioButtonLabel.css';
 
-interface RadioButtonLabel extends RlsComponent {
+interface RadioButtonLabelProps extends RlsComponent {
   disabled?: boolean;
   extended?: boolean;
   formControl?: ReactControl<HTMLElement>;
@@ -19,7 +19,7 @@ export function RlsRadioButtonLabel({
   formControl,
   rlsTheme,
   value
-}: RadioButtonLabel) {
+}: RadioButtonLabelProps) {
   const [checked, setChecked] = useState(formControl?.state || false);
 
   useEffect(() => {

@@ -3,21 +3,21 @@ import { useState } from 'react';
 import { RlsInput } from '../Input/Input';
 import './InputNumber.css';
 
-interface InputNumber {
+interface InputNumberProps {
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
-  onValue?: (value: number) => void;
   placeholder?: string;
   value?: number;
+  onValue?: (value: number) => void;
 }
 
 export function RlsInputNumber({
   disabled,
   formControl,
-  onValue,
   placeholder,
-  value
-}: InputNumber) {
+  value,
+  onValue
+}: InputNumberProps) {
   const [valueInput, setValueInput] = useState(value || 0);
 
   function onNumber(value: number): void {

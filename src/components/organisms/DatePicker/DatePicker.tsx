@@ -22,7 +22,7 @@ import './DatePicker.css';
 
 const FORMAT_DESCRIPTION = '{dw}, {mx} {dd} de {aa}';
 
-interface DatePicker extends RlsComponent {
+interface DatePickerProps extends RlsComponent {
   automatic?: boolean;
   date?: Date;
   disabled?: boolean;
@@ -68,9 +68,9 @@ export function RlsDatePicker({
   disabled,
   maxDate,
   minDate,
-  onListener,
-  rlsTheme
-}: DatePicker) {
+  rlsTheme,
+  onListener
+}: DatePickerProps) {
   const dateInitial = formControl?.state || date || new Date();
 
   const yearControl = useReactControl({ state: dateInitial.getFullYear() });

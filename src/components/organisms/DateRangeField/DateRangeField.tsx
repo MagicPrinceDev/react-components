@@ -7,7 +7,7 @@ import { RlsDateRangePicker } from '../DateRangePicker/DateRangePicker';
 import { RlsModal } from '../Modal/Modal';
 import './DateRangeField.css';
 
-interface DateRangeField extends RlsComponent {
+interface DateRangeFieldProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, DateRange>;
@@ -25,7 +25,7 @@ export function RlsDateRangeField({
   minDate,
   placeholder,
   rlsTheme
-}: DateRangeField) {
+}: DateRangeFieldProps) {
   const rangeInitial = formControl?.state || DateRange.now();
   const dateInitial = datePicker || new Date();
 

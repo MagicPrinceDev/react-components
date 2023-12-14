@@ -1,12 +1,12 @@
 import { renderClassStatus } from '../../../utils/css';
 import './Icon.css';
 
-interface Icon {
+interface IconProps {
   value: string;
   skeleton?: boolean;
 }
 
-export function RlsIcon({ value, skeleton }: Icon) {
+export function RlsIcon({ value, skeleton }: IconProps) {
   return (
     <div className={renderClassStatus('rls-icon', { skeleton })}>
       <i className={`rls-icon-${value}`}></i>

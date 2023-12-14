@@ -7,11 +7,11 @@ function charClass(char: string): string {
   return pointers.includes(char) ? `${baseCls}__pointer` : `${baseCls}__char`;
 }
 
-interface TabularText {
+interface TabularTextProps {
   value?: string;
 }
 
-export function RlsTabularText({ value }: TabularText) {
+export function RlsTabularText({ value }: TabularTextProps) {
   return (
     <div className="rls-tabular-text">
       {value?.split('').map((char, index) => (

@@ -2,7 +2,7 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './FormNavigation.css';
 
-interface FormNavigation extends RlsComponent {
+interface FormNavigationProps extends RlsComponent {
   visible?: boolean;
 }
 
@@ -10,7 +10,7 @@ export function RlsFormNavigation({
   children,
   visible,
   rlsTheme
-}: FormNavigation) {
+}: FormNavigationProps) {
   return (
     <div
       className={renderClassStatus('rls-form-navigation', { visible })}

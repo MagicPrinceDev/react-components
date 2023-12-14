@@ -2,7 +2,7 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './RadioButton.css';
 
-interface RadioButton extends RlsComponent {
+interface RadioButtonProps extends RlsComponent {
   checked: boolean;
   disabled?: boolean;
   onClick?: () => void;
@@ -11,9 +11,9 @@ interface RadioButton extends RlsComponent {
 export function RlsRadioButton({
   checked,
   disabled,
-  onClick,
-  rlsTheme
-}: RadioButton) {
+  rlsTheme,
+  onClick
+}: RadioButtonProps) {
   return (
     <div
       className={renderClassStatus('rls-radiobutton', { checked, disabled })}

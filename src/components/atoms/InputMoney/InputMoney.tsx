@@ -4,25 +4,25 @@ import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
 import './InputMoney.css';
 
-interface InputMoney {
+interface InputMoneyProps {
   decimals?: boolean;
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, number>;
-  onValue?: (value: number) => void;
   placeholder?: string;
   symbol?: string;
   value?: number;
+  onValue?: (value: number) => void;
 }
 
 export function RlsInputMoney({
   decimals,
   disabled,
   formControl,
-  onValue,
   placeholder,
   symbol,
-  value
-}: InputMoney) {
+  value,
+  onValue
+}: InputMoneyProps) {
   const [valueInput, setValueInput] = useState(value || 0);
 
   function onMoney(value: number): void {

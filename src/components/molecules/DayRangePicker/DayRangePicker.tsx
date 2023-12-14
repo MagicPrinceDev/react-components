@@ -11,7 +11,7 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './DayRangePicker.css';
 
-interface DayRangePicker extends RlsComponent {
+interface DayRangePickerProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, DateRange>;
@@ -26,7 +26,7 @@ export function RlsDayRangePicker({
   maxDate,
   minDate,
   rlsTheme
-}: DayRangePicker) {
+}: DayRangePickerProps) {
   const initialRange = formControl?.state || DateRange.now();
   const initialDate = normalizeMinTime(date || initialRange.minDate);
 

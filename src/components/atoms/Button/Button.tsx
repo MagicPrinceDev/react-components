@@ -6,7 +6,7 @@ import './Button.css';
 
 export type ButtonType = 'raised' | 'flat' | 'outline' | 'ghost';
 
-interface Button extends RlsComponent {
+interface ButtonProps extends RlsComponent {
   type: ButtonType;
   disabled?: boolean;
   prefixIcon?: string;
@@ -22,7 +22,7 @@ export function RlsButton({
   suffixIcon,
   rlsTheme,
   onClick
-}: Button) {
+}: ButtonProps) {
   return (
     <button
       className="rls-button"

@@ -6,12 +6,13 @@ import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './YearPicker.css';
 
-interface YearPicker extends RlsComponent {
+interface YearPickerProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, number>;
   maxDate?: Date;
   minDate?: Date;
+  onValue?: (value: number) => void;
 }
 
 export function RlsYearPicker({
@@ -20,8 +21,9 @@ export function RlsYearPicker({
   disabled: disabledPicker,
   maxDate,
   minDate,
-  rlsTheme
-}: YearPicker) {
+  rlsTheme,
+  onValue
+}: YearPickerProps) {
   const initialDate = date || new Date();
   const initialYear = formControl?.state || initialDate.getFullYear();
 
@@ -59,6 +61,10 @@ export function RlsYearPicker({
     formControl?.setState(value);
     setYear(value);
     setValue(value);
+
+    if (onValue) {
+      onValue(value);
+    }
   }
 
   return (
@@ -98,7 +104,7 @@ export function RlsYearPicker({
               selected
             })}
             onClick={() => {
-              if (value) {
+              if (value && !disabled) {
                 onChange(value);
               }
             }}

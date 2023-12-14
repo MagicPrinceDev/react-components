@@ -14,7 +14,7 @@ interface PaginationEvent {
   lastPage: boolean;
 }
 
-interface Pagination<T> {
+interface PaginationProps<T> {
   elements: T[];
   count?: number;
   filter?: Nulleable<string>;
@@ -43,7 +43,7 @@ export function RlsPagination<T>({
   filter,
   onElements,
   onPagination
-}: Pagination<T>) {
+}: PaginationProps<T>) {
   const count = defaultCount || DEFAULT_COUNT_ELEMENT;
 
   const [collection, setCollection] = useState<T[]>([]);
@@ -92,7 +92,7 @@ export function RlsPagination<T>({
     setIndex(value);
     setCurrentPagination(pagination);
 
-    refreshFromChanged(createPageProps({ index: value }));
+    refreshFromChanged(clonePage({ index: value }));
   }
 
   function goPagination(pagination: PaginationState): void {
@@ -115,7 +115,7 @@ export function RlsPagination<T>({
         const prevIndex = value - MIN_NUMBER_PAGE;
 
         if (prevIndex >= FIRST_PAGE) {
-          refreshFromChanged(createPagePropsFromIndex(prevIndex));
+          refreshFromChanged(clonePageFromIndex(prevIndex));
         }
       }
     }
@@ -123,7 +123,7 @@ export function RlsPagination<T>({
 
   function goFirstPagination(): void {
     if (collection.length) {
-      refreshFromChanged(createPagePropsFromIndex(FIRST_PAGE));
+      refreshFromChanged(clonePageFromIndex(FIRST_PAGE));
     }
   }
 
@@ -139,7 +139,7 @@ export function RlsPagination<T>({
         const nextIndex = value + 1;
 
         if (nextIndex <= maxPage) {
-          refreshFromChanged(createPagePropsFromIndex(nextIndex));
+          refreshFromChanged(clonePageFromIndex(nextIndex));
         }
       }
     }
@@ -147,7 +147,7 @@ export function RlsPagination<T>({
 
   function goLastPagination(): void {
     if (collection.length) {
-      refreshFromChanged(createPagePropsFromIndex(maxPage - MIN_NUMBER_PAGE));
+      refreshFromChanged(clonePageFromIndex(maxPage - MIN_NUMBER_PAGE));
     }
   }
 
@@ -166,23 +166,12 @@ export function RlsPagination<T>({
 
   function refreshFromElements(elements: T[]): void {
     elements.length
-      ? refreshFromChanged(createRefreshProps(elements, filter))
+      ? refreshFromChanged(refreshPage(elements, filter))
       : rebootPagination();
   }
 
   function refreshFromFilter(filter?: Nulleable<string>): void {
-    refreshFromChanged(createRefreshProps(elements, filter));
-  }
-
-  function createRefreshProps(
-    elements: T[],
-    filter?: Nulleable<string>
-  ): Page<T> {
-    const collection = refreshCollection(elements, filter);
-    const maxPage = refreshMaxPage(collection, count);
-    const index = refreshIndex(collection, maxPage);
-
-    return createPageProps({ collection, index, maxPage });
+    refreshFromChanged(refreshPage(elements, filter));
   }
 
   function refreshFromChanged(page: Page<T>): void {
@@ -225,15 +214,6 @@ export function RlsPagination<T>({
     setIndex(newIndex);
 
     return newIndex;
-  }
-
-  function rebootPagination(): void {
-    setCollection([]);
-    setMaxPage(0);
-    setIndex(0);
-    setPaginations([]);
-
-    onChangeElements([]);
   }
 
   function refreshDescription(page: Page<T>): void {
@@ -288,6 +268,28 @@ export function RlsPagination<T>({
     setPaginations(paginations);
   }
 
+  function clonePage(pagePartial: Partial<Page<T>>): Page<T> {
+    return {
+      collection: pagePartial.collection || collection,
+      index: typeof pagePartial.index === 'number' ? pagePartial.index : index,
+      count: pagePartial.count || count,
+      maxPage:
+        typeof pagePartial.maxPage === 'number' ? pagePartial.maxPage : maxPage
+    };
+  }
+
+  function clonePageFromIndex(index: number): Page<T> {
+    return clonePage({ index });
+  }
+
+  function refreshPage(elements: T[], filter?: Nulleable<string>): Page<T> {
+    const collection = refreshCollection(elements, filter);
+    const maxPage = refreshMaxPage(collection, count);
+    const index = refreshIndex(collection, maxPage);
+
+    return clonePage({ collection, index, maxPage });
+  }
+
   function createPagination(value: number, index: number): PaginationState {
     const active = value === index;
 
@@ -304,17 +306,13 @@ export function RlsPagination<T>({
     return pagination;
   }
 
-  function createPagePropsFromIndex(index: number): Page<T> {
-    return createPageProps({ index });
-  }
+  function rebootPagination(): void {
+    setCollection([]);
+    setMaxPage(0);
+    setIndex(0);
+    setPaginations([]);
 
-  function createPageProps(props: Partial<Page<T>>): Page<T> {
-    return {
-      collection: props.collection || collection,
-      index: typeof props.index === 'number' ? props.index : index,
-      count: props.count || count,
-      maxPage: typeof props.maxPage === 'number' ? props.maxPage : maxPage
-    };
+    onChangeElements([]);
   }
 
   return (

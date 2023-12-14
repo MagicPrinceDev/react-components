@@ -38,7 +38,7 @@ interface ConfirmationBasic {
   rlsTheme?: RlsTheme;
 }
 
-interface Confirmation extends ConfirmationBasic {
+interface ConfirmationProps extends ConfirmationBasic {
   approved?: ConfirmationAction;
   reject?: ConfirmationAction;
   visible?: boolean;
@@ -49,13 +49,11 @@ interface ConfirmationConfig extends ConfirmationBasic {
   reject?: string;
 }
 
-export type FnConfirmation = (
-  props: ConfirmationConfig
-) => Promise<ConfirmationResult>;
+export type Confirmation = (props: ConfirmationConfig) => Result;
 
 export interface ConfirmationService {
   RlsConfirmation: JSX.Element;
-  confirmation: FnConfirmation;
+  confirmation: Confirmation;
 }
 
 export function RlsConfirmation({
@@ -66,7 +64,7 @@ export function RlsConfirmation({
   subtitle,
   title,
   visible
-}: Confirmation) {
+}: ConfirmationProps) {
   return (
     <div
       className={renderClassStatus('rls-confirmation', { visible })}
@@ -125,7 +123,7 @@ export function RlsConfirmation({
 }
 
 export function useConfirmationService(): ConfirmationService {
-  const [config, setConfig] = useState<Confirmation>({});
+  const [config, setConfig] = useState<ConfirmationProps>({});
   const [visible, setVisible] = useState(false);
 
   const rlsConfirmation = ReactDOM.createPortal(

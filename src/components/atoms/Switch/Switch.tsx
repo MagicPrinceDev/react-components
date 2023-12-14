@@ -3,18 +3,23 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 import './Switch.css';
 
-interface Switch extends RlsComponent {
+interface SwitchProps extends RlsComponent {
   checked: boolean;
   disabled?: boolean;
   onClick?: () => void;
 }
 
-interface SwitchControl extends RlsComponent {
+interface Props extends RlsComponent {
   disabled?: boolean;
   formControl: ReactControl<HTMLElement, boolean>;
 }
 
-export function RlsSwitch({ checked, disabled, onClick, rlsTheme }: Switch) {
+export function RlsSwitch({
+  checked,
+  disabled,
+  rlsTheme,
+  onClick
+}: SwitchProps) {
   return (
     <div
       className={renderClassStatus('rls-switch', { checked, disabled })}
@@ -29,11 +34,7 @@ export function RlsSwitch({ checked, disabled, onClick, rlsTheme }: Switch) {
   );
 }
 
-export function RlsSwitchControl({
-  formControl,
-  disabled,
-  rlsTheme
-}: SwitchControl) {
+export function RlsSwitchControl({ formControl, disabled, rlsTheme }: Props) {
   return (
     <RlsSwitch
       checked={formControl.state || false}

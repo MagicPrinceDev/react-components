@@ -1,17 +1,17 @@
 import { renderClassStatus } from '../../../utils/css';
 import { RlsComponent } from '../../definitions';
 
-interface DatatableCell extends RlsComponent {
+interface DatatableCellProps extends RlsComponent {
   className?: string;
   control?: boolean;
   overflow?: boolean;
 }
 
-interface DatatableRow extends RlsComponent {
+interface DatatableRowProps extends RlsComponent {
   className?: string;
 }
 
-interface Datatable extends RlsComponent {
+interface DatatableProps extends RlsComponent {
   footer?: JSX.Element;
   header?: JSX.Element;
 }
@@ -24,7 +24,7 @@ export function RlsDatatableTitle({
   children,
   className,
   control
-}: DatatableCell) {
+}: DatatableCellProps) {
   return (
     <th
       className={
@@ -36,7 +36,7 @@ export function RlsDatatableTitle({
   );
 }
 
-export function RlsDatatableData({ children, className }: DatatableRow) {
+export function RlsDatatableData({ children, className }: DatatableRowProps) {
   return <tr className={`rls-datatable__data ${className}`}>{children}</tr>;
 }
 
@@ -45,7 +45,7 @@ export function RlsDatatableCell({
   className,
   control,
   overflow
-}: DatatableCell) {
+}: DatatableCellProps) {
   return (
     <th
       className={
@@ -63,7 +63,7 @@ export function RlsDatatable({
   footer,
   header,
   rlsTheme
-}: Datatable) {
+}: DatatableProps) {
   return (
     <div className="rls-datatable" rls-theme={rlsTheme}>
       <table>

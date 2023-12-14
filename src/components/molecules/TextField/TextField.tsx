@@ -4,23 +4,23 @@ import { RlsMessageIcon, RlsInputText } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './TextField.css';
 
-interface TextField extends RlsComponent {
+interface TextFieldProps extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement, string>;
-  onValue?: (value: string) => void;
   placeholder?: string;
   value?: string;
+  onValue?: (value: string) => void;
 }
 
 export function RlsTextField({
   children,
   disabled,
   formControl,
-  onValue,
   placeholder,
   rlsTheme,
-  value
-}: TextField) {
+  value,
+  onValue
+}: TextFieldProps) {
   return (
     <div
       className={renderClassStatus(
