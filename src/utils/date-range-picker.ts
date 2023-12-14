@@ -6,14 +6,14 @@ import {
 } from '@rolster/helpers-date';
 import { DateRange, DayRangeState, WeekRangeState } from '../models';
 
-interface Props {
+interface FactoryProps {
   date: Date;
   range: DateRange;
   minDate?: Date;
   maxDate?: Date;
 }
 
-class Factory {
+class DateRangePickerFactory {
   private range: DateRange;
 
   private date: Date;
@@ -22,7 +22,7 @@ class Factory {
 
   private maxDate?: Date;
 
-  protected constructor(props: Props) {
+  protected constructor(props: FactoryProps) {
     const { date, range, maxDate, minDate } = props;
 
     this.date = new Date(date.getTime());
@@ -33,8 +33,8 @@ class Factory {
     this.date.setDate(1);
   }
 
-  public static execute(props: Props): WeekRangeState[] {
-    const factory = new Factory(props);
+  public static execute(props: FactoryProps): WeekRangeState[] {
+    const factory = new DateRangePickerFactory(props);
 
     const firstWeek = factory.createFirstWeek();
     const rightWeeks = factory.createRightWeeks();
@@ -156,6 +156,6 @@ class Factory {
   }
 }
 
-export function createRangePicker(props: Props): WeekRangeState[] {
-  return Factory.execute(props);
+export function createRangePicker(props: FactoryProps): WeekRangeState[] {
+  return DateRangePickerFactory.execute(props);
 }

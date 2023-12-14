@@ -2,7 +2,7 @@ import { YearState } from '../models';
 
 export const COUNT_YEAR_RANGE = 4;
 
-interface Props {
+interface FactoryProps {
   value: number;
   year: number;
   minDate?: Date;
@@ -17,26 +17,26 @@ interface YearPickerTemplate {
   years: YearState[];
 }
 
-class FactoryYearPicker {
-  private value: number;
-
+class YearPickerFactory {
   private minDate?: Date;
 
   private maxDate?: Date;
+
+  private value: number;
 
   private declare minYearRange: number;
 
   private declare maxYearRange: number;
 
-  protected constructor(props: Props) {
+  protected constructor(props: FactoryProps) {
     const { value, maxDate, minDate } = props;
     this.value = value;
     this.maxDate = maxDate;
     this.minDate = minDate;
   }
 
-  public static execute(props: Props): YearPickerTemplate {
-    const factory = new FactoryYearPicker(props);
+  public static execute(props: FactoryProps): YearPickerTemplate {
+    const factory = new YearPickerFactory(props);
 
     let year = props.year;
 
@@ -128,6 +128,6 @@ class FactoryYearPicker {
   }
 }
 
-export function createYearPicker(props: Props): YearPickerTemplate {
-  return FactoryYearPicker.execute(props);
+export function createYearPicker(props: FactoryProps): YearPickerTemplate {
+  return YearPickerFactory.execute(props);
 }

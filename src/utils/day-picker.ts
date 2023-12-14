@@ -1,14 +1,14 @@
 import { daysFromMonth, refactorDay, weight } from '@rolster/helpers-date';
 import { DayState, WeekState } from '../models';
 
-interface Props {
+interface FactoryProps {
   value: number;
   date: Date;
   minDate?: Date;
   maxDate?: Date;
 }
 
-class Factory {
+class DayPickerFactory {
   private value: number;
 
   private date: Date;
@@ -17,7 +17,7 @@ class Factory {
 
   private maxDate?: Date;
 
-  protected constructor(props: Props) {
+  protected constructor(props: FactoryProps) {
     const { date, value, maxDate, minDate } = props;
 
     this.value = value;
@@ -28,8 +28,8 @@ class Factory {
     this.date.setDate(1);
   }
 
-  public static execute(props: Props): WeekState[] {
-    const factory = new Factory(props);
+  public static execute(props: FactoryProps): WeekState[] {
+    const factory = new DayPickerFactory(props);
 
     const firstWeek = factory.createFirstWeek();
     const rightWeeks = factory.createRightWeeks();
@@ -127,6 +127,6 @@ class Factory {
   }
 }
 
-export function createDayPicker(props: Props): WeekState[] {
-  return Factory.execute(props);
+export function createDayPicker(props: FactoryProps): WeekState[] {
+  return DayPickerFactory.execute(props);
 }

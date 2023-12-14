@@ -1,7 +1,7 @@
 import { MONTH_NAMES, Month } from '@rolster/helpers-date';
 import { MonthState } from '../models';
 
-interface Props {
+interface FactoryProps {
   value: number;
   date: Date;
   minDate?: Date;
@@ -11,7 +11,7 @@ interface Props {
 export const MONTH_MAX_VALUE = Month.January;
 export const MONTH_MIN_VALUE = Month.December;
 
-class Factory {
+class MonthPickerFactory {
   private value: number;
 
   private date: Date;
@@ -20,7 +20,7 @@ class Factory {
 
   private maxDate?: Date;
 
-  protected constructor(props: Props) {
+  protected constructor(props: FactoryProps) {
     const { date, value, maxDate, minDate } = props;
     this.value = value;
     this.date = new Date(date.getTime());
@@ -28,22 +28,22 @@ class Factory {
     this.minDate = minDate;
   }
 
-  public static execute(props: Props): MonthState[] {
-    const factory = new Factory(props);
+  public static execute(props: FactoryProps): MonthState[] {
+    const factory = new MonthPickerFactory(props);
 
     return [
-      factory.createMonth(0),
-      factory.createMonth(1),
-      factory.createMonth(2),
-      factory.createMonth(3),
-      factory.createMonth(4),
-      factory.createMonth(5),
-      factory.createMonth(6),
-      factory.createMonth(7),
-      factory.createMonth(8),
-      factory.createMonth(9),
-      factory.createMonth(10),
-      factory.createMonth(11)
+      factory.createMonth(Month.January),
+      factory.createMonth(Month.February),
+      factory.createMonth(Month.March),
+      factory.createMonth(Month.April),
+      factory.createMonth(Month.May),
+      factory.createMonth(Month.June),
+      factory.createMonth(Month.July),
+      factory.createMonth(Month.August),
+      factory.createMonth(Month.September),
+      factory.createMonth(Month.October),
+      factory.createMonth(Month.November),
+      factory.createMonth(Month.December)
     ];
   }
 
@@ -107,6 +107,6 @@ export function isMaxLimitMonth(
   return date.getFullYear() === maxYear && month >= maxMonth;
 }
 
-export function createMonthPicker(props: Props): MonthState[] {
-  return Factory.execute(props);
+export function createMonthPicker(props: FactoryProps): MonthState[] {
+  return MonthPickerFactory.execute(props);
 }
