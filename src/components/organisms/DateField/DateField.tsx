@@ -46,10 +46,10 @@ export function RlsDateField({
 
   function onChange(value?: Date, ignoreControl = false): void {
     if (!ignoreControl) {
-      formControl?.setState(undefined);
+      formControl?.setState(value);
     }
 
-    setValue(undefined);
+    setValue(value);
 
     if (onValue) {
       onValue(value);

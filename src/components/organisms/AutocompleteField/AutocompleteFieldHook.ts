@@ -91,19 +91,16 @@ export function useAutocompleteField<
   useEffect(() => filterSuggestions(pattern), [pattern]);
 
   useEffect(() => {
-    changeInternal ? setChangeInternal(false) : resetComponent();
+    changeInternal ? setChangeInternal(false) : resetState();
   }, [formControl?.state]);
 
-  useEffect(
-    () => setValue(requestCurrentElement()?.description || ''),
-    [collection]
-  );
+  useEffect(() => resetState(), [collection]);
 
   function requestCurrentElement(): Undefined<AbstractListElement<T>> | null {
     return formControl?.state && collection.find(formControl.state);
   }
 
-  function resetComponent(): void {
+  function resetState(): void {
     const element = requestCurrentElement();
 
     setValue(element?.description || '');
