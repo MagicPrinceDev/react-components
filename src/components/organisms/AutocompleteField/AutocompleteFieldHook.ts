@@ -7,7 +7,10 @@ import {
   useEffect,
   useState
 } from 'react';
-import { AbstractAutocompleteElement as Element } from '../../../models';
+import {
+  AbstractListElement,
+  AbstractAutocompleteElement as Element
+} from '../../../models';
 import { ListControl, useListControl } from '../../../hooks';
 
 const DURATION_ANIMATION = 240;
@@ -83,30 +86,32 @@ export function useAutocompleteField<
 
   const [changeInternal, setChangeInternal] = useState(false);
 
-  useEffect(() => {
-    filterSuggestions(pattern, true);
-  }, [suggestions]);
+  useEffect(() => filterSuggestions(pattern, true), [suggestions]);
+
+  useEffect(() => filterSuggestions(pattern), [pattern]);
 
   useEffect(() => {
-    filterSuggestions(pattern);
-  }, [pattern]);
-
-  useEffect(() => {
-    if (!changeInternal) {
-      redefineDescription();
-    }
-
-    setChangeInternal(false);
+    changeInternal ? setChangeInternal(false) : resetComponent();
   }, [formControl?.state]);
 
-  useEffect(() => {
-    redefineDescription();
-  }, [collection]);
+  useEffect(
+    () => setValue(requestCurrentElement()?.description || ''),
+    [collection]
+  );
 
-  function redefineDescription(): void {
-    const element = formControl?.state && collection.find(formControl?.state);
+  function requestCurrentElement(): Undefined<AbstractListElement<T>> | null {
+    return formControl?.state && collection.find(formControl.state);
+  }
+
+  function resetComponent(): void {
+    const element = requestCurrentElement();
 
     setValue(element?.description || '');
+
+    if (!element) {
+      setChangeInternal(true);
+      formControl?.setState(undefined);
+    }
   }
 
   function onClickControl(): void {

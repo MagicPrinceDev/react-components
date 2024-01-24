@@ -51,21 +51,27 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
   const [changeInternal, setChangeInternal] = useState(false);
 
   useEffect(() => {
-    if (!changeInternal) {
-      redefineDescription();
-    }
-
-    setChangeInternal(false);
+    changeInternal ? setChangeInternal(false) : resetComponent();
   }, [formControl?.state]);
 
-  useEffect(() => {
-    redefineDescription();
-  }, [collection]);
+  useEffect(
+    () => setValue(requestCurrentElement()?.description || ''),
+    [collection]
+  );
 
-  function redefineDescription(): void {
-    const element = formControl?.state && collection.find(formControl?.state);
+  function requestCurrentElement(): Undefined<Element<T>> | null {
+    return formControl?.state && collection.find(formControl.state);
+  }
+
+  function resetComponent(): void {
+    const element = requestCurrentElement();
 
     setValue(element?.description || '');
+
+    if (!element) {
+      setChangeInternal(true);
+      formControl?.setState(undefined);
+    }
   }
 
   function onFocusInput(): void {

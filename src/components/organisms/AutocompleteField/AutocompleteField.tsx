@@ -9,7 +9,7 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
-import { useAutocompleteField } from './autocomplete-field.hook';
+import { useAutocompleteField } from './AutocompleteFieldHook';
 import './AutocompleteField.css';
 
 interface AutocompleteFieldProps<T = unknown, E extends Element<T> = Element<T>>

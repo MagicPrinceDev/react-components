@@ -6,7 +6,7 @@ import { renderClassStatus } from '../../../utils/css';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';
-import { useSelectField } from './select-field.hook';
+import { useSelectField } from './SelectFieldHook';
 import './SelectField.css';
 
 interface SelectFieldProps<T = unknown, E extends Element<T> = Element<T>>
