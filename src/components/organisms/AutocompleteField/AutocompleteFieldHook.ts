@@ -1,3 +1,4 @@
+import { FormState } from '@rolster/helpers-forms';
 import { hasPattern } from '@rolster/helpers-string';
 import { ReactControl } from '@rolster/react-forms';
 import {
@@ -7,11 +8,11 @@ import {
   useEffect,
   useState
 } from 'react';
-import {
-  AbstractListElement,
-  AbstractAutocompleteElement as Element
-} from '../../../models';
 import { ListControl, useListControl } from '../../../hooks';
+import {
+  AbstractAutocompleteElement as Element,
+  ListCollection
+} from '../../../models';
 
 const DURATION_ANIMATION = 240;
 const MAX_ELEMENTS = 6;
@@ -30,7 +31,6 @@ export interface AutocompleteControl<
 > {
   coincidences: E[];
   listControl: ListControl<T>;
-  pattern: string;
   onBlurInput: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
@@ -39,6 +39,7 @@ export interface AutocompleteControl<
   onFocusInput: () => void;
   onKeydownElement: (element: E) => KeyboardEventHandler;
   onKeydownInput: (event: KeyboardEvent) => void;
+  pattern: string;
   setPattern: (value: string) => void;
 }
 
@@ -54,11 +55,11 @@ export function useAutocompleteField<
   T = unknown,
   E extends Element<T> = Element<T>
 >({
-  suggestions,
   disabled,
   formControl,
   onSelect,
-  onValue
+  onValue,
+  suggestions
 }: AutocompleteProps<T, E>): AutocompleteControl<T, E> {
   const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<E[]>([]);
@@ -71,17 +72,17 @@ export function useAutocompleteField<
   const listControl = useListControl({
     suggestions,
     formControl,
-    withHigher: true
+    higher: true
   });
 
   const {
     collection,
     inputRef,
+    navigationElement,
+    navigationInput,
     setFocused,
     setValue,
-    setVisible,
-    navigationElement,
-    navigationInput
+    setVisible
   } = listControl;
 
   const [changeInternal, setChangeInternal] = useState(false);
@@ -91,23 +92,30 @@ export function useAutocompleteField<
   useEffect(() => filterSuggestions(pattern), [pattern]);
 
   useEffect(() => {
-    changeInternal ? setChangeInternal(false) : resetState();
+    changeInternal
+      ? setChangeInternal(false)
+      : reset(collection, formControl?.state);
   }, [formControl?.state]);
 
-  useEffect(() => resetState(), [collection]);
+  useEffect(() => reset(collection, formControl?.state), [collection]);
 
-  function requestCurrentElement(): Undefined<AbstractListElement<T>> | null {
-    return formControl?.state && collection.find(formControl.state);
+  function setFormState(value: Undefined<T>): void {
+    setChangeInternal(true);
+    formControl?.setState(value);
   }
 
-  function resetState(): void {
-    const element = requestCurrentElement();
+  function reset(collection: ListCollection<T>, state: FormState<T>): void {
+    if (state) {
+      const element = collection.find(state);
 
-    setValue(element?.description || '');
-
-    if (!element) {
-      setChangeInternal(true);
-      formControl?.setState(undefined);
+      if (element) {
+        setValue(element.description);
+      } else {
+        setValue('');
+        setFormState(undefined);
+      }
+    } else {
+      setValue('');
     }
   }
 
@@ -148,8 +156,7 @@ export function useAutocompleteField<
     setValue('');
 
     if (formControl) {
-      setChangeInternal(true);
-      formControl.setState(undefined);
+      setFormState(undefined);
     }
 
     if (onValue) {
@@ -188,8 +195,7 @@ export function useAutocompleteField<
       onSelect(value);
     } else {
       if (formControl) {
-        setChangeInternal(true);
-        formControl.setState(value);
+        setFormState(value);
       }
 
       setValue(description);
@@ -261,7 +267,6 @@ export function useAutocompleteField<
   return {
     coincidences,
     listControl,
-    pattern,
     onBlurInput,
     onClickAction,
     onClickBackdrop,
@@ -270,6 +275,7 @@ export function useAutocompleteField<
     onFocusInput,
     onKeydownElement,
     onKeydownInput,
+    pattern,
     setPattern
   };
 }

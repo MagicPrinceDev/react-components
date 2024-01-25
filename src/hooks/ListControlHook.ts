@@ -40,13 +40,13 @@ export interface ListControl<T = unknown> {
 interface ListControlProps<T = unknown> {
   suggestions: AbstractListElement<T>[];
   formControl?: ReactControl<HTMLElement, T>;
-  withHigher?: boolean;
+  higher?: boolean;
 }
 
 export function useListControl<T = unknown>({
   suggestions,
   formControl,
-  withHigher = false
+  higher: withHigher = false
 }: ListControlProps<T>): ListControl<T> {
   const boxContentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -167,10 +167,7 @@ export function useListControl<T = unknown>({
       elements.item(0).focus();
 
       setTimeout(() => {
-        listRef?.current?.scroll({
-          top: 0,
-          behavior: 'smooth'
-        });
+        listRef?.current?.scroll({ top: 0, behavior: 'smooth' });
       }, 100);
     }
   }
@@ -207,12 +204,12 @@ export function useListControl<T = unknown>({
     higher,
     inputRef,
     listRef,
-    value,
-    visible,
     navigationElement,
     navigationInput,
     setFocused,
     setValue,
-    setVisible
+    setVisible,
+    value,
+    visible
   };
 }

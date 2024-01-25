@@ -1,3 +1,4 @@
+import { FormState } from '@rolster/helpers-forms';
 import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
@@ -7,7 +8,10 @@ import {
   useState
 } from 'react';
 import { ListControl, useListControl } from '../../../hooks';
-import { AbstractListElement as Element } from '../../../models';
+import {
+  AbstractListElement as Element,
+  ListCollection
+} from '../../../models';
 
 export interface SelectControl<T = unknown, E extends Element<T> = Element<T>> {
   listControl: ListControl<T>;
@@ -41,33 +45,40 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
     collection,
     inputRef,
     visible,
+    navigationElement,
+    navigationInput,
     setFocused,
     setValue,
-    setVisible,
-    navigationElement,
-    navigationInput
+    setVisible
   } = listControl;
 
   const [changeInternal, setChangeInternal] = useState(false);
 
   useEffect(() => {
-    changeInternal ? setChangeInternal(false) : resetState();
+    changeInternal
+      ? setChangeInternal(false)
+      : reset(collection, formControl?.state);
   }, [formControl?.state]);
 
-  useEffect(() => resetState(), [collection]);
+  useEffect(() => reset(collection, formControl?.state), [collection]);
 
-  function requestCurrentElement(): Undefined<Element<T>> | null {
-    return formControl?.state && collection.find(formControl.state);
+  function setFormState(value: Undefined<T>): void {
+    setChangeInternal(true);
+    formControl?.setState(value);
   }
 
-  function resetState(): void {
-    const element = requestCurrentElement();
+  function reset(collection: ListCollection<T>, state: FormState<T>): void {
+    if (state) {
+      const element = collection.find(state);
 
-    setValue(element?.description || '');
-
-    if (!element) {
-      setChangeInternal(true);
-      formControl?.setState(undefined);
+      if (element) {
+        setValue(element.description);
+      } else {
+        setValue('');
+        setFormState(undefined);
+      }
+    } else {
+      setValue('');
     }
   }
 
@@ -150,8 +161,7 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
       onSelect(value);
     } else {
       if (formControl) {
-        setChangeInternal(true);
-        formControl.setState(value);
+        setFormState(value);
       }
 
       setValue(description);
