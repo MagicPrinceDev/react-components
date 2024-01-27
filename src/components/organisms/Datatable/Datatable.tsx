@@ -7,8 +7,9 @@ interface DatatableCellProps extends RlsComponent {
   overflow?: boolean;
 }
 
-interface DatatableRowProps extends RlsComponent {
+interface DatatableDateProps extends RlsComponent {
   className?: string;
+  error?: boolean;
 }
 
 interface DatatableProps extends RlsComponent {
@@ -27,17 +28,31 @@ export function RlsDatatableTitle({
 }: DatatableCellProps) {
   return (
     <th
-      className={
-        `${className} ` + renderClassStatus('rls-datatable__title', { control })
-      }
+      className={(
+        renderClassStatus('rls-datatable__title', { control }) +
+        ` ${className || ''}`
+      ).trim()}
     >
       {children}
     </th>
   );
 }
 
-export function RlsDatatableData({ children, className }: DatatableRowProps) {
-  return <tr className={`rls-datatable__data ${className}`}>{children}</tr>;
+export function RlsDatatableData({
+  children,
+  className,
+  error
+}: DatatableDateProps) {
+  return (
+    <tr
+      className={(
+        renderClassStatus('rls-datatable__data', { error }) +
+        ` ${className || ''}`
+      ).trim()}
+    >
+      {children}
+    </tr>
+  );
 }
 
 export function RlsDatatableCell({
@@ -48,10 +63,10 @@ export function RlsDatatableCell({
 }: DatatableCellProps) {
   return (
     <th
-      className={
-        `${className} ` +
-        renderClassStatus('rls-datatable__cell', { control, overflow })
-      }
+      className={(
+        renderClassStatus('rls-datatable__cell', { control, overflow }) +
+        ` ${className || ''}`
+      ).trim()}
     >
       {children}
     </th>
