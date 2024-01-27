@@ -1,16 +1,16 @@
 // Rolster Technology FormNavigation Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 31/May/2023
-// Updated: 12/Sep/2023
+// Updated: 27/Ene/2024
 
 .rls-form-navigation {
   position: fixed;
   top: var(--sizing-x8);
   right: var(--sizing-x8);
   width: calc(100% - var(--sizing-x16));
-  max-width: 20rem;
+  max-width: 160rem;
   height: auto;
   max-height: calc(100vh - var(--sizing-x16));
   z-index: var(--z-index-12);

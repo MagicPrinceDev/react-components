@@ -1,9 +1,9 @@
 // Rolster Technology DayRangePicker Component
-// v1.0.1
+// v1.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 12/Sep/2023
+// Updated: 27/Ene/2024
 
 .rls-day-range-picker {
   --pvt-span-nothover-background: transparent;
@@ -13,7 +13,7 @@
   position: relative;
   float: left;
   width: 100%;
-  max-width: 17.5rem;
+  max-width: 140rem;
   box-sizing: border-box;
   user-select: none;
 
@@ -50,7 +50,7 @@
       height: var(--sizing-x18);
       line-height: var(--sizing-x18);
       margin: var(--sizing-x1) 0rem;
-      font-size: 0.875rem;
+      font-size: 7rem;
       font-weight: var(--font-weight-semibold);
 
       &:not(:hover) {

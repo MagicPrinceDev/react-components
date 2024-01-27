@@ -1,14 +1,14 @@
 // Rolster Technology DateRangePicker Component
-// v1.0.0
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 25/May/2023
+// Updated: 27/Ene/2024
 
 .rls-date-range-picker {
   position: relative;
   float: left;
-  max-width: 18.75rem;
+  max-width: 150rem;
   overflow: hidden;
 
   &__header {
@@ -31,7 +31,7 @@
     &--description {
       height: var(--sizing-x16);
       line-height: var(--sizing-x16);
-      font-size: 1.15rem;
+      font-size: 9.25rem;
     }
 
     &--year {
