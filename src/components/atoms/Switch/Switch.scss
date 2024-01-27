@@ -6,11 +6,11 @@
 // Updated: 27/Nov/2023
 
 .rls-switch {
-  --pvt-element-left: var(--sizing-2);
+  --pvt-element-left: var(--sizing-x1);
   --pvt-element-background: var(--background-theme-500);
   --pvt-bar-background: var(--background-theme-100);
 
-  max-width: var(--sizing-40);
+  max-width: var(--sizing-x20);
 
   &:hover {
     cursor: pointer;
@@ -19,7 +19,7 @@
   &--checked {
     --pvt-element-background: var(--gradient-rolster-500);
     --pvt-element-left: calc(
-      100% - var(--rls-switch-element-size) - var(--sizing-2)
+      100% - var(--rls-switch-element-size) - var(--sizing-x1)
     );
     --pvt-bar-background: var(--color-rolster-300);
   }
@@ -32,7 +32,7 @@
   &__component {
     position: relative;
     width: 100%;
-    padding: var(--sizing-6) var(--sizing-2);
+    padding: var(--sizing-x3) var(--sizing-x1);
     box-sizing: border-box;
 
     &__element {
@@ -42,11 +42,11 @@
       width: var(--rls-switch-element-size);
       height: var(--rls-switch-element-size);
       z-index: var(--z-index-2);
-      padding: var(--sizing-4);
+      padding: var(--sizing-x2);
       box-sizing: border-box;
       border-radius: 50%;
       background: var(--background-theme-500);
-      box-shadow: 0 0 0.25rem 0 rgba(37, 38, 65, 0.38);
+      box-shadow: 0 0 2rem 0 rgba(37, 38, 65, 0.38);
       transition: left 240ms var(--standard-curve);
 
       &::before {

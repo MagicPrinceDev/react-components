@@ -7,13 +7,13 @@
 
 .rls-checkbox-label {
   --pvt-text-opacity: 1;
-  --pvt-text-height: var(--sizing-24);
+  --pvt-text-height: var(--sizing-x12);
   --pvt-text-overflow: hidden;
   --pvt-text-white-space: nowrap;
   --pvt-text-text-overflow: ellipsis;
 
   display: flex;
-  column-gap: var(--sizing-8);
+  column-gap: var(--sizing-x4);
 
   &--disabled {
     --pvt-text-opacity: 0.5;
@@ -33,9 +33,9 @@
   }
 
   &__text {
-    max-width: calc(100% - var(--sizing-32));
+    max-width: calc(100% - var(--sizing-x16));
     height: var(--pvt-text-height);
-    line-height: var(--sizing-24);
+    line-height: var(--sizing-x12);
     color: var(--color-theme-300);
     font-size: var(--label-font-size);
     font-weight: var(--font-weight-medium);

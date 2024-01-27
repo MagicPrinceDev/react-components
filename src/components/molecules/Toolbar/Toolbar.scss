@@ -8,7 +8,7 @@
 .rls-toolbar {
   display: flex;
   justify-content: space-between;
-  column-gap: var(--sizing-12);
+  column-gap: var(--sizing-x6);
   height: var(--rls-toolbar-height);
 
   & > * {
@@ -18,14 +18,14 @@
   &__content {
     display: flex;
     height: 100%;
-    padding: var(--sizing-4) var(--sizing-12);
+    padding: var(--sizing-x2) var(--sizing-x6);
     box-sizing: border-box;
     margin: auto 0rem;
   }
 
   &__description {
     overflow: hidden;
-    padding: 0rem var(--sizing-4);
+    padding: 0rem var(--sizing-x2);
     box-sizing: border-box;
     margin: auto 0rem;
 
@@ -41,8 +41,8 @@
 
   &__title {
     color: var(--color-theme-500);
-    height: var(--sizing-24);
-    line-height: var(--sizing-24);
+    height: var(--sizing-x12);
+    line-height: var(--sizing-x12);
     font-size: 1.0125rem;
     letter-spacing: var(--label-letter-spacing);
     font-weight: var(--font-weight-bold);
@@ -56,7 +56,7 @@
     display: flex;
     box-sizing: border-box;
     margin: auto 0rem;
-    column-gap: var(--sizing-16);
+    column-gap: var(--sizing-x8);
 
     & > * {
       margin: auto 0rem;

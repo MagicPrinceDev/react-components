@@ -6,14 +6,14 @@
 // Updated: 12/May/2023
 
 .rls-search-input {
-  --rls-input-height: var(--sizing-28);
+  --rls-input-height: var(--sizing-x14);
 
   position: relative;
   float: left;
   display: flex;
   align-items: center;
-  padding: var(--sizing-8) var(--sizing-12);
+  padding: var(--sizing-x4) var(--sizing-x6);
   box-sizing: border-box;
   border: var(--border-1-theme-300);
-  border-radius: var(--sizing-8);
+  border-radius: var(--sizing-x4);
 }

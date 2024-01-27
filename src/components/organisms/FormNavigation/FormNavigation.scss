@@ -7,19 +7,19 @@
 
 .rls-form-navigation {
   position: fixed;
-  top: var(--sizing-16);
-  right: var(--sizing-16);
-  width: calc(100% - var(--sizing-32));
+  top: var(--sizing-x8);
+  right: var(--sizing-x8);
+  width: calc(100% - var(--sizing-x16));
   max-width: 20rem;
   height: auto;
-  max-height: calc(100vh - var(--sizing-32));
+  max-height: calc(100vh - var(--sizing-x16));
   z-index: var(--z-index-12);
-  padding: var(--sizing-16) var(--sizing-16) var(--sizing-24) var(--sizing-16);
+  padding: var(--sizing-x8) var(--sizing-x8) var(--sizing-x12) var(--sizing-x8);
   box-sizing: border-box;
   background: var(--background-theme-500);
-  border-radius: var(--sizing-8);
+  border-radius: var(--sizing-x4);
   box-shadow: var(--shadow-center-dark-8);
-  transform: translateX(calc(100% + var(--sizing-32)));
+  transform: translateX(calc(100% + var(--sizing-x16)));
   transition: transform 240ms 0ms var(--standard-curve);
 
   &--visible {
@@ -27,11 +27,11 @@
   }
 
   &__header {
-    margin-bottom: var(--sizing-16);
+    margin-bottom: var(--sizing-x8);
 
     .rls-button-action {
-      width: var(--sizing-24);
-      height: var(--sizing-24);
+      width: var(--sizing-x12);
+      height: var(--sizing-x12);
       padding: 0rem;
       float: right;
     }

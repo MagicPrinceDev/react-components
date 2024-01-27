@@ -14,9 +14,9 @@
 
   &__header {
     background: var(--color-rolster-100);
-    padding: var(--sizing-8);
+    padding: var(--sizing-x4);
     box-sizing: border-box;
-    margin-bottom: var(--sizing-16);
+    margin-bottom: var(--sizing-x8);
   }
 
   &__title {
@@ -30,16 +30,16 @@
     }
 
     &--description {
-      height: var(--sizing-32);
-      line-height: var(--sizing-32);
+      height: var(--sizing-x16);
+      line-height: var(--sizing-x16);
       font-size: 1.15rem;
     }
 
     &--year {
-      margin: var(--sizing-8) 0rem var(--sizing-4) 0rem;
-      height: var(--sizing-32);
-      line-height: var(--sizing-32);
-      font-size: var(--sizing-24);
+      margin: var(--sizing-x4) 0rem var(--sizing-x2) 0rem;
+      height: var(--sizing-x16);
+      line-height: var(--sizing-x16);
+      font-size: var(--sizing-x12);
       color: var(--color-theme-300);
     }
   }
@@ -47,9 +47,9 @@
   &__component {
     display: flex;
     width: 18.75rem;
-    padding: 0rem var(--sizing-4);
+    padding: 0rem var(--sizing-x2);
     box-sizing: border-box;
-    margin-bottom: var(--sizing-8);
+    margin-bottom: var(--sizing-x4);
 
     & > * {
       margin: 0rem auto;
@@ -84,17 +84,17 @@
   &__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sizing-8);
-    padding: var(--sizing-8) var(--sizing-16) var(--sizing-12) var(--sizing-16);
+    gap: var(--sizing-x4);
+    padding: var(--sizing-x4) var(--sizing-x8) var(--sizing-x6) var(--sizing-x8);
     overflow: hidden;
     box-sizing: border-box;
 
     &--cancel {
-      width: calc(50% - var(--sizing-4));
+      width: calc(50% - var(--sizing-x2));
     }
 
     &--today {
-      width: calc(50% - var(--sizing-4));
+      width: calc(50% - var(--sizing-x2));
     }
 
     &--ok {

@@ -7,13 +7,13 @@
 
 .rls-message-icon {
   --rls-icon-color: var(--color-rolster-500);
-  --rls-icon-width: var(--sizing-16);
-  --rls-icon-height: var(--sizing-16);
-  --rls-icon-font-size: var(--sizing-16);
+  --rls-icon-width: var(--sizing-x8);
+  --rls-icon-height: var(--sizing-x8);
+  --rls-icon-font-size: var(--sizing-x8);
 
   display: flex;
   align-items: center;
-  column-gap: var(--sizing-4);
+  column-gap: var(--sizing-x2);
 
   span {
     color: var(--color-theme-300);

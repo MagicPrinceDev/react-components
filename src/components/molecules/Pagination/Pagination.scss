@@ -12,15 +12,15 @@
   float: left;
   width: 100%;
   overflow: hidden;
-  height: var(--sizing-40);
-  padding: 0rem var(--sizing-12);
+  height: var(--sizing-x20);
+  padding: 0rem var(--sizing-x6);
   box-sizing: border-box;
 
   &__pages {
     display: flex;
-    gap: var(--sizing-8);
+    gap: var(--sizing-x4);
     width: auto;
-    margin: 0rem var(--sizing-8);
+    margin: 0rem var(--sizing-x4);
   }
 
   &__page {
@@ -29,10 +29,10 @@
     cursor: default;
     margin: auto 0rem;
     text-align: center;
-    width: var(--sizing-32);
-    height: var(--sizing-32);
-    line-height: var(--sizing-32);
-    border-radius: var(--sizing-4);
+    width: var(--sizing-x16);
+    height: var(--sizing-x16);
+    line-height: var(--sizing-x16);
+    border-radius: var(--sizing-x2);
 
     &:hover {
       background: var(--color-rolster-300);
@@ -47,10 +47,10 @@
 
   &__description {
     color: var(--font-primary-900);
-    margin: 0rem var(--sizing-8);
+    margin: 0rem var(--sizing-x4);
     width: auto;
-    height: var(--sizing-40);
-    line-height: var(--sizing-40);
+    height: var(--sizing-x20);
+    line-height: var(--sizing-x20);
     font-size: var(--body-1-size);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--body-1-letter-spacing);
@@ -64,10 +64,10 @@
     background: none;
     outline: none;
     color: var(--color-theme-300);
-    height: var(--sizing-36);
-    width: var(--sizing-36);
-    padding: var(--sizing-6);
-    margin: var(--sizing-2) 0rem;
+    height: var(--sizing-x18);
+    width: var(--sizing-x18);
+    padding: var(--sizing-x3);
+    margin: var(--sizing-x1) 0rem;
 
     &:hover {
       color: var(--color-rolster-300);

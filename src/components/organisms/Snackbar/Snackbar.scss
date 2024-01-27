@@ -8,16 +8,16 @@
 .rls-snackbar {
   position: fixed;
   display: flex;
-  column-gap: var(--sizing-12);
+  column-gap: var(--sizing-x6);
   bottom: 0rem;
   left: var(--rls-snackbar-left);
   z-index: 32;
   width: auto;
   height: auto;
   max-width: 30rem;
-  padding: var(--sizing-12);
+  padding: var(--sizing-x6);
   box-sizing: border-box;
-  border-radius: var(--sizing-8);
+  border-radius: var(--sizing-x4);
   background: var(--background-theme-500);
   box-shadow: var(--shadow-bottom-light-4);
   border: var(--border-1-rolster-300);
@@ -26,7 +26,7 @@
   transition: transform 160ms 0ms var(--standard-curve);
 
   &--visible {
-    transform: translate(-50%, calc(0% - var(--sizing-16)));
+    transform: translate(-50%, calc(0% - var(--sizing-x8)));
   }
 
   &__avatar {
@@ -37,19 +37,19 @@
     align-items: center;
     overflow: hidden;
     background: var(--color-rolster-500);
-    width: var(--sizing-36);
-    height: var(--sizing-36);
-    border-radius: var(--sizing-8);
+    width: var(--sizing-x18);
+    height: var(--sizing-x18);
+    border-radius: var(--sizing-x4);
 
     & + .rls-snackbar__component {
-      width: calc(100% - var(--sizing-36));
+      width: calc(100% - var(--sizing-x18));
     }
   }
 
   &__component {
     display: flex;
     flex-direction: column;
-    row-gap: var(--sizing-4);
+    row-gap: var(--sizing-x2);
   }
 
   &__title {
@@ -64,7 +64,7 @@
 
   &__content {
     p {
-      line-height: var(--sizing-20);
+      line-height: var(--sizing-x10);
       color: var(--color-theme-300);
       font-size: var(--label-font-size);
       font-weight: var(--font-weight-medium);
@@ -75,6 +75,6 @@
 
 @media only screen and (max-width: 375px) {
   .rls-snackbar {
-    width: calc(100% - var(--sizing-24));
+    width: calc(100% - var(--sizing-x12));
   }
 }

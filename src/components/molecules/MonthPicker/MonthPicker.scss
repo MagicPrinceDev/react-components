@@ -12,8 +12,8 @@
   max-width: 17.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--sizing-4);
-  padding: var(--sizing-2);
+  gap: var(--sizing-x2);
+  padding: var(--sizing-x1);
   box-sizing: border-box;
 
   &__component {
@@ -22,8 +22,8 @@
     display: flex;
     box-sizing: border-box;
     text-align: center;
-    height: var(--sizing-36);
-    border-radius: var(--sizing-8);
+    height: var(--sizing-x18);
+    border-radius: var(--sizing-x4);
     color: var(--color-theme-300);
 
     &:hover {

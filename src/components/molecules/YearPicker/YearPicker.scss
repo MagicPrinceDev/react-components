@@ -17,23 +17,23 @@
   &__header {
     display: flex;
     box-sizing: border-box;
-    padding: var(--sizing-8) var(--sizing-12);
+    padding: var(--sizing-x4) var(--sizing-x6);
     color: var(--color-theme-500);
     background: var(--background-theme-100);
   }
 
   &__title {
     width: 100%;
-    height: var(--sizing-32);
-    line-height: var(--sizing-32);
+    height: var(--sizing-x16);
+    line-height: var(--sizing-x16);
     text-align: center;
     font-weight: var(--font-weight-bold);
   }
 
   &__action {
-    width: var(--sizing-32);
-    height: var(--sizing-32);
-    line-height: var(--sizing-32);
+    width: var(--sizing-x16);
+    height: var(--sizing-x16);
+    line-height: var(--sizing-x16);
 
     button {
       color: var(--color-theme-500);
@@ -52,10 +52,10 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--sizing-8);
+    gap: var(--sizing-x4);
     width: 100%;
     float: left;
-    padding: var(--sizing-8);
+    padding: var(--sizing-x4);
     box-sizing: border-box;
   }
 
@@ -65,8 +65,8 @@
     display: flex;
     box-sizing: border-box;
     text-align: center;
-    height: var(--sizing-36);
-    border-radius: var(--sizing-8);
+    height: var(--sizing-x18);
+    border-radius: var(--sizing-x4);
     color: var(--color-theme-300);
 
     &:hover {

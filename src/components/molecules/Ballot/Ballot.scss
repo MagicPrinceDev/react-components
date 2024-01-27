@@ -6,19 +6,19 @@
 // Updated: 12/Sep/2023
 
 .rls-ballot {
-  --rls-avatar-width: var(--sizing-40);
-  --rls-avatar-height: var(--sizing-40);
+  --rls-avatar-width: var(--sizing-x20);
+  --rls-avatar-height: var(--sizing-x20);
 
   position: relative;
   float: left;
   display: flex;
   width: 100%;
-  padding: var(--sizing-8);
+  padding: var(--sizing-x4);
   box-sizing: border-box;
   overflow: hidden;
 
   &--bordered {
-    border-radius: var(--sizing-8);
+    border-radius: var(--sizing-x4);
     border: var(--border-1-theme-300);
   }
 
@@ -30,8 +30,8 @@
     margin: auto 0rem;
 
     & + .rls-ballot__component {
-      width: calc(100% - var(--sizing-56));
-      margin-left: var(--sizing-8);
+      width: calc(100% - var(--sizing-x28));
+      margin-left: var(--sizing-x4);
     }
   }
 
@@ -60,7 +60,7 @@
     float: left;
     width: var(--rls-ballot-subtitle-width);
     color: var(--color-theme-300);
-    margin-top: var(--sizing-4);
+    margin-top: var(--sizing-x2);
     font-weight: var(--font-weight-semibold);
     font-size: var(--smalltext-font-size);
     letter-spacing: var(--smalltext-letter-spacing);

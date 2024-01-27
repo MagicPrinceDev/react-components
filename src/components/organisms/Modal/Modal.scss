@@ -38,13 +38,13 @@
   &__component {
     position: absolute;
     width: auto;
-    max-width: calc(100% - var(--sizing-16));
+    max-width: calc(100% - var(--sizing-x8));
     height: var(--pvt-component-height);
     opacity: var(--pvt-component-opacity);
     visibility: var(--pvt-component-visibility);
     z-index: var(--z-index-2);
     overflow: hidden;
-    border-radius: var(--sizing-8);
+    border-radius: var(--sizing-x4);
     background: var(--background-theme-500);
     will-change: transform;
     transform: var(--pvt-component-transform);

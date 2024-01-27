@@ -92,19 +92,23 @@ export function useAutocompleteField<
   useEffect(() => filterSuggestions(pattern), [pattern]);
 
   useEffect(() => {
-    changeInternal
-      ? setChangeInternal(false)
-      : reset(collection, formControl?.state);
+    changeInternal ? setChangeInternal(false) : resetState(formControl?.state);
   }, [formControl?.state]);
 
-  useEffect(() => reset(collection, formControl?.state), [collection]);
+  useEffect(
+    () => resetCollection(collection, formControl?.state),
+    [collection]
+  );
 
   function setFormState(value: Undefined<T>): void {
     setChangeInternal(true);
     formControl?.setState(value);
   }
 
-  function reset(collection: ListCollection<T>, state: FormState<T>): void {
+  function resetCollection(
+    collection: ListCollection<T>,
+    state: FormState<T>
+  ): void {
     if (state) {
       const element = collection.find(state);
 
@@ -112,11 +116,14 @@ export function useAutocompleteField<
         setValue(element.description);
       } else {
         setValue('');
-        setFormState(undefined);
       }
     } else {
       setValue('');
     }
+  }
+
+  function resetState(state: FormState<T>): void {
+    setValue(state ? collection.find(state)?.description || '' : '');
   }
 
   function onClickControl(): void {

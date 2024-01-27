@@ -19,17 +19,17 @@
 
   &__header {
     display: flex;
-    margin-bottom: var(--sizing-8);
+    margin-bottom: var(--sizing-x4);
     background: var(--background-theme-100);
     color: var(--color-theme-500);
-    border-radius: var(--sizing-4);
+    border-radius: var(--sizing-x2);
   }
 
   &__label {
-    padding: var(--sizing-12) 0rem;
+    padding: var(--sizing-x6) 0rem;
     text-align: center;
     width: 100%;
-    font-size: var(--sizing-12);
+    font-size: var(--sizing-x6);
     font-weight: var(--font-weight-bold);
   }
 
@@ -39,17 +39,17 @@
 
   &__day {
     text-align: center;
-    padding: var(--sizing-2);
+    padding: var(--sizing-x1);
     box-sizing: border-box;
 
     &__span {
       position: relative;
       display: block;
       color: var(--color-theme-500);
-      border-radius: var(--sizing-8);
-      height: var(--sizing-36);
-      line-height: var(--sizing-36);
-      margin: var(--sizing-2) 0rem;
+      border-radius: var(--sizing-x4);
+      height: var(--sizing-x18);
+      line-height: var(--sizing-x18);
+      margin: var(--sizing-x1) 0rem;
       font-size: 0.875rem;
       font-weight: var(--font-weight-semibold);
 

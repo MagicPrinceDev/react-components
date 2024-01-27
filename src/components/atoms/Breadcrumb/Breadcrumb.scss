@@ -12,7 +12,7 @@
   width: 100%;
   height: var(--rls-breadcrumb-height);
   line-height: var(--rls-breadcrumb-height);
-  padding: 0rem var(--sizing-16);
+  padding: 0rem var(--sizing-x8);
   box-sizing: border-box;
   user-select: none;
   overflow: auto;
@@ -45,10 +45,10 @@
       font-family: -rolster-icons;
       display: inline-block;
       content: '\e911';
-      margin: 0rem var(--sizing-4);
+      margin: 0rem var(--sizing-x2);
       cursor: default;
       color: inherit;
-      font-size: var(--sizing-24);
+      font-size: var(--sizing-x12);
       font-weight: normal;
       font-style: normal;
       letter-spacing: normal;

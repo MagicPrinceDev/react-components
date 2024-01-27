@@ -6,7 +6,7 @@
 // Updated: 03/Oct/2023
 
 .rls-date-range-field {
-  --rls-boxfield-body-padding: var(--sizing-6) var(--sizing-8);
+  --rls-boxfield-body-padding: var(--sizing-x3) var(--sizing-x4);
 
   position: relative;
   float: left;
@@ -16,9 +16,9 @@
   &__control {
     position: relative;
     float: left;
-    width: calc(100% - var(--sizing-28));
-    height: var(--sizing-24);
-    line-height: var(--sizing-24);
+    width: calc(100% - var(--sizing-x14));
+    height: var(--sizing-x12);
+    line-height: var(--sizing-x12);
     padding: 0rem;
     cursor: default;
     border: none;
@@ -40,10 +40,10 @@
 
   &__action {
     color: var(--color-theme-300);
-    width: var(--sizing-24);
-    height: var(--sizing-24);
+    width: var(--sizing-x12);
+    height: var(--sizing-x12);
     padding: 0rem;
-    margin-left: var(--sizing-4);
+    margin-left: var(--sizing-x2);
     background: transparent;
   }
 }

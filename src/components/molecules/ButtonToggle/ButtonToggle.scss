@@ -14,14 +14,14 @@
   }
 
   &__action {
-    --rls-button-content-radius: var(--sizing-4) 0rem 0rem var(--sizing-4);
+    --rls-button-content-radius: var(--sizing-x2) 0rem 0rem var(--sizing-x2);
 
     width: auto;
   }
 
   &__icon {
-    --rls-button-content-radius: 0rem var(--sizing-4) var(--sizing-4) 0rem;
-    --rls-button-content-padding: var(--sizing-4);
+    --rls-button-content-radius: 0rem var(--sizing-x2) var(--sizing-x2) 0rem;
+    --rls-button-content-padding: var(--sizing-x2);
 
     width: auto;
   }
@@ -62,8 +62,8 @@
       width: 100%;
       height: var(--rls-button-toggle-ul-height);
       opacity: var(--rls-button-toggle-ul-opacity);
-      padding: var(--sizing-8) 0rem;
-      border-radius: var(--sizing-8);
+      padding: var(--sizing-x4) 0rem;
+      border-radius: var(--sizing-x4);
       box-sizing: border-box;
       overflow-y: auto;
       overflow-x: hidden;
@@ -77,10 +77,10 @@
       will-change: opacity, transform;
 
       li {
-        padding: 0rem var(--sizing-12);
+        padding: 0rem var(--sizing-x6);
         box-sizing: border-box;
-        height: var(--sizing-40);
-        line-height: var(--sizing-40);
+        height: var(--sizing-x20);
+        line-height: var(--sizing-x20);
         cursor: default;
         font-weight: var(--font-weight-bold);
         font-size: 0.825rem;
