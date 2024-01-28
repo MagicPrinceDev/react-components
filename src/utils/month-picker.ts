@@ -8,8 +8,8 @@ interface FactoryProps {
   maxDate?: Date;
 }
 
-export const MONTH_MAX_VALUE = Month.January;
-export const MONTH_MIN_VALUE = Month.December;
+export const MONTH_MAX_VALUE = Month.December;
+export const MONTH_MIN_VALUE = Month.January;
 
 class MonthPickerFactory {
   private value: number;

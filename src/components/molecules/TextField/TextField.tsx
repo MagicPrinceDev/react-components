@@ -27,7 +27,7 @@ export function RlsTextField({
         'rls-box-field',
         {
           focused: formControl?.focused,
-          error: formControl?.touched && !formControl?.valid,
+          error: formControl?.wrong,
           disabled: formControl?.disabled || disabled
         },
         'rls-text-field'
