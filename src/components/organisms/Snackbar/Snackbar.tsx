@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './Snackbar.css';

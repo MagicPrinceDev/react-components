@@ -1,46 +1,41 @@
 import { MONTH_NAMES } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
 import {
   MONTH_MAX_VALUE,
   MONTH_MIN_VALUE,
   isMaxLimitMonth,
   isMinLimitMonth
-} from '../../../utils/month-picker';
+} from '../../../helpers/month-picker';
 import { RlsButtonAction } from '../../atoms';
 import './MonthTitlePicker.css';
 
+type MonthTitlePickerType = 'month' | 'year';
+
 interface MonthTitlePickerProps {
   monthControl: ReactControl<HTMLElement, number>;
+  type: MonthTitlePickerType;
   yearControl: ReactControl<HTMLElement, number>;
   date?: Date;
+  disabled?: boolean;
   maxDate?: Date;
   minDate?: Date;
   onClick?: () => void;
 }
 
 export function RlsMonthTitlePicker({
-  monthControl,
-  yearControl,
   date,
+  disabled,
+  monthControl,
   maxDate,
   minDate,
-  onClick
+  onClick,
+  type,
+  yearControl
 }: MonthTitlePickerProps) {
   const { state: month } = monthControl;
   const { state: year } = yearControl;
 
-  const [limitMinMonth, setLimitMinMonth] = useState(false);
-  const [limitMaxMonth, setLimitMaxMonth] = useState(false);
-
   const monthName = MONTH_NAMES()[month || 0];
-
-  useEffect(() => {
-    if (typeof month === 'number' && date) {
-      setLimitMinMonth(isMinLimitMonth(month, date, minDate));
-      setLimitMaxMonth(isMaxLimitMonth(month, date, maxDate));
-    }
-  }, [date]);
 
   function onPreviousMonth(): void {
     if (typeof month === 'number' && typeof year === 'number') {
@@ -51,6 +46,16 @@ export function RlsMonthTitlePicker({
         yearControl.setState(year - 1);
       }
     }
+  }
+
+  function onPreviousYear(): void {
+    if (typeof year === 'number') {
+      yearControl.setState(year - 1);
+    }
+  }
+
+  function onPrevious(): void {
+    type === 'month' ? onPreviousMonth() : onPreviousYear();
   }
 
   function onNextMonth(): void {
@@ -64,20 +69,30 @@ export function RlsMonthTitlePicker({
     }
   }
 
+  function onNextYear(): void {
+    if (typeof year === 'number') {
+      yearControl.setState(year + 1);
+    }
+  }
+
+  function onNext(): void {
+    type === 'month' ? onNextMonth() : onNextYear();
+  }
+
   return (
     <div className="rls-month-title-picker">
       <RlsButtonAction
         icon="arrow-ios-left"
-        onClick={onPreviousMonth}
-        disabled={limitMinMonth}
+        onClick={onPrevious}
+        disabled={isMinLimitMonth(month, date, minDate) || disabled}
       />
 
       <span onClick={onClick}>{monthName}</span>
 
       <RlsButtonAction
         icon="arrow-ios-right"
-        onClick={onNextMonth}
-        disabled={limitMaxMonth}
+        onClick={onNext}
+        disabled={isMaxLimitMonth(month, date, maxDate) || disabled}
       />
     </div>
   );

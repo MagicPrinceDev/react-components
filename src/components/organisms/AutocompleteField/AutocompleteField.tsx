@@ -5,7 +5,7 @@ import {
   AbstractAutocompleteElement as Element,
   AutocompleteElement
 } from '../../../models';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';

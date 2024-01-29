@@ -1,7 +1,7 @@
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../utils/css';
-import { createYearPicker } from '../../../utils/year-picker';
+import { renderClassStatus } from '../../../helpers/css';
+import { createYearPicker } from '../../../helpers/year-picker';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './YearPicker.css';
@@ -17,7 +17,7 @@ interface YearPickerProps extends RlsComponent {
 
 export function RlsYearPicker({
   formControl,
-  date: date,
+  date,
   disabled: disabledPicker,
   maxDate,
   minDate,
@@ -47,7 +47,7 @@ export function RlsYearPicker({
         maxDate
       })
     );
-  }, [value, year, date, minDate, maxDate]);
+  }, [value, year, minDate, maxDate]);
 
   function onClickPrev(): void {
     setYear(year - 8);
@@ -79,11 +79,9 @@ export function RlsYearPicker({
           </button>
         </div>
 
-        <div className="rls-year-picker__title">
-          <label className="title1-bold">
-            {template.minRange} - {template.maxRange}
-          </label>
-        </div>
+        <label className="title-bold">
+          {template.minRange} - {template.maxRange}
+        </label>
 
         <div className="rls-year-picker__action rls-year-picker__action--next">
           <button

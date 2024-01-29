@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import './Button.css';

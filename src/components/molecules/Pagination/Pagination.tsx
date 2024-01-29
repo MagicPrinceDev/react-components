@@ -1,6 +1,6 @@
 import { hasPattern } from '@rolster/helpers-string';
 import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms';
 import './Pagination.css';
 

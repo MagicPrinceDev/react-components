@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { ButtonType, RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './ButtonToggle.css';

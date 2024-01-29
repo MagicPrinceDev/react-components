@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsMessageIcon, RlsInputText } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './TextField.css';

@@ -2,7 +2,7 @@ import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
 import reactI18n from '../../../i18n';
 import { AbstractListElement as Element, ListElement } from '../../../models';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules';

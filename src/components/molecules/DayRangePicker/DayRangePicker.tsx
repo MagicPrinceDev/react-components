@@ -6,8 +6,8 @@ import {
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { DateRange, WeekRangeState } from '../../../models';
-import { createRangePicker } from '../../../utils/date-range-picker';
-import { renderClassStatus } from '../../../utils/css';
+import { createRangePicker } from '../../../helpers/date-range-picker';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './DayRangePicker.css';
 

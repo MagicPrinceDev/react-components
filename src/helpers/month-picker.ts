@@ -65,11 +65,11 @@ class MonthPickerFactory {
   }
 
   private get minMonth(): number {
-    return this.minDate?.getMonth() || MONTH_MIN_VALUE;
+    return this.minDate ? this.minDate.getMonth() : MONTH_MIN_VALUE;
   }
 
   private get maxMonth(): number {
-    return this.maxDate?.getMonth() || MONTH_MAX_VALUE;
+    return this.maxDate ? this.maxDate.getMonth() : MONTH_MAX_VALUE;
   }
 
   private overflowMonth(month: number): boolean {
@@ -86,25 +86,33 @@ class MonthPickerFactory {
 }
 
 export function isMinLimitMonth(
-  month: number,
-  date: Date,
-  maxDate?: Date
+  month?: Nulleable<number>,
+  date?: Date,
+  minDate?: Date
 ): boolean {
-  const minYear = maxDate?.getFullYear() || 0;
-  const minMonth = maxDate?.getMonth() || 0;
+  if (typeof month === 'number' && date) {
+    const minMonth = minDate ? minDate.getMonth() : MONTH_MIN_VALUE;
+    const minYear = minDate ? minDate.getFullYear() : 0;
 
-  return date.getFullYear() === minYear && month <= minMonth;
+    return date.getFullYear() === minYear && month <= minMonth;
+  }
+
+  return false;
 }
 
 export function isMaxLimitMonth(
-  month: number,
-  date: Date,
+  month?: Nulleable<number>,
+  date?: Date,
   maxDate?: Date
 ): boolean {
-  const maxYear = maxDate?.getFullYear() || 10000;
-  const maxMonth = maxDate?.getMonth() || 11;
+  if (typeof month === 'number' && date) {
+    const maxMonth = maxDate ? maxDate.getMonth() : MONTH_MAX_VALUE;
+    const maxYear = maxDate ? maxDate.getFullYear() : 10000;
 
-  return date.getFullYear() === maxYear && month >= maxMonth;
+    return date.getFullYear() === maxYear && month >= maxMonth;
+  }
+
+  return false;
 }
 
 export function createMonthPicker(props: FactoryProps): MonthState[] {

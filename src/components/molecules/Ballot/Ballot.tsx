@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsAvatar, RlsSkeletonText } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './Ballot.css';

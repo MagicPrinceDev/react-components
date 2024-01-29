@@ -2,7 +2,7 @@ import { PartialSealed } from '@rolster/helpers-advanced';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import reactI18n from '../../../i18n';
-import { renderClassStatus } from '../../../utils/css';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsButton } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';

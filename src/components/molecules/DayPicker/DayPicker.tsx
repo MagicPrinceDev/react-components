@@ -1,8 +1,8 @@
 import { DAY_LABELS } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../utils/css';
-import { createDayPicker } from '../../../utils/day-picker';
+import { renderClassStatus } from '../../../helpers/css';
+import { createDayPicker } from '../../../helpers/day-picker';
 import { WeekState } from '../../../models';
 import { RlsComponent } from '../../definitions';
 import './DayPicker.css';

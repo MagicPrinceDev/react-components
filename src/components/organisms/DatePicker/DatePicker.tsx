@@ -8,8 +8,8 @@ import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import reactI18n from '../../../i18n';
 import { PickerListener, PickerListenerType } from '../../../types';
-import { renderClassStatus } from '../../../utils/css';
-import { verifyDateRange } from '../../../utils/date-picker';
+import { renderClassStatus } from '../../../helpers/css';
+import { verifyDateRange } from '../../../helpers/date-picker';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import {
@@ -92,8 +92,6 @@ export function RlsDatePicker({
           )
         : prevValue;
     });
-
-    setVisibility(VISIBILITY.DAY);
   }, [yearControl.state]);
 
   useEffect(() => {
@@ -106,8 +104,6 @@ export function RlsDatePicker({
           )
         : prevValue;
     });
-
-    setVisibility(VISIBILITY.DAY);
   }, [monthControl.state]);
 
   useEffect(() => {
@@ -179,6 +175,8 @@ export function RlsDatePicker({
           date={value}
           maxDate={maxDate}
           minDate={minDate}
+          disabled={year}
+          type={month ? 'year' : 'month'}
           onClick={onVisibilityMonth}
         />
       </div>
@@ -204,6 +202,7 @@ export function RlsDatePicker({
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}
+          onValue={onVisibilityDay}
         />
 
         <RlsYearPicker
@@ -212,6 +211,7 @@ export function RlsDatePicker({
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}
+          onValue={onVisibilityDay}
         />
       </div>
 

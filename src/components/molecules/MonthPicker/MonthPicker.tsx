@@ -1,8 +1,8 @@
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { MonthState } from '../../../models';
-import { createMonthPicker } from '../../../utils/month-picker';
-import { renderClassStatus } from '../../../utils/css';
+import { createMonthPicker } from '../../../helpers/month-picker';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './MonthPicker.css';
 
