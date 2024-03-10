@@ -33,6 +33,8 @@
     height: var(--sizing-x16);
     line-height: var(--sizing-x16);
     border-radius: var(--sizing-x2);
+    font-size: var(--body-font-size);
+    letter-spacing: var(--body-letter-spacing);
 
     &:hover {
       background: var(--color-rolster-300);
@@ -46,14 +48,14 @@
   }
 
   &__description {
-    color: var(--font-primary-900);
+    color: var(--color-theme-500);
     margin: 0rem var(--sizing-x4);
     width: auto;
     height: var(--sizing-x20);
     line-height: var(--sizing-x20);
-    font-size: var(--body-1-size);
+    font-size: var(--body-font-size);
     font-weight: var(--font-weight-bold);
-    letter-spacing: var(--body-1-letter-spacing);
+    letter-spacing: var(--body-letter-spacing);
   }
 
   &__actions {
