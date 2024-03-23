@@ -1,11 +1,12 @@
 import {
   DAY_LABELS,
-  normalizeMinTime,
-  refactorDay
+  DateRange,
+  assignDay,
+  normalizeMinTime
 } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { DateRange, WeekRangeState } from '../../../models';
+import { WeekRangeState } from '../../../models';
 import { createRangePicker } from '../../../helpers/date-range-picker';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
@@ -45,7 +46,7 @@ export function RlsDayRangePicker({
   }, [range, date, minDate, maxDate]);
 
   function onChange(value: number): void {
-    const newRange = range.recalculate(refactorDay(initialDate, value));
+    const newRange = range.recalculate(assignDay(initialDate, value));
 
     setRange(newRange);
     formControl?.setState(newRange);

@@ -1,4 +1,4 @@
-import { DateRange } from './models';
+import { DateRange } from '@rolster/helpers-date';
 
 export enum PickerListenerType {
   Select = 'PickerSelect',

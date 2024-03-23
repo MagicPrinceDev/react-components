@@ -7,13 +7,18 @@ interface AvatarProps extends RlsComponent {
   skeleton?: boolean;
 }
 
-export function RlsAvatar({ children, rounded, skeleton, rlsTheme }: AvatarProps) {
+export function RlsAvatar({
+  children,
+  rounded,
+  skeleton,
+  rlsTheme
+}: AvatarProps) {
   return (
-    <div
+    <rls-avatar
       className={renderClassStatus('rls-avatar', { rounded, skeleton })}
       rls-theme={rlsTheme}
     >
       {children}
-    </div>
+    </rls-avatar>
   );
 }

@@ -1,6 +1,7 @@
+import { DateRange } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { DateRange } from '../../../models';
+import { formatRange } from '../../../helpers/date-range-picker';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsDateRangePicker } from '../DateRangePicker/DateRangePicker';
@@ -35,7 +36,7 @@ export function RlsDateRangeField({
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    setDescription(value?.description || '');
+    setDescription(value ? formatRange(value) : '');
   }, [value]);
 
   function onClickInput(): void {

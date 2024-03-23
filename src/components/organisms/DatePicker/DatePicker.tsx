@@ -1,8 +1,8 @@
 import {
-  formatDate,
-  refactorDay,
-  refactorMonth,
-  refactorYear
+  assignDay,
+  assignMonth,
+  assignYear,
+  formatDate
 } from '@rolster/helpers-date';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
@@ -86,7 +86,7 @@ export function RlsDatePicker({
     setValue((prevValue) => {
       return typeof yearControl.state === 'number'
         ? verifyDateRange(
-            refactorYear(prevValue, yearControl.state),
+            assignYear(prevValue, yearControl.state),
             minDate,
             maxDate
           )
@@ -98,7 +98,7 @@ export function RlsDatePicker({
     setValue((prevValue) => {
       return typeof monthControl.state === 'number'
         ? verifyDateRange(
-            refactorMonth(prevValue, monthControl.state),
+            assignMonth(prevValue, monthControl.state),
             minDate,
             maxDate
           )
@@ -110,7 +110,7 @@ export function RlsDatePicker({
     setValue((prevValue) => {
       return typeof dayControl.state === 'number'
         ? verifyDateRange(
-            refactorDay(prevValue, dayControl.state),
+            assignDay(prevValue, dayControl.state),
             minDate,
             maxDate
           )

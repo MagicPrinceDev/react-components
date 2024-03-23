@@ -12,9 +12,9 @@ interface AmountProps {
 
 export function RlsAmount({ value, decimals, rlsTheme, symbol }: AmountProps) {
   return (
-    <div className="rls-amount" rls-theme={rlsTheme}>
+    <rls-amount className="rls-amount" rls-theme={rlsTheme}>
       {symbol && <span>{symbol}</span>}
       <RlsTabularText value={currencyFormat({ value, decimals })} />
-    </div>
+    </rls-amount>
   );
 }

@@ -1,10 +1,12 @@
 import {
+  DateRange,
+  assignDay,
+  between,
   daysFromMonth,
-  isBetween,
-  refactorDay,
+  formatDate,
   weight
 } from '@rolster/helpers-date';
-import { DateRange, DayRangeState, WeekRangeState } from '../models';
+import { DayRangeState, WeekRangeState } from '../models';
 
 interface FactoryProps {
   date: Date;
@@ -12,6 +14,8 @@ interface FactoryProps {
   minDate?: Date;
   maxDate?: Date;
 }
+
+const DATE_FORMAT = '{dd}/{mm}/{aa}';
 
 class DateRangePickerFactory {
   private range: DateRange;
@@ -132,10 +136,10 @@ class DateRangePickerFactory {
   }
 
   private isRangedFromDate(day: number): boolean {
-    return isBetween(
+    return between(
       this.range.minDate,
       this.range.maxDate,
-      refactorDay(this.date, day)
+      assignDay(this.date, day)
     );
   }
 
@@ -145,15 +149,22 @@ class DateRangePickerFactory {
 
   private minOverflowDay(day: number): boolean {
     return this.minDate
-      ? weight(refactorDay(this.date, day)) < weight(this.minDate)
+      ? weight(assignDay(this.date, day)) < weight(this.minDate)
       : false;
   }
 
   private maxOverflowDay(day: number): boolean {
     return this.maxDate
-      ? weight(refactorDay(this.date, day)) > weight(this.maxDate)
+      ? weight(assignDay(this.date, day)) > weight(this.maxDate)
       : false;
   }
+}
+
+export function formatRange(range: DateRange): string {
+  const minFormat = formatDate(range.minDate, DATE_FORMAT);
+  const maxFormat = formatDate(range.maxDate, DATE_FORMAT);
+
+  return `${minFormat} - ${maxFormat}`;
 }
 
 export function createRangePicker(props: FactoryProps): WeekRangeState[] {

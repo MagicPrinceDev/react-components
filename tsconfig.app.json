@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "files": ["node_modules/@rolster/types/index.d.ts"],
+  "files": ["node_modules/@rolster/types/index.d.ts", "src/@types/index.d.ts"],
   "exclude": [
     "src/App.tsx",
     "src/main.tsx",
