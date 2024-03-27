@@ -14,11 +14,11 @@ export function RlsAvatar({
   rlsTheme
 }: AvatarProps) {
   return (
-    <rls-avatar
+    <div
       className={renderClassStatus('rls-avatar', { rounded, skeleton })}
       rls-theme={rlsTheme}
     >
       {children}
-    </rls-avatar>
+    </div>
   );
 }
