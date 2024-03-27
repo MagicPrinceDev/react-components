@@ -15,7 +15,7 @@ interface FactoryProps {
   maxDate?: Date;
 }
 
-const DATE_FORMAT = '{dd}/{mn}/{aa}';
+const DATE_FORMAT = '{dd}/{mx}/{aa}';
 
 class DateRangePickerFactory {
   private range: DateRange;
