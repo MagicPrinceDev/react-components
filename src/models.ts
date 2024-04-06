@@ -46,11 +46,12 @@ export interface WeekState {
 }
 
 export interface DayRangeState {
-  value?: number;
   disabled: boolean;
+  end: boolean;
   forbidden: boolean;
+  source: boolean;
   ranged: boolean;
-  selected: boolean;
+  value?: number;
 }
 
 export interface WeekRangeState {

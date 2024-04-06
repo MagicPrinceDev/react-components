@@ -75,7 +75,7 @@ export function RlsDateRangeField({
         </div>
       </div>
 
-      <RlsModal visible={show}>
+      <RlsModal visible={show} rlsTheme={rlsTheme}>
         <RlsDateRangePicker
           formControl={formControl}
           date={date}

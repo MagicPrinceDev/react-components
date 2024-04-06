@@ -11,26 +11,30 @@ import { DayRangeState, WeekRangeState } from '../models';
 interface FactoryProps {
   date: Date;
   range: DateRange;
+  sourceDate: Date;
   minDate?: Date;
   maxDate?: Date;
 }
 
-const DATE_FORMAT = '{dd}/{mx}/{aa}';
+export const DATE_RANGE_FORMAT = '{dd}/{mx}/{aa}';
 
 class DateRangePickerFactory {
   private range: DateRange;
 
   private date: Date;
 
+  private sourceDate: Date;
+
   private minDate?: Date;
 
   private maxDate?: Date;
 
   protected constructor(props: FactoryProps) {
-    const { date, range, maxDate, minDate } = props;
+    const { date, range, sourceDate, maxDate, minDate } = props;
 
     this.date = new Date(date.getTime());
     this.range = range;
+    this.sourceDate = sourceDate;
     this.maxDate = maxDate;
     this.minDate = minDate;
 
@@ -110,17 +114,11 @@ class DateRangePickerFactory {
     return daysPending;
   }
 
-  private createDayRangeState(day?: number): DayRangeState {
-    return {
-      value: day,
-      disabled: this.overflowDay(day || 0),
-      forbidden: !day,
-      ranged: day ? this.isRangedFromDate(day) : false,
-      selected: day ? this.isSelected(day) : false
-    };
+  private isSelectedSource(day: number): boolean {
+    return this.isSelectedForDate(this.sourceDate, day);
   }
 
-  private isSelected(day: number): boolean {
+  private isSelectedEnd(day: number): boolean {
     return (
       this.isSelectedForDate(this.range.minDate, day) ||
       this.isSelectedForDate(this.range.maxDate, day)
@@ -158,11 +156,22 @@ class DateRangePickerFactory {
       ? weight(assignDay(this.date, day)) > weight(this.maxDate)
       : false;
   }
+
+  private createDayRangeState(day?: number): DayRangeState {
+    return {
+      value: day,
+      disabled: this.overflowDay(day || 0),
+      forbidden: !day,
+      ranged: day ? this.isRangedFromDate(day) : false,
+      end: day ? this.isSelectedEnd(day) : false,
+      source: day ? this.isSelectedSource(day) : false
+    };
+  }
 }
 
 export function formatRange(range: DateRange): string {
-  const minFormat = formatDate(range.minDate, DATE_FORMAT);
-  const maxFormat = formatDate(range.maxDate, DATE_FORMAT);
+  const minFormat = formatDate(range.minDate, DATE_RANGE_FORMAT);
+  const maxFormat = formatDate(range.maxDate, DATE_RANGE_FORMAT);
 
   return `${minFormat} - ${maxFormat}`;
 }

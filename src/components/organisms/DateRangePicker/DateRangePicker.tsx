@@ -72,9 +72,9 @@ export function RlsDateRangePicker({
   const dateInitial = normalizeMinTime(datePicker || new Date());
   const rangeInitial = formControl?.state || DateRange.now();
 
-  const yearControl = useReactControl({ state: dateInitial.getFullYear() });
-  const monthControl = useReactControl({ state: dateInitial.getMonth() });
-  const dayControl = useReactControl({ state: rangeInitial });
+  const yearControl = useReactControl(dateInitial.getFullYear());
+  const monthControl = useReactControl(dateInitial.getMonth());
+  const dayControl = useReactControl(rangeInitial);
 
   const [value, setValue] = useState(rangeInitial);
   const [date, setDate] = useState(dateInitial);

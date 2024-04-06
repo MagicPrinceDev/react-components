@@ -2,13 +2,18 @@ import {
   DAY_LABELS,
   DateRange,
   assignDay,
+  before,
+  formatDate,
   normalizeMinTime
 } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { WeekRangeState } from '../../../models';
-import { createRangePicker } from '../../../helpers/date-range-picker';
 import { renderClassStatus } from '../../../helpers/css';
+import {
+  DATE_RANGE_FORMAT,
+  createRangePicker
+} from '../../../helpers/date-range-picker';
 import { RlsComponent } from '../../definitions';
 import './DayRangePicker.css';
 
@@ -31,6 +36,8 @@ export function RlsDayRangePicker({
   const initialRange = formControl?.state || DateRange.now();
   const initialDate = normalizeMinTime(date || initialRange.minDate);
 
+  const sourceDate = useRef(initialRange.minDate);
+
   const [weeks, setWeeks] = useState<WeekRangeState[]>([]);
   const [range, setRange] = useState(initialRange);
 
@@ -39,6 +46,7 @@ export function RlsDayRangePicker({
       createRangePicker({
         date: initialDate,
         range,
+        sourceDate: sourceDate.current,
         minDate,
         maxDate
       })
@@ -46,7 +54,13 @@ export function RlsDayRangePicker({
   }, [range, date, minDate, maxDate]);
 
   function onChange(value: number): void {
-    const newRange = range.recalculate(assignDay(initialDate, value));
+    const newDate = assignDay(initialDate, value);
+
+    const newRange = before(newDate, sourceDate.current)
+      ? new DateRange(sourceDate.current, newDate)
+      : new DateRange(newDate, sourceDate.current);
+
+    sourceDate.current = newDate;
 
     setRange(newRange);
     formControl?.setState(newRange);
@@ -54,6 +68,10 @@ export function RlsDayRangePicker({
 
   return (
     <div className="rls-day-range-picker" rls-theme={rlsTheme}>
+      <div className="rls-day-range-picker__title">
+        {formatDate(sourceDate.current, DATE_RANGE_FORMAT)}
+      </div>
+
       <div className="rls-day-range-picker__header">
         {DAY_LABELS().map((title, index) => (
           <label key={index} className="rls-day-range-picker__label">
@@ -66,14 +84,15 @@ export function RlsDayRangePicker({
         {weeks.map(({ days }, index) => (
           <div key={index} className="rls-day-range-picker__week">
             {days.map(
-              ({ value, disabled, forbidden, ranged, selected }, index) => (
+              ({ disabled, end, forbidden, source, ranged, value }, index) => (
                 <div
                   key={index}
                   className={renderClassStatus('rls-day-range-picker__day', {
                     disabled: disabled || disabledPicker,
+                    end,
                     forbidden,
-                    selected,
-                    ranged
+                    ranged,
+                    source
                   })}
                   onClick={() => {
                     if (value && !disabled) {

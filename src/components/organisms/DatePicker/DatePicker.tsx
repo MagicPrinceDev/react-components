@@ -73,9 +73,9 @@ export function RlsDatePicker({
 }: DatePickerProps) {
   const dateInitial = formControl?.state || date || new Date();
 
-  const yearControl = useReactControl({ state: dateInitial.getFullYear() });
-  const dayControl = useReactControl({ state: dateInitial.getDate() });
-  const monthControl = useReactControl({ state: dateInitial.getMonth() });
+  const yearControl = useReactControl(dateInitial.getFullYear());
+  const dayControl = useReactControl(dateInitial.getDate());
+  const monthControl = useReactControl(dateInitial.getMonth());
 
   const [value, setValue] = useState(dateInitial);
   const [{ day, month, year }, setVisibility] = useState(VISIBILITY.DAY);

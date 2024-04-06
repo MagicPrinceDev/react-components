@@ -1,12 +1,14 @@
 import { ReactNode } from 'react';
 
 export type RlsTheme =
-  | 'rolster'
+  | 'primary'
   | 'success'
   | 'info'
   | 'happy'
   | 'warning'
-  | 'danger';
+  | 'danger'
+  | 'coffee'
+  | 'obsidian';
 
 export interface RlsComponent {
   children?: ReactNode;
