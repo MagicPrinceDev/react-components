@@ -1,5 +1,5 @@
-import { RefObject } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { DatatableHook } from '../../../hooks';
 import { RlsComponent } from '../../definitions';
 
 interface DatatableCellProps extends RlsComponent {
@@ -8,13 +8,13 @@ interface DatatableCellProps extends RlsComponent {
   overflow?: boolean;
 }
 
-interface DatatableDateProps extends RlsComponent {
+interface DatatableDataProps extends RlsComponent {
   className?: string;
   error?: boolean;
 }
 
 interface DatatableProps extends RlsComponent {
-  bodyRef?: RefObject<HTMLTableSectionElement>;
+  datatable?: DatatableHook;
   footer?: JSX.Element;
   header?: JSX.Element;
 }
@@ -30,9 +30,10 @@ export function RlsDatatableTitle({
 }: DatatableCellProps) {
   return (
     <th
-      className={(
-        renderClassStatus('rls-datatable__title', { control }) +
-        ` ${className || ''}`
+      className={renderClassStatus(
+        'rls-datatable__title',
+        { control },
+        className
       ).trim()}
     >
       {children}
@@ -44,12 +45,13 @@ export function RlsDatatableData({
   children,
   className,
   error
-}: DatatableDateProps) {
+}: DatatableDataProps) {
   return (
     <tr
-      className={(
-        renderClassStatus('rls-datatable__data', { error }) +
-        ` ${className || ''}`
+      className={renderClassStatus(
+        'rls-datatable__data',
+        { error },
+        className
       ).trim()}
     >
       {children}
@@ -65,9 +67,10 @@ export function RlsDatatableCell({
 }: DatatableCellProps) {
   return (
     <th
-      className={(
-        renderClassStatus('rls-datatable__cell', { control, overflow }) +
-        ` ${className || ''}`
+      className={renderClassStatus(
+        'rls-datatable__cell',
+        { control, overflow },
+        className
       ).trim()}
     >
       {children}
@@ -76,18 +79,23 @@ export function RlsDatatableCell({
 }
 
 export function RlsDatatable({
-  bodyRef,
   children,
+  datatable,
   footer,
   header,
   rlsTheme
 }: DatatableProps) {
   return (
-    <div className="rls-datatable" rls-theme={rlsTheme}>
+    <div
+      className={renderClassStatus('rls-datatable', {
+        scrolleable: datatable?.scrolleable
+      })}
+      rls-theme={rlsTheme}
+    >
       <table>
         {header && <thead className="rls-datatable__thead">{header}</thead>}
 
-        <tbody ref={bodyRef} className="rls-datatable__tbody">
+        <tbody ref={datatable?.bodyRef} className="rls-datatable__tbody">
           {children}
         </tbody>
       </table>
