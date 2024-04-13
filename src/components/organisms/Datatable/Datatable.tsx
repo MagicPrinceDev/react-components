@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -13,6 +14,7 @@ interface DatatableDateProps extends RlsComponent {
 }
 
 interface DatatableProps extends RlsComponent {
+  bodyRef?: RefObject<HTMLTableSectionElement>;
   footer?: JSX.Element;
   header?: JSX.Element;
 }
@@ -74,6 +76,7 @@ export function RlsDatatableCell({
 }
 
 export function RlsDatatable({
+  bodyRef,
   children,
   footer,
   header,
@@ -84,7 +87,9 @@ export function RlsDatatable({
       <table>
         {header && <thead className="rls-datatable__thead">{header}</thead>}
 
-        <tbody className="rls-datatable__tbody">{children}</tbody>
+        <tbody ref={bodyRef} className="rls-datatable__tbody">
+          {children}
+        </tbody>
       </table>
 
       {footer && <div className="rls-datatable__tfooter">{footer}</div>}

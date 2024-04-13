@@ -13,7 +13,7 @@ export function RlsToolbar({ actions, children, subtitle }: ToolbarProps) {
       <div className="rls-toolbar__description">
         {children && <label className="rls-toolbar__title">{children}</label>}
         {subtitle && (
-          <label className="rls-toolbar__subtitle caption-semibold">
+          <label className="rls-toolbar__subtitle smalltext-semibold">
             {subtitle}
           </label>
         )}

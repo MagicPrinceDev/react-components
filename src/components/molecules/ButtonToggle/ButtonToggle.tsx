@@ -10,20 +10,22 @@ export interface ButtonToggleOption {
 }
 
 interface ButtonToggleProps extends RlsComponent {
+  onAction: (value: string) => void;
   options: ButtonToggleOption[];
   type: ButtonType;
+  automatic?: boolean;
   disabled?: boolean;
-  onAction?: (value: string) => void;
 }
 
 export function RlsButtonToggle({
+  onAction,
   options,
   type,
+  automatic,
   disabled,
-  rlsTheme,
-  onAction
+  rlsTheme
 }: ButtonToggleProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
+  const componentRef = useRef<HTMLDivElement>(null);
 
   const [firstAction] = options;
 
@@ -32,7 +34,7 @@ export function RlsButtonToggle({
 
   useEffect(() => {
     function onCloseMenu({ target }: any) {
-      if (!contentRef?.current?.contains(target)) {
+      if (!componentRef?.current?.contains(target)) {
         setVisible(false);
       }
     }
@@ -51,21 +53,21 @@ export function RlsButtonToggle({
   function onSelectAction(action: ButtonToggleOption): void {
     setAction(action);
     setVisible(false);
+
+    if (automatic) {
+      onAction(action.value);
+    }
   }
 
   return (
-    <div className="rls-button-toggle" ref={contentRef} rls-theme={rlsTheme}>
+    <div className="rls-button-toggle" ref={componentRef} rls-theme={rlsTheme}>
       <div className="rls-button-toggle__content">
         {action && (
           <div className="rls-button-toggle__action">
             <RlsButton
               disabled={disabled}
               type={type}
-              onClick={() => {
-                if (onAction) {
-                  onAction(action.value);
-                }
-              }}
+              onClick={() => onAction(action.value)}
             >
               {action.label}
             </RlsButton>
@@ -93,9 +95,7 @@ export function RlsButtonToggle({
             <li
               className="truncate"
               key={index}
-              onClick={() => {
-                onSelectAction(action);
-              }}
+              onClick={() => onSelectAction(action)}
             >
               {action.label}
             </li>

@@ -1,5 +1,6 @@
 export * from './Amount/Amount';
 export * from './Avatar/Avatar';
+export * from './Badge/Badge';
 export * from './Breadcrumb/Breadcrumb';
 export * from './Button/Button';
 export * from './ButtonAction/ButtonAction';
