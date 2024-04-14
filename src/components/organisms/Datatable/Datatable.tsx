@@ -17,6 +17,7 @@ interface DatatableProps extends RlsComponent {
   datatable?: DatatableHook;
   footer?: JSX.Element;
   header?: JSX.Element;
+  summary?: JSX.Element;
 }
 
 export function RlsDatatableHeader({ children }: RlsComponent) {
@@ -78,12 +79,50 @@ export function RlsDatatableCell({
   );
 }
 
+export function RlsDatatableTotals({
+  children,
+  className,
+  error
+}: DatatableDataProps) {
+  return (
+    <div
+      className={renderClassStatus(
+        'rls-datatable__totals',
+        { error },
+        className
+      ).trim()}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function RlsDatatableInfo({
+  children,
+  className,
+  control,
+  overflow
+}: DatatableCellProps) {
+  return (
+    <div
+      className={renderClassStatus(
+        'rls-datatable__info',
+        { control, overflow },
+        className
+      ).trim()}
+    >
+      {children}
+    </div>
+  );
+}
+
 export function RlsDatatable({
   children,
   datatable,
   footer,
   header,
-  rlsTheme
+  rlsTheme,
+  summary
 }: DatatableProps) {
   return (
     <div
@@ -99,6 +138,8 @@ export function RlsDatatable({
           {children}
         </tbody>
       </table>
+
+      {summary && <div className="rls-datatable__tsummary">{summary}</div>}
 
       {footer && <div className="rls-datatable__tfooter">{footer}</div>}
     </div>

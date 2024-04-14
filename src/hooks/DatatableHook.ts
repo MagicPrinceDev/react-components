@@ -10,11 +10,21 @@ export function useDatatable(): DatatableHook {
   const bodyRef = useRef<HTMLTableSectionElement>(null);
 
   useEffect(() => {
-    const scrollHeight = bodyRef?.current?.scrollHeight || 0;
-    const clientHeight = bodyRef?.current?.clientHeight || 0;
+    let observer: ResizeObserver;
 
-    setScrolleable(scrollHeight > clientHeight);
-  }, [bodyRef]);
+    if (bodyRef?.current) {
+      observer = new ResizeObserver(() => {
+        const scrollHeight = bodyRef?.current?.scrollHeight || 0;
+        const clientHeight = bodyRef?.current?.clientHeight || 0;
+
+        setScrolleable(scrollHeight > clientHeight);
+      });
+
+      observer.observe(bodyRef?.current);
+    }
+
+    return () => observer?.disconnect();
+  }, []);
 
   return { bodyRef, scrolleable };
 }
