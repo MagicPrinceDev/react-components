@@ -1,4 +1,5 @@
 export * from './Ballot/Ballot';
+export * from './ButtonProgress/ButtonProgress';
 export * from './ButtonToggle/ButtonToggle';
 export * from './CheckBoxLabel/CheckBoxLabel';
 export * from './DayPicker/DayPicker';

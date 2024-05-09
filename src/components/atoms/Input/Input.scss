@@ -11,7 +11,6 @@
   --pvt-component-font-color: transparent;
 
   position: relative;
-  float: left;
   width: 100%;
 
   &--focused {
@@ -25,7 +24,6 @@
 
   &__component {
     position: relative;
-    float: left;
     width: 100%;
     height: var(--rls-input-height);
     line-height: var(--rls-input-height);

@@ -1,14 +1,14 @@
 import {
   DateRange,
-  assignMonth,
-  assignYear,
+  assignMonthInDate,
+  assignYearInDate,
   normalizeMinTime
 } from '@rolster/helpers-date';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import reactI18n from '../../../i18n';
 import { renderClassStatus } from '../../../helpers/css';
-import { formatRange } from '../../../helpers/date-range-picker';
+import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
 import { PickerListener, PickerListenerType } from '../../../types';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
@@ -83,7 +83,7 @@ export function RlsDateRangePicker({
   useEffect(() => {
     setDate((prevValue) => {
       return typeof yearControl.state === 'number'
-        ? assignYear(prevValue, yearControl.state)
+        ? assignYearInDate(prevValue, yearControl.state)
         : prevValue;
     });
   }, [yearControl.state]);
@@ -91,7 +91,7 @@ export function RlsDateRangePicker({
   useEffect(() => {
     setDate((prevValue) => {
       return typeof monthControl.state === 'number'
-        ? assignMonth(prevValue, monthControl.state)
+        ? assignMonthInDate(prevValue, monthControl.state)
         : prevValue;
     });
   }, [monthControl.state]);
@@ -134,7 +134,7 @@ export function RlsDateRangePicker({
     <div className="rls-date-range-picker" rls-theme={rlsTheme}>
       <div className="rls-date-range-picker__header">
         <div className="rls-date-range-picker__title rls-date-range-picker__title--description">
-          <span onClick={onVisibilityDay}>{formatRange(value)}</span>
+          <span onClick={onVisibilityDay}>{rangeFormatTemplate(value)}</span>
         </div>
 
         <div className="rls-date-range-picker__title rls-date-range-picker__title--year">

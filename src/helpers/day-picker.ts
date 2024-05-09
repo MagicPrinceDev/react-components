@@ -1,4 +1,8 @@
-import { assignDay, daysFromMonth, weight } from '@rolster/helpers-date';
+import {
+  assignDayInDate,
+  getDateWeight,
+  getDaysOfMonth
+} from '@rolster/helpers-date';
 import { DayState, WeekState } from '../models';
 
 interface FactoryProps {
@@ -60,7 +64,7 @@ class DayPickerFactory {
     const dayStart = this.date.getDay();
     const rightWeeks: WeekState[] = [];
 
-    const dayCount = daysFromMonth(
+    const dayCount = getDaysOfMonth(
       this.date.getFullYear(),
       this.date.getMonth()
     );
@@ -116,13 +120,15 @@ class DayPickerFactory {
 
   private minOverflowDay(day: number): boolean {
     return this.minDate
-      ? weight(assignDay(this.date, day)) < weight(this.minDate)
+      ? getDateWeight(assignDayInDate(this.date, day)) <
+          getDateWeight(this.minDate)
       : false;
   }
 
   private maxOverflowDay(day: number): boolean {
     return this.maxDate
-      ? weight(assignDay(this.date, day)) > weight(this.maxDate)
+      ? getDateWeight(assignDayInDate(this.date, day)) >
+          getDateWeight(this.maxDate)
       : false;
   }
 }

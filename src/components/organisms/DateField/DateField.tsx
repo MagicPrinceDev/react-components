@@ -1,13 +1,14 @@
-import { formatDate } from '@rolster/helpers-date';
+import { dateFormatTemplate } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { DATE_RANGE_FORMAT } from '../../../helpers/date-range-picker';
+import { PickerListenerType } from '../../../types';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsDatePicker } from '../DatePicker/DatePicker';
 import { RlsModal } from '../Modal/Modal';
 import './DateField.css';
-import { PickerListenerType } from '../../../types';
 
 interface DateFieldProps extends RlsComponent {
   date?: Date;
@@ -37,7 +38,7 @@ export function RlsDateField({
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    setDescription(value ? formatDate(value, '{dd}/{mx}/{aa}') : '');
+    setDescription(value ? dateFormatTemplate(value, DATE_RANGE_FORMAT) : '');
   }, [value]);
 
   function onClickInput(): void {

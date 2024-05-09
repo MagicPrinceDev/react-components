@@ -1,15 +1,15 @@
 import {
-  assignDay,
-  assignMonth,
-  assignYear,
-  formatDate
+  assignDayInDate,
+  assignMonthInDate,
+  assignYearInDate,
+  dateFormatTemplate
 } from '@rolster/helpers-date';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import reactI18n from '../../../i18n';
 import { PickerListener, PickerListenerType } from '../../../types';
 import { renderClassStatus } from '../../../helpers/css';
-import { verifyDateRange } from '../../../helpers/date-picker';
+import { dateIsRange } from '../../../helpers/date-picker';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import {
@@ -80,13 +80,13 @@ export function RlsDatePicker({
   const [value, setValue] = useState(dateInitial);
   const [{ day, month, year }, setVisibility] = useState(VISIBILITY.DAY);
 
-  const title = formatDate(value, FORMAT_DESCRIPTION);
+  const title = dateFormatTemplate(value, FORMAT_DESCRIPTION);
 
   useEffect(() => {
     setValue((prevValue) => {
       return typeof yearControl.state === 'number'
-        ? verifyDateRange(
-            assignYear(prevValue, yearControl.state),
+        ? dateIsRange(
+            assignYearInDate(prevValue, yearControl.state),
             minDate,
             maxDate
           )
@@ -97,8 +97,8 @@ export function RlsDatePicker({
   useEffect(() => {
     setValue((prevValue) => {
       return typeof monthControl.state === 'number'
-        ? verifyDateRange(
-            assignMonth(prevValue, monthControl.state),
+        ? dateIsRange(
+            assignMonthInDate(prevValue, monthControl.state),
             minDate,
             maxDate
           )
@@ -109,8 +109,8 @@ export function RlsDatePicker({
   useEffect(() => {
     setValue((prevValue) => {
       return typeof dayControl.state === 'number'
-        ? verifyDateRange(
-            assignDay(prevValue, dayControl.state),
+        ? dateIsRange(
+            assignDayInDate(prevValue, dayControl.state),
             minDate,
             maxDate
           )

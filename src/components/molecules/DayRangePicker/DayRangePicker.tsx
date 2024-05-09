@@ -1,9 +1,9 @@
 import {
   DAY_LABELS,
   DateRange,
-  assignDay,
-  before,
-  formatDate,
+  assignDayInDate,
+  dateFormatTemplate,
+  dateIsBefore,
   normalizeMinTime
 } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
@@ -54,9 +54,9 @@ export function RlsDayRangePicker({
   }, [range, date, minDate, maxDate]);
 
   function onChange(value: number): void {
-    const newDate = assignDay(initialDate, value);
+    const newDate = assignDayInDate(initialDate, value);
 
-    const newRange = before(newDate, sourceDate.current)
+    const newRange = dateIsBefore(newDate, sourceDate.current)
       ? new DateRange(sourceDate.current, newDate)
       : new DateRange(newDate, sourceDate.current);
 
@@ -69,7 +69,7 @@ export function RlsDayRangePicker({
   return (
     <div className="rls-day-range-picker" rls-theme={rlsTheme}>
       <div className="rls-day-range-picker__title">
-        {formatDate(sourceDate.current, DATE_RANGE_FORMAT)}
+        {dateFormatTemplate(sourceDate.current, DATE_RANGE_FORMAT)}
       </div>
 
       <div className="rls-day-range-picker__header">

@@ -6,8 +6,8 @@ import './ButtonAction.css';
 interface ButtonActionProps extends RlsComponent {
   icon: string;
   disabled?: boolean;
-  tooltip?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  tooltip?: string;
 }
 
 export function RlsButtonAction({

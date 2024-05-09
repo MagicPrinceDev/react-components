@@ -15,6 +15,7 @@ export * from './Label/Label';
 export * from './MessageIcon/MessageIcon';
 export * from './Poster/Poster';
 export * from './ProgressBar/ProgressBar';
+export * from './ProgressCircular/ProgressCircular';
 export * from './RadioButton/RadioButton';
 export * from './SearchInput/SearchInput';
 export * from './Skeleton/Skeleton';

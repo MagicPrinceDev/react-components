@@ -1,10 +1,10 @@
 import {
   DateRange,
-  assignDay,
-  between,
-  daysFromMonth,
-  formatDate,
-  weight
+  assignDayInDate,
+  dateFormatTemplate,
+  dateIsBetween,
+  getDateWeight,
+  getDaysOfMonth
 } from '@rolster/helpers-date';
 import { DayRangeState, WeekRangeState } from '../models';
 
@@ -73,7 +73,7 @@ class DateRangePickerFactory {
     const rightWeeks: WeekRangeState[] = [];
     const dayStart = this.date.getDay();
 
-    const dayCount = daysFromMonth(
+    const dayCount = getDaysOfMonth(
       this.date.getFullYear(),
       this.date.getMonth()
     );
@@ -134,10 +134,10 @@ class DateRangePickerFactory {
   }
 
   private isRangedFromDate(day: number): boolean {
-    return between(
+    return dateIsBetween(
       this.range.minDate,
       this.range.maxDate,
-      assignDay(this.date, day)
+      assignDayInDate(this.date, day)
     );
   }
 
@@ -147,13 +147,15 @@ class DateRangePickerFactory {
 
   private minOverflowDay(day: number): boolean {
     return this.minDate
-      ? weight(assignDay(this.date, day)) < weight(this.minDate)
+      ? getDateWeight(assignDayInDate(this.date, day)) <
+          getDateWeight(this.minDate)
       : false;
   }
 
   private maxOverflowDay(day: number): boolean {
     return this.maxDate
-      ? weight(assignDay(this.date, day)) > weight(this.maxDate)
+      ? getDateWeight(assignDayInDate(this.date, day)) >
+          getDateWeight(this.maxDate)
       : false;
   }
 
@@ -169,9 +171,9 @@ class DateRangePickerFactory {
   }
 }
 
-export function formatRange(range: DateRange): string {
-  const minFormat = formatDate(range.minDate, DATE_RANGE_FORMAT);
-  const maxFormat = formatDate(range.maxDate, DATE_RANGE_FORMAT);
+export function rangeFormatTemplate(range: DateRange): string {
+  const minFormat = dateFormatTemplate(range.minDate, DATE_RANGE_FORMAT);
+  const maxFormat = dateFormatTemplate(range.maxDate, DATE_RANGE_FORMAT);
 
   return `${minFormat} - ${maxFormat}`;
 }

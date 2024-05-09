@@ -1,9 +1,9 @@
 // Rolster Technology DateRangeField Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 03/Oct/2023
+// Updated: 23/Abr/2024
 
 .rls-date-range-field {
   --rls-boxfield-body-padding: var(--sizing-x3) var(--sizing-x4);
@@ -23,7 +23,7 @@
     cursor: default;
     border: none;
     outline: none;
-    color: var(--color-theme-input);
+    color: var(--rls-input-font-color);
     background: transparent;
     font-size: var(--input-font-size);
     font-weight: var(--font-weight-medium);
