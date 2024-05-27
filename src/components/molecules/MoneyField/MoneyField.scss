@@ -6,10 +6,9 @@
 // Updated: 06/May/2023
 
 .rls-money-field {
-  --rls-input-parent-padding: var(--sizing-x3) var(--sizing-x4);
+  --rlc-input-parent-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
 
   position: relative;
-  float: left;
   width: 100%;
   box-sizing: border-box;
 }

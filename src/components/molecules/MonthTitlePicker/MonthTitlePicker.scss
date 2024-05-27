@@ -10,16 +10,16 @@
   justify-content: space-between;
 
   span {
-    color: var(--color-theme-300);
+    color: var(--rls-app-color-300);
     cursor: default;
     margin: auto 0rem;
-    height: var(--sizing-x14);
-    line-height: var(--sizing-x14);
-    font-size: var(--sizing-x10);
-    font-weight: var(--font-weight-bold);
+    height: var(--rls-sizing-x14);
+    line-height: var(--rls-sizing-x14);
+    font-size: var(--rls-sizing-x10);
+    font-weight: var(--rls-font-weight-bold);
 
     &:hover {
-      color: var(--color-rolster-500);
+      color: var(--rls-theme-color-500);
     }
   }
 }

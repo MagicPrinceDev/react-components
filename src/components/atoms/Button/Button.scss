@@ -8,26 +8,25 @@
 .rls-button {
   --pvt-button-content-background: none;
   --pvt-button-content-border: none;
-  --pvt-button-content-font-color: var(--color-rolster-500);
+  --pvt-button-content-font-color: var(--rls-theme-color-500);
   --pvt-button-content-animation: none;
   --pvt-button-content-visibility: hidden;
-  --pvt-button-ripple-background: var(--color-rolster-700);
+  --pvt-button-ripple-background: var(--rls-theme-color-700);
 
   --pvt-ghost-background: none;
-  --pvt-ghost-font-color: var(--color-rolster-500);
+  --pvt-ghost-font-color: var(--rls-theme-color-500);
   --pvt-ghost-border: none;
-  --pvt-flat-background: var(--color-rolster-100);
-  --pvt-flat-font-color: var(--color-rolster-500);
+  --pvt-flat-background: var(--rls-theme-color-100);
+  --pvt-flat-font-color: var(--rls-theme-color-500);
   --pvt-flat-border: none;
   --pvt-outline-background: transparent;
-  --pvt-outline-font-color: var(--color-theme-300);
-  --pvt-outline-border: var(--border-1-theme-300);
-  --pvt-raised-background: var(--gradient-rolster-500);
-  --pvt-raised-font-color: var(--color-light-500);
+  --pvt-outline-font-color: var(--rls-app-color-300);
+  --pvt-outline-border: var(--rls-app-border-1-300);
+  --pvt-raised-background: var(--rls-theme-gradient-500);
+  --pvt-raised-font-color: var(--rls-light-color-500);
   --pvt-raised-border: none;
 
   position: relative;
-  float: left;
   padding: 0rem;
   overflow: hidden;
   outline: none;
@@ -35,7 +34,7 @@
 
   &:not(:disabled):not(:active) {
     --pvt-button-content-animation: ripple-squarecenter 1000ms
-      var(--standard-curve);
+      var(--rls-standard-curve);
   }
 
   &:not(:disabled):focus {
@@ -43,17 +42,17 @@
   }
 
   &:not(:disabled):hover {
-    --pvt-ghost-background: var(--color-rolster-100);
-    --pvt-ghost-font-color: var(--color-rolster-500);
+    --pvt-ghost-background: var(--rls-theme-color-100);
+    --pvt-ghost-font-color: var(--rls-theme-color-500);
     --pvt-ghost-border: none;
-    --pvt-flat-background: var(--color-rolster-100);
-    --pvt-flat-font-color: var(--color-rolster-700);
+    --pvt-flat-background: var(--rls-theme-color-100);
+    --pvt-flat-font-color: var(--rls-theme-color-700);
     --pvt-flat-border: none;
     --pvt-outline-background: transparent;
-    --pvt-outline-font-color: var(--color-rolster-500);
-    --pvt-outline-border: var(--border-1-rolster-500);
-    --pvt-raised-background: var(--color-rolster-700);
-    --pvt-raised-font-color: var(--color-light-500);
+    --pvt-outline-font-color: var(--rls-theme-color-500);
+    --pvt-outline-border: var(--rls-theme-border-1-500);
+    --pvt-raised-background: var(--rls-theme-color-700);
+    --pvt-raised-font-color: var(--rls-light-color-500);
     --pvt-raised-border: none;
   }
 
@@ -66,11 +65,11 @@
     display: flex;
     justify-content: center;
     overflow: hidden;
-    line-height: var(--sizing-x20);
-    height: var(--sizing-x20);
-    padding: var(--rls-button-content-padding);
+    line-height: var(--rls-sizing-x20);
+    height: var(--rls-sizing-x20);
+    padding: var(--rlc-button-content-padding);
     box-sizing: border-box;
-    border-radius: var(--rls-button-content-radius);
+    border-radius: var(--rlc-button-content-radius);
     color: var(--pvt-button-content-font-color);
     border: var(--pvt-button-content-border);
     background: var(--pvt-button-content-background);
@@ -81,14 +80,14 @@
       content: '';
       top: 50%;
       left: 50%;
-      padding-top: calc(100% - var(--sizing-x8));
-      padding-left: calc(100% - var(--sizing-x8));
-      margin-top: calc(-50% + var(--sizing-x4));
-      margin-left: calc(-50% + var(--sizing-x4));
+      padding-top: calc(100% - var(--rls-sizing-x8));
+      padding-left: calc(100% - var(--rls-sizing-x8));
+      margin-top: calc(-50% + var(--rls-sizing-x4));
+      margin-left: calc(-50% + var(--rls-sizing-x4));
       border-radius: 50%;
       opacity: 0.26;
       transform: scale(0);
-      z-index: var(--z-index-2);
+      z-index: var(--rls-z-index-2);
       background: var(--pvt-button-ripple-background);
       animation: var(--pvt-button-content-animation);
       visibility: var(--pvt-button-content-visibility);
@@ -104,7 +103,7 @@
       --pvt-button-content-font-color: var(--pvt-flat-font-color);
       --pvt-button-content-background: var(--pvt-flat-background);
       --pvt-button-content-border: var(--pvt-flat-border);
-      --pvt-button-ripple-background: var(--color-rolster-500);
+      --pvt-button-ripple-background: var(--rls-theme-color-500);
     }
 
     &--outline {
@@ -117,23 +116,23 @@
       --pvt-button-content-background: var(--pvt-raised-background);
       --pvt-button-content-font-color: var(--pvt-raised-font-color);
       --pvt-button-content-border: var(--pvt-raised-border);
-      --pvt-button-ripple-background: var(--color-light-500);
+      --pvt-button-ripple-background: var(--rls-light-color-500);
     }
   }
 
   .rls-icon {
-    margin: auto var(--sizing-x2);
+    margin: auto var(--rls-sizing-x2);
   }
 
   &__label {
-    padding: 0rem var(--sizing-x2);
+    padding: 0rem var(--rls-sizing-x2);
     line-height: initial;
     width: auto;
     margin: auto 0rem;
-    font-size: var(--button-font-size);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: var(--button-letter-spacing);
-    text-transform: var(--rls-button-label-text-transform);
+    font-size: var(--rls-button-font-size);
+    font-weight: var(--rls-font-weight-bold);
+    letter-spacing: var(--rls-button-letter-spacing);
+    text-transform: var(--rlc-button-label-text-transform);
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

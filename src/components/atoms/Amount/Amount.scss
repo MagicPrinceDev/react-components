@@ -7,10 +7,10 @@
 
 .rls-amount {
   display: flex;
-  justify-content: var(--rls-amount-text-align);
-  column-gap: var(--sizing-x2);
+  justify-content: var(--rlc-amount-text-align);
+  column-gap: var(--rls-sizing-x2);
 
   &[rls-theme] {
-    color: var(--color-rolster-500);
+    color: var(--rls-theme-color-500);
   }
 }

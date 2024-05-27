@@ -6,7 +6,7 @@
 // Updated: 04/Dic/2023
 
 .rls-input {
-  --pvt-value-font-color: var(--rls-input-font-color);
+  --pvt-value-font-color: var(--rlc-input-font-color);
   --pvt-value-opacity: 1;
   --pvt-component-font-color: transparent;
 
@@ -14,7 +14,7 @@
   width: 100%;
 
   &--focused {
-    --pvt-component-font-color: var(--rls-input-font-color);
+    --pvt-component-font-color: var(--rlc-input-font-color);
     --pvt-value-font-color: transparent;
   }
 
@@ -25,17 +25,17 @@
   &__component {
     position: relative;
     width: 100%;
-    height: var(--rls-input-height);
-    line-height: var(--rls-input-height);
+    height: var(--rlc-input-height);
+    line-height: var(--rlc-input-height);
     padding: 0rem;
     cursor: text;
     border: none;
     outline: none;
     background: transparent;
     color: var(--pvt-component-font-color);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--rls-font-weight-medium);
     font-size: var(--rls-input-font-size);
-    text-align: var(--rls-input-text-align);
+    text-align: var(--rlc-input-text-align);
     letter-spacing: var(--rls-input-letter-spacing);
 
     &::-webkit-outer-spin-button,
@@ -45,12 +45,12 @@
     }
 
     &::placeholder {
-      color: var(--color-theme-100);
+      color: var(--rls-app-color-100);
     }
 
     &::selection {
-      background: var(--color-rolster-700);
-      color: var(--color-light-500);
+      background: var(--rls-theme-color-700);
+      color: var(--rls-light-color-500);
     }
 
     &:disabled {
@@ -63,17 +63,17 @@
     top: 0rem;
     left: 0rem;
     width: 100%;
-    height: var(--rls-input-height);
-    line-height: var(--rls-input-height);
+    height: var(--rlc-input-height);
+    line-height: var(--rlc-input-height);
     background: transparent;
     pointer-events: none;
     overflow: hidden;
     white-space: nowrap;
     opacity: var(--pvt-value-opacity);
     color: var(--pvt-value-font-color);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--rls-font-weight-medium);
     font-size: var(--rls-input-font-size);
-    text-align: var(--rls-input-text-align);
+    text-align: var(--rlc-input-text-align);
     letter-spacing: var(--rls-input-letter-spacing);
   }
 }

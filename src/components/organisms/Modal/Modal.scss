@@ -19,7 +19,7 @@
   left: 0rem;
   width: 100%;
   height: 100%;
-  z-index: var(--z-index-24);
+  z-index: var(--rls-z-index-24);
   visibility: hidden;
   align-items: center;
   justify-content: center;
@@ -38,19 +38,19 @@
   &__component {
     position: absolute;
     width: auto;
-    max-width: calc(100% - var(--sizing-x8));
+    max-width: calc(100% - var(--rls-sizing-x8));
     height: var(--pvt-component-height);
     opacity: var(--pvt-component-opacity);
     visibility: var(--pvt-component-visibility);
-    z-index: var(--z-index-2);
+    z-index: var(--rls-z-index-2);
     overflow: hidden;
-    border-radius: var(--sizing-x4);
-    background: var(--background-theme-500);
+    border-radius: var(--rls-sizing-x4);
+    background: var(--rls-app-background-500);
     will-change: transform;
     transform: var(--pvt-component-transform);
-    transition: opacity 125ms 0ms var(--deceleration-curve),
-      transform 125ms 0ms var(--deceleration-curve),
-      visibility 125ms 0ms var(--deceleration-curve);
+    transition: opacity 125ms 0ms var(--rls-deceleration-curve),
+      transform 125ms 0ms var(--rls-deceleration-curve),
+      visibility 125ms 0ms var(--rls-deceleration-curve);
   }
 
   &__backdrop {
@@ -63,9 +63,9 @@
     opacity: var(--pvt-backdrop-opacity);
     z-index: 1;
     will-change: opacity;
-    background: var(--backdrop-rolster-500);
+    background: var(--rls-theme-backdrop-500);
     backdrop-filter: blur(2px);
-    transition: opacity 120ms 0ms var(--deceleration-curve),
-      bottom 120ms 0ms var(--deceleration-curve);
+    transition: opacity 120ms 0ms var(--rls-deceleration-curve),
+      bottom 120ms 0ms var(--rls-deceleration-curve);
   }
 }

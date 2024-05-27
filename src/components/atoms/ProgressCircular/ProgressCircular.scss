@@ -7,11 +7,11 @@
 
 .rls-progress-circular {
   position: relative;
-  width: var(--rls-progress-circular-dimension);
-  height: var(--rls-progress-circular-dimension);
-  padding: var(--sizing-x2);
+  width: var(--rlc-progress-circular-dimension);
+  height: var(--rlc-progress-circular-dimension);
+  padding: var(--rls-sizing-x2);
   box-sizing: border-box;
-  stroke: var(--color-rolster-500);
+  stroke: var(--rls-theme-color-500);
 
   &__svg {
     height: 100%;
@@ -27,7 +27,7 @@
     stroke-dasharray: 65;
     stroke-dashoffset: 65;
     opacity: 1;
-    animation: progress-circular-circle 1750ms var(--standard-curve) infinite;
+    animation: progress-circular-circle 1750ms var(--rls-standard-curve) infinite;
   }
 }
 

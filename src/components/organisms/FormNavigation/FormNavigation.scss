@@ -7,31 +7,32 @@
 
 .rls-form-navigation {
   position: fixed;
-  top: var(--sizing-x8);
-  right: var(--sizing-x8);
-  width: calc(100% - var(--sizing-x16));
+  top: var(--rls-sizing-x8);
+  right: var(--rls-sizing-x8);
+  width: calc(100% - var(--rls-sizing-x16));
   max-width: 160rem;
   height: auto;
-  max-height: calc(100vh - var(--sizing-x16));
-  z-index: var(--z-index-12);
-  padding: var(--sizing-x8) var(--sizing-x8) var(--sizing-x12) var(--sizing-x8);
+  max-height: calc(100vh - var(--rls-sizing-x16));
+  z-index: var(--rls-z-index-12);
+  padding: var(--rls-sizing-x8) var(--rls-sizing-x8) var(--rls-sizing-x12)
+    var(--rls-sizing-x8);
   box-sizing: border-box;
-  background: var(--background-theme-500);
-  border-radius: var(--sizing-x4);
-  box-shadow: var(--shadow-center-dark-8);
-  transform: translateX(calc(100% + var(--sizing-x16)));
-  transition: transform 240ms 0ms var(--standard-curve);
+  background: var(--rls-app-background-500);
+  border-radius: var(--rls-sizing-x4);
+  box-shadow: var(--rls-dark-shadow-center-8);
+  transform: translateX(calc(100% + var(--rls-sizing-x16)));
+  transition: transform 240ms 0ms var(--rls-standard-curve);
 
   &--visible {
     transform: translateX(0%);
   }
 
   &__header {
-    margin-bottom: var(--sizing-x8);
+    margin-bottom: var(--rls-sizing-x8);
 
     .rls-button-action {
-      width: var(--sizing-x12);
-      height: var(--sizing-x12);
+      width: var(--rls-sizing-x12);
+      height: var(--rls-sizing-x12);
       padding: 0rem;
       float: right;
     }

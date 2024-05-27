@@ -9,7 +9,6 @@
   --pvt-value-visibility: visible;
 
   position: relative;
-  float: left;
   width: 100%;
   max-height: inherit;
   min-height: inherit;
@@ -21,8 +20,8 @@
   &--active {
     --pvt-value-visibility: hidden;
 
-    background: var(--color-rolster-100);
-    border-radius: var(--sizing-x2);
+    background: var(--rls-theme-color-100);
+    border-radius: var(--rls-sizing-x2);
 
     &::after {
       animation: skeleton-text-animation 1600ms infinite;
@@ -39,17 +38,16 @@
     transform: translateX(-100%);
     background-image: linear-gradient(
       90deg,
-      var(--skeleton-rolster-100) 0%,
-      var(--skeleton-rolster-100) 20%,
-      var(--skeleton-rolster-300) 60%,
-      var(--skeleton-rolster-100)
+      var(--rls-theme-skeleton-100) 0%,
+      var(--rls-theme-skeleton-100) 20%,
+      var(--rls-theme-skeleton-300) 60%,
+      var(--rls-theme-skeleton-100)
     );
   }
 
   &__value {
     position: relative;
     display: block;
-    float: left;
     width: 100%;
     height: inherit;
     max-height: inherit;

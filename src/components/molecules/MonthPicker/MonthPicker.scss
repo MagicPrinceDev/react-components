@@ -7,34 +7,32 @@
 
 .rls-month-picker {
   position: relative;
-  float: left;
   width: 100%;
   max-width: 140rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--sizing-x2);
-  padding: var(--sizing-x1);
+  gap: var(--rls-sizing-x2);
+  padding: var(--rls-sizing-x1);
   box-sizing: border-box;
 
   &__component {
     position: relative;
-    float: left;
     display: flex;
     box-sizing: border-box;
     text-align: center;
-    height: var(--sizing-x18);
-    border-radius: var(--sizing-x4);
-    color: var(--color-theme-300);
+    height: var(--rls-sizing-x18);
+    border-radius: var(--rls-sizing-x4);
+    color: var(--rls-app-color-300);
 
     &:hover {
-      background: var(--color-rolster-900);
-      color: var(--color-light-500);
+      background: var(--rls-theme-color-900);
+      color: var(--rls-light-color-500);
     }
 
     &--selected {
       &:not(:hover) {
-        background: var(--color-rolster-500);
-        color: var(--color-light-500);
+        background: var(--rls-theme-color-500);
+        color: var(--rls-light-color-500);
       }
     }
 
@@ -49,6 +47,6 @@
     margin: auto;
     cursor: default;
     pointer-events: none;
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--rls-font-weight-semibold);
   }
 }

@@ -6,19 +6,19 @@
 // Updated: 12/Sep/2023
 
 .rls-breadcrumb {
-  --pvt-link-font-color: var(--color-theme-300);
+  --pvt-link-font-color: var(--rls-app-color-300);
 
   display: -webkit-box;
   width: 100%;
-  height: var(--rls-breadcrumb-height);
-  line-height: var(--rls-breadcrumb-height);
-  padding: 0rem var(--sizing-x8);
+  height: var(--rlc-breadcrumb-height);
+  line-height: var(--rlc-breadcrumb-height);
+  padding: 0rem var(--rls-sizing-x8);
   box-sizing: border-box;
   user-select: none;
   overflow: auto;
   overflow-y: hidden;
-  color: var(--color-theme-300);
-  font-weight: var(--font-weight-medium);
+  color: var(--rls-app-color-300);
+  font-weight: var(--rls-font-weight-medium);
 
   &::-webkit-scrollbar {
     width: 0rem;
@@ -32,8 +32,8 @@
     cursor: pointer;
     font-weight: inherit;
     color: inherit;
-    font-size: var(--body-font-size);
-    letter-spacing: var(--body-letter-spacing);
+    font-size: var(--rls-body-font-size);
+    letter-spacing: var(--rls-body-letter-spacing);
 
     &:first-child {
       &::before {
@@ -45,10 +45,10 @@
       font-family: -rolster-icons;
       display: inline-block;
       content: '\e911';
-      margin: 0rem var(--sizing-x2);
+      margin: 0rem var(--rls-sizing-x2);
       cursor: default;
       color: inherit;
-      font-size: var(--sizing-x12);
+      font-size: var(--rls-sizing-x12);
       font-weight: normal;
       font-style: normal;
       letter-spacing: normal;
@@ -57,7 +57,7 @@
     }
 
     &--active {
-      --pvt-link-font-color: var(--color-rolster-500);
+      --pvt-link-font-color: var(--rls-theme-color-500);
     }
 
     &__a {
@@ -66,7 +66,7 @@
       color: var(--pvt-link-font-color);
 
       &:hover {
-        color: var(--color-rolster-500);
+        color: var(--rls-theme-color-500);
         text-decoration: underline;
       }
     }

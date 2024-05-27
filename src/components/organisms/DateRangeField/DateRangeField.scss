@@ -6,31 +6,29 @@
 // Updated: 23/Abr/2024
 
 .rls-date-range-field {
-  --rls-boxfield-body-padding: var(--sizing-x3) var(--sizing-x4);
+  --rlc-boxfield-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
 
   position: relative;
-  float: left;
   width: 100%;
   box-sizing: border-box;
 
   &__control {
     position: relative;
-    float: left;
-    width: calc(100% - var(--sizing-x14));
-    height: var(--sizing-x12);
-    line-height: var(--sizing-x12);
+    width: calc(100% - var(--rls-sizing-x14));
+    height: var(--rls-sizing-x12);
+    line-height: var(--rls-sizing-x12);
     padding: 0rem;
     cursor: default;
     border: none;
     outline: none;
-    color: var(--rls-input-font-color);
+    color: var(--rlc-input-font-color);
     background: transparent;
-    font-size: var(--input-font-size);
-    font-weight: var(--font-weight-medium);
-    letter-spacing: var(--input-letter-spacing);
+    font-size: var(--rls-input-font-size);
+    font-weight: var(--rls-font-weight-medium);
+    letter-spacing: var(--rls-input-letter-spacing);
 
     &::placeholder {
-      color: var(--color-theme-100);
+      color: var(--rls-app-color-100);
     }
 
     &:disabled {
@@ -39,11 +37,11 @@
   }
 
   &__action {
-    color: var(--color-theme-300);
-    width: var(--sizing-x12);
-    height: var(--sizing-x12);
+    color: var(--rls-app-color-300);
+    width: var(--rls-sizing-x12);
+    height: var(--rls-sizing-x12);
     padding: 0rem;
-    margin-left: var(--sizing-x2);
+    margin-left: var(--rls-sizing-x2);
     background: transparent;
   }
 }

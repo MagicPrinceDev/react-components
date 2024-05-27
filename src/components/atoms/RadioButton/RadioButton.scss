@@ -12,11 +12,11 @@
   float: left;
   display: flex;
   outline: none;
-  width: var(--sizing-x12);
-  height: var(--sizing-x12);
+  width: var(--rls-sizing-x12);
+  height: var(--rls-sizing-x12);
   border-radius: 50%;
   box-sizing: border-box;
-  border: var(--border-1-theme-300);
+  border: var(--rls-app-border-1-300);
 
   &:hover {
     cursor: pointer;
@@ -25,7 +25,7 @@
   &--checked {
     --pvt-component-transform: scale(1);
 
-    border: var(--border-1-rolster-500);
+    border: var(--rls-theme-border-1-500);
   }
 
   &--disabled {
@@ -38,9 +38,9 @@
     width: 7rem;
     height: 7rem;
     margin: auto;
-    background: var(--gradient-rolster-500);
+    background: var(--rls-theme-gradient-500);
     transform: var(--pvt-component-transform);
     transform-origin: 50% 50%;
-    transition: all 160ms 0ms var(--standard-curve);
+    transition: all 160ms 0ms var(--rls-standard-curve);
   }
 }

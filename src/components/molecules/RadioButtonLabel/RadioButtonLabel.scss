@@ -7,13 +7,12 @@
 
 .rls-radiobutton-label {
   --pvt-text-opacity: 1;
-  --pvt-text-height: var(--sizing-x12);
+  --pvt-text-height: var(--rls-sizing-x12);
   --pvt-text-overflow: hidden;
   --pvt-text-white-space: nowrap;
   --pvt-text-text-overflow: ellipsis;
 
   position: relative;
-  float: left;
   width: 100%;
   display: flex;
 
@@ -31,19 +30,18 @@
   }
 
   &__component {
-    margin-right: var(--sizing-x4);
+    margin-right: var(--rls-sizing-x4);
     width: auto;
   }
 
   &__text {
-    float: left;
-    max-width: calc(100% - var(--sizing-x16));
+    max-width: calc(100% - var(--rls-sizing-x16));
     height: var(--pvt-text-height);
-    line-height: var(--sizing-x12);
-    color: var(--color-theme-300);
-    font-size: var(--label-font-size);
-    font-weight: var(--font-weight-medium);
-    letter-spacing: var(--label-letter-spacing);
+    line-height: var(--rls-sizing-x12);
+    color: var(--rls-app-color-300);
+    font-size: var(--rls-label-font-size);
+    font-weight: var(--rls-font-weight-medium);
+    letter-spacing: var(--rls-label-letter-spacing);
     user-select: none;
     opacity: var(--pvt-text-opacity);
     overflow: var(--pvt-text-overflow);

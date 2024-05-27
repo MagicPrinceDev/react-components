@@ -9,14 +9,14 @@
   position: relative;
   display: inline-block;
   width: auto;
-  padding: var(--sizing-x2);
+  padding: var(--rls-sizing-x2);
   box-sizing: border-box;
-  font-size: var(--caption-font-size);
-  letter-spacing: var(--caption-letter-spacing);
-  line-height: var(--caption-line-height);
-  color: var(--color-rolster-500);
-  background: var(--color-rolster-100);
-  border-radius: var(--sizing-x2);
+  font-size: var(--rls-caption-font-size);
+  letter-spacing: var(--rls-caption-letter-spacing);
+  line-height: var(--rls-caption-line-height);
+  color: var(--rls-theme-color-500);
+  background: var(--rls-theme-color-100);
+  border-radius: var(--rls-sizing-x2);
 
   & > span {
     font-size: inherit;

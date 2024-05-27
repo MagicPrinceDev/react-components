@@ -15,33 +15,33 @@
   width: 100%;
   max-width: 140rem;
   flex-direction: column;
-  row-gap: var(--sizing-x4);
+  row-gap: var(--rls-sizing-x4);
   box-sizing: border-box;
   user-select: none;
 
   &__title {
-    color: var(--color-rolster-500);
+    color: var(--rls-theme-color-500);
     text-align: center;
-    padding: var(--sizing-x4) 0rem;
-    font-size: var(--subtitle-font-size);
-    letter-spacing: var(--subtitle-letter-spacing);
-    line-height: var(--subtitle-line-height);
-    font-weight: var(--font-weight-bold);
+    padding: var(--rls-sizing-x4) 0rem;
+    font-size: var(--rls-subtitle-font-size);
+    letter-spacing: var(--rls-subtitle-letter-spacing);
+    line-height: var(--rls-subtitle-line-height);
+    font-weight: var(--rls-font-weight-bold);
   }
 
   &__header {
     display: flex;
-    background: var(--background-theme-100);
-    color: var(--color-theme-500);
-    border-radius: var(--sizing-x2);
+    background: var(--rls-app-background-100);
+    color: var(--rls-app-color-500);
+    border-radius: var(--rls-sizing-x2);
   }
 
   &__label {
-    padding: var(--sizing-x6) 0rem;
+    padding: var(--rls-sizing-x6) 0rem;
     text-align: center;
     width: 100%;
-    font-size: var(--sizing-x6);
-    font-weight: var(--font-weight-bold);
+    font-size: var(--rls-sizing-x6);
+    font-weight: var(--rls-font-weight-bold);
   }
 
   &__week {
@@ -50,19 +50,19 @@
 
   &__day {
     text-align: center;
-    padding: var(--sizing-x1);
+    padding: var(--rls-sizing-x1);
     box-sizing: border-box;
 
     &__span {
       position: relative;
       display: block;
-      color: var(--color-theme-500);
-      border-radius: var(--sizing-x4);
-      height: var(--sizing-x18);
-      line-height: var(--sizing-x18);
-      margin: var(--sizing-x1) 0rem;
+      color: var(--rls-app-color-500);
+      border-radius: var(--rls-sizing-x4);
+      height: var(--rls-sizing-x18);
+      line-height: var(--rls-sizing-x18);
+      margin: var(--rls-sizing-x1) 0rem;
       font-size: 7rem;
-      font-weight: var(--font-weight-semibold);
+      font-weight: var(--rls-font-weight-semibold);
 
       &:not(:hover) {
         background: var(--pvt-span-nothover-background);
@@ -70,27 +70,27 @@
       }
 
       &:hover {
-        color: var(--color-light-500);
-        background: var(--color-rolster-900);
+        color: var(--rls-light-color-500);
+        background: var(--rls-theme-color-900);
       }
     }
 
     &--end {
-      --pvt-span-nothover-background: var(--color-theme-500);
-      --pvt-span-nothover-font-color: var(--background-theme-500);
+      --pvt-span-nothover-background: var(--rls-app-color-500);
+      --pvt-span-nothover-font-color: var(--rls-app-background-500);
     }
 
     &--source {
-      --pvt-span-nothover-background: var(--color-rolster-500);
-      --pvt-span-nothover-font-color: var(--color-light-500);
+      --pvt-span-nothover-background: var(--rls-theme-color-500);
+      --pvt-span-nothover-font-color: var(--rls-light-color-500);
     }
 
     &--ranged {
-      --pvt-span-nothover-background: var(--color-rolster-100);
+      --pvt-span-nothover-background: var(--rls-theme-color-100);
     }
 
     &--forbidden {
-      --pvt-span-background: var(--background-theme-100);
+      --pvt-span-background: var(--rls-app-background-100);
 
       pointer-events: none;
       opacity: 0.5;

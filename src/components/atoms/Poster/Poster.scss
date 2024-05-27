@@ -9,11 +9,11 @@
   position: relative;
   float: left;
   width: auto;
-  height: var(--rls-poster-height);
-  line-height: var(--rls-poster-height);
-  padding: var(--rls-poster-padding);
+  height: var(--rlc-poster-height);
+  line-height: var(--rlc-poster-height);
+  padding: var(--rlc-poster-padding);
   box-sizing: border-box;
-  border-radius: var(--sizing-x2);
-  color: var(--color-light-500);
-  background: var(--gradient-rolster-500);
+  border-radius: var(--rls-sizing-x2);
+  color: var(--rls-light-color-500);
+  background: var(--rls-theme-gradient-500);
 }

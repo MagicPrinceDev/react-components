@@ -10,7 +10,7 @@
   --pvt-control-opacity: 1;
 
   &.rls-box-field--selected {
-    --pvt-control-width: calc(100% - var(--sizing-x14));
+    --pvt-control-width: calc(100% - var(--rls-sizing-x14));
   }
 
   &.rls-box-field--disabled {
@@ -30,19 +30,19 @@
       display: flex;
       align-items: center;
       width: 100%;
-      margin-top: var(--sizing-x2);
-      margin-bottom: var(--sizing-x6);
-      background: var(--background-theme-300);
-      border-radius: var(--sizing-x4);
-      padding: var(--sizing-x4);
+      margin-top: var(--rls-sizing-x2);
+      margin-bottom: var(--rls-sizing-x6);
+      background: var(--rls-app-background-300);
+      border-radius: var(--rls-sizing-x4);
+      padding: var(--rls-sizing-x4);
       box-sizing: border-box;
 
       button {
-        color: var(--color-theme-300);
+        color: var(--rls-app-color-300);
         background: transparent;
 
         &:not(:disabled):hover {
-          color: var(--color-rolster-300);
+          color: var(--rls-theme-color-300);
         }
 
         &:disabled {
@@ -53,25 +53,25 @@
 
     &__control {
       width: 100%;
-      height: var(--sizing-x12);
-      line-height: var(--sizing-x12);
+      height: var(--rls-sizing-x12);
+      line-height: var(--rls-sizing-x12);
       padding: 0rem;
       cursor: text;
       border: none;
       outline: none;
       background: transparent;
-      color: var(--color-theme-500);
-      font-size: var(--input-font-size);
-      font-weight: var(--font-weight-medium);
-      letter-spacing: var(--input-letter-spacing);
+      color: var(--rls-app-color-500);
+      font-size: var(--rls-input-font-size);
+      font-weight: var(--rls-font-weight-medium);
+      letter-spacing: var(--rls-input-letter-spacing);
 
       &::placeholder {
-        color: var(--color-theme-100);
+        color: var(--rls-app-color-100);
       }
 
       &::selection {
-        background: var(--color-rolster-700);
-        color: var(--color-light-500);
+        background: var(--rls-theme-color-700);
+        color: var(--rls-light-color-500);
       }
 
       &:disabled {
@@ -80,7 +80,7 @@
     }
 
     .rls-progress-bar {
-      margin-bottom: var(--sizing-x8);
+      margin-bottom: var(--rls-sizing-x8);
     }
   }
 
@@ -88,10 +88,10 @@
     .rls-ballot {
       &__title {
         label {
-          background: var(--color-rolster-100);
-          color: var(--color-rolster-500);
-          padding: 0rem var(--sizing-x2);
-          border-radius: var(--sizing-x2);
+          background: var(--rls-theme-color-100);
+          color: var(--rls-theme-color-500);
+          padding: 0rem var(--rls-sizing-x2);
+          border-radius: var(--rls-sizing-x2);
         }
       }
     }

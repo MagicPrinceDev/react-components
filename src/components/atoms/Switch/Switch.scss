@@ -6,22 +6,22 @@
 // Updated: 27/Nov/2023
 
 .rls-switch {
-  --pvt-element-left: var(--sizing-x1);
-  --pvt-element-background: var(--background-theme-500);
-  --pvt-bar-background: var(--background-theme-100);
+  --pvt-element-left: var(--rls-sizing-x1);
+  --pvt-element-background: var(--rls-app-background-500);
+  --pvt-bar-background: var(--rls-app-background-100);
 
-  max-width: var(--sizing-x20);
+  max-width: var(--rls-sizing-x20);
 
   &:hover {
     cursor: pointer;
   }
 
   &--checked {
-    --pvt-element-background: var(--gradient-rolster-500);
+    --pvt-element-background: var(--rls-theme-gradient-500);
     --pvt-element-left: calc(
-      100% - var(--rls-switch-element-size) - var(--sizing-x1)
+      100% - var(--rlc-switch-element-size) - var(--rls-sizing-x1)
     );
-    --pvt-bar-background: var(--color-rolster-300);
+    --pvt-bar-background: var(--rls-theme-color-300);
   }
 
   &--disabled {
@@ -32,22 +32,22 @@
   &__component {
     position: relative;
     width: 100%;
-    padding: var(--sizing-x3) var(--sizing-x1);
+    padding: var(--rls-sizing-x3) var(--rls-sizing-x1);
     box-sizing: border-box;
 
     &__element {
       position: absolute;
       top: 0rem;
       left: var(--pvt-element-left);
-      width: var(--rls-switch-element-size);
-      height: var(--rls-switch-element-size);
-      z-index: var(--z-index-2);
-      padding: var(--sizing-x2);
+      width: var(--rlc-switch-element-size);
+      height: var(--rlc-switch-element-size);
+      z-index: var(--rls-z-index-2);
+      padding: var(--rls-sizing-x2);
       box-sizing: border-box;
       border-radius: 50%;
-      background: var(--background-theme-500);
+      background: var(--rls-app-background-500);
       box-shadow: 0 0 2rem 0 rgba(37, 38, 65, 0.38);
-      transition: left 240ms var(--standard-curve);
+      transition: left 240ms var(--rls-standard-curve);
 
       &::before {
         display: block;
@@ -62,8 +62,8 @@
     &__bar {
       background: var(--pvt-bar-background);
       width: 100%;
-      height: var(--rls-switch-bar-height);
-      border-radius: var(--rls-switch-bar-radius);
+      height: var(--rlc-switch-bar-height);
+      border-radius: var(--rlc-switch-bar-radius);
     }
   }
 }

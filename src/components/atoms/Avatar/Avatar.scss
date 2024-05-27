@@ -10,15 +10,15 @@
   display: flex;
   justify-content: center;
   overflow: hidden;
-  font-size: var(--rls-avatar-font-size);
-  width: var(--rls-avatar-width);
-  height: var(--rls-avatar-height);
-  background: var(--gradient-rolster-500);
-  color: var(--color-light-500);
-  border-radius: var(--rls-avatar-border-radius);
+  font-size: var(--rlc-avatar-font-size);
+  width: var(--rlc-avatar-width);
+  height: var(--rlc-avatar-height);
+  background: var(--rls-theme-gradient-500);
+  color: var(--rls-light-color-500);
+  border-radius: var(--rlc-avatar-border-radius);
 
   &--skeleton {
-    background: var(--color-rolster-100);
+    background: var(--rls-theme-color-100);
 
     & > * {
       display: none;

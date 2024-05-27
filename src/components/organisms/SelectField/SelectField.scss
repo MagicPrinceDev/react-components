@@ -11,7 +11,7 @@
   }
 
   .rls-list-field__action {
-    transition: transform 160ms 0ms var(--sharp-curve);
+    transition: transform 160ms 0ms var(--rls-sharp-curve);
 
     &--visible {
       transform: rotate(180deg);

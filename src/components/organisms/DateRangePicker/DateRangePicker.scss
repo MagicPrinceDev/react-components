@@ -9,38 +9,38 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  row-gap: var(--sizing-x4);
+  row-gap: var(--rls-sizing-x4);
   overflow: hidden;
   max-width: 150rem;
 
   &__header {
-    background: var(--color-rolster-100);
-    padding: var(--sizing-x4);
+    background: var(--rls-theme-color-100);
+    padding: var(--rls-sizing-x4);
     box-sizing: border-box;
   }
 
   &__title {
-    color: var(--color-theme-500);
+    color: var(--rls-app-color-500);
     text-align: center;
     cursor: default;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--rls-font-weight-bold);
 
     &:hover {
-      color: var(--color-rolster-500);
+      color: var(--rls-theme-color-500);
     }
 
     &--description {
-      height: var(--sizing-x16);
-      line-height: var(--sizing-x16);
+      height: var(--rls-sizing-x16);
+      line-height: var(--rls-sizing-x16);
       font-size: 9.25rem;
     }
 
     &--year {
-      margin: var(--sizing-x4) 0rem var(--sizing-x2) 0rem;
-      height: var(--sizing-x16);
-      line-height: var(--sizing-x16);
-      font-size: var(--sizing-x12);
-      color: var(--color-theme-300);
+      margin: var(--rls-sizing-x4) 0rem var(--rls-sizing-x2) 0rem;
+      height: var(--rls-sizing-x16);
+      line-height: var(--rls-sizing-x16);
+      font-size: var(--rls-sizing-x12);
+      color: var(--rls-app-color-300);
     }
 
     &--month {
@@ -48,10 +48,10 @@
       justify-content: space-between;
 
       span {
-        height: var(--sizing-x14);
-        line-height: var(--sizing-x14);
-        font-size: var(--sizing-x10);
-        color: var(--color-theme-300);
+        height: var(--rls-sizing-x14);
+        line-height: var(--rls-sizing-x14);
+        font-size: var(--rls-sizing-x10);
+        color: var(--rls-app-color-300);
         margin: auto 0rem;
       }
     }
@@ -61,7 +61,7 @@
     display: flex;
     justify-content: center;
     width: 150rem;
-    padding: 0rem var(--sizing-x2);
+    padding: 0rem var(--rls-sizing-x2);
     box-sizing: border-box;
 
     & > * {
@@ -96,8 +96,8 @@
   &__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sizing-x4);
-    padding: 0rem var(--sizing-x8) var(--sizing-x6) var(--sizing-x8);
+    gap: var(--rls-sizing-x4);
+    padding: 0rem var(--rls-sizing-x8) var(--rls-sizing-x6) var(--rls-sizing-x8);
     overflow: hidden;
     box-sizing: border-box;
 

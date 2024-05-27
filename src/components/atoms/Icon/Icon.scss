@@ -9,22 +9,21 @@
   --pvt-icon-display: block;
 
   position: relative;
-  float: left;
-  font-size: var(--rls-icon-font-size);
-  width: var(--rls-icon-width);
-  height: var(--rls-icon-height);
-  line-height: var(--rls-icon-height);
+  font-size: var(--rlc-icon-font-size);
+  width: var(--rlc-icon-width);
+  height: var(--rlc-icon-height);
+  line-height: var(--rlc-icon-height);
 
   &--skeleton {
     --pvt-icon-display: none;
 
-    background: var(--theme-rolster-300);
-    border-radius: var(--sizing-x2);
+    background: var(--rls-theme-color-300);
+    border-radius: var(--rls-sizing-x2);
   }
 
   & > i {
     display: var(--pvt-icon-display);
-    color: var(--rls-icon-color);
+    color: var(--rlc-icon-color);
     float: left;
     width: 100%;
     height: 100%;

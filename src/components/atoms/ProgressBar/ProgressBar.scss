@@ -11,9 +11,9 @@
   position: relative;
   float: left;
   width: 100%;
-  height: var(--sizing-x2);
+  height: var(--rls-sizing-x2);
   overflow: hidden;
-  background: var(--color-rolster-100);
+  background: var(--rls-theme-color-100);
 
   &--indeterminate {
     --pvt-component-display: none;
@@ -24,8 +24,8 @@
       content: '';
       top: 0rem;
       width: 0%;
-      height: var(--sizing-x2);
-      background: var(--gradient-rolster-500);
+      height: var(--rls-sizing-x2);
+      background: var(--rls-theme-gradient-500);
     }
 
     &::after {
@@ -41,10 +41,10 @@
     position: absolute;
     top: 0rem;
     width: 0%;
-    height: var(--sizing-x4);
+    height: var(--rls-sizing-x4);
     display: var(--pvt-component-display);
-    background: var(--gradient-rolster-500);
-    transition: width 320ms 0ms var(--standard-curve);
+    background: var(--rls-theme-gradient-500);
+    transition: width 320ms 0ms var(--rls-standard-curve);
   }
 }
 
