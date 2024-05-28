@@ -170,7 +170,7 @@ export function RlsDateRangePicker({
 
         <RlsMonthPicker
           formControl={monthControl}
-          date={date}
+          year={yearControl.state}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}
@@ -179,7 +179,6 @@ export function RlsDateRangePicker({
 
         <RlsYearPicker
           formControl={yearControl}
-          date={date}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}

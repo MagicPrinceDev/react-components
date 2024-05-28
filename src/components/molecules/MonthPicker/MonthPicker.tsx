@@ -1,7 +1,11 @@
+import { itIsDefined } from '@rolster/helpers-advanced';
+import {
+  MonthState,
+  checkMonthPicker,
+  createMonthPicker
+} from '@rolster/helpers-components';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { MonthState } from '../../../models';
-import { createMonthPicker } from '../../../helpers/month-picker';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './MonthPicker.css';
@@ -13,37 +17,58 @@ interface MonthPickerProps extends RlsComponent {
   maxDate?: Date;
   minDate?: Date;
   onValue?: (value: number) => void;
+  year?: Nulleable<number>;
 }
 
 export function RlsMonthPicker({
-  formControl,
   date,
   disabled: disabledPicker,
+  formControl,
   maxDate,
   minDate,
+  onValue,
   rlsTheme,
-  onValue
+  year
 }: MonthPickerProps) {
-  const initialDate = date || new Date();
-  const initialMonth = formControl?.state || initialDate.getMonth();
+  const currentDate = date || new Date();
 
   const [months, setMonths] = useState<MonthState[]>([]);
-  const [value, setValue] = useState(initialMonth);
+  const [value, setValue] = useState(
+    formControl?.state || currentDate.getMonth()
+  );
 
   useEffect(() => {
-    setMonths(
-      createMonthPicker({
-        date: initialDate,
-        value: formControl?.state || value,
-        minDate,
-        maxDate
-      })
-    );
-  }, [value, date, minDate, maxDate]);
+    const props = createPickerProps(); // MonthPickerProps
+
+    const month = checkMonthPicker(props);
+
+    month ? setMonthValue(month) : setMonths(createMonthPicker(props));
+  }, [year, value, minDate, maxDate]);
+
+  useEffect(() => {
+    const month = checkMonthPicker(createPickerProps());
+
+    itIsDefined(month)
+      ? formControl?.setState(month)
+      : setValue(formControl?.state || currentDate.getMonth());
+  }, [formControl?.state]);
+
+  function createPickerProps() {
+    return {
+      date: currentDate,
+      year: year || currentDate.getFullYear(),
+      month: itIsDefined(formControl?.state) ? formControl?.state : value,
+      minDate,
+      maxDate
+    };
+  }
+
+  function setMonthValue(value: number): void {
+    formControl ? formControl.setState(value) : setValue(value);
+  }
 
   function onChange(value: number): void {
-    formControl?.setState(value);
-    setValue(value);
+    setMonthValue(value);
 
     if (onValue) {
       onValue(value);
@@ -56,14 +81,12 @@ export function RlsMonthPicker({
         <div
           key={index}
           className={renderClassStatus('rls-month-picker__component', {
-            disabled: disabled || disabledPicker || false,
+            disabled: disabled || disabledPicker,
             selected
           })}
-          onClick={() => {
-            if (!disabled) {
-              onChange(value);
-            }
-          }}
+          onClick={
+            !(disabled || disabledPicker) ? () => onChange(value) : undefined
+          }
         >
           <span className="rls-month-picker__span">{label}</span>
         </div>

@@ -1,13 +1,9 @@
-import { MONTH_NAMES } from '@rolster/helpers-date';
+import { itIsDefined } from '@rolster/helpers-advanced';
+import { MONTH_NAMES, Month } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
-import {
-  MONTH_MAX_VALUE,
-  MONTH_MIN_VALUE,
-  isMaxLimitMonth,
-  isMinLimitMonth
-} from '../../../helpers/month-picker';
 import { RlsButtonAction } from '../../atoms';
 import './MonthTitlePicker.css';
+import { monthLimitTemplate } from '@rolster/helpers-components';
 
 type MonthTitlePickerType = 'month' | 'year';
 
@@ -23,34 +19,38 @@ interface MonthTitlePickerProps {
 }
 
 export function RlsMonthTitlePicker({
+  monthControl,
+  type,
+  yearControl,
   date,
   disabled,
-  monthControl,
   maxDate,
   minDate,
-  onClick,
-  type,
-  yearControl
+  onClick
 }: MonthTitlePickerProps) {
-  const { state: month } = monthControl;
-  const { state: year } = yearControl;
+  const { limitNext, limitPrevious } = monthLimitTemplate({
+    date,
+    maxDate,
+    minDate,
+    month: monthControl.state
+  });
 
-  const monthName = MONTH_NAMES()[month || 0];
+  const monthName = MONTH_NAMES()[monthControl.state || 0];
 
   function onPreviousMonth(): void {
-    if (typeof month === 'number' && typeof year === 'number') {
-      if (month > MONTH_MIN_VALUE) {
-        monthControl.setState(month - 1);
+    if (itIsDefined(monthControl.state) && itIsDefined(yearControl.state)) {
+      if (monthControl.state > Month.January) {
+        monthControl.setState(monthControl.state - 1);
       } else {
-        monthControl.setState(MONTH_MAX_VALUE);
-        yearControl.setState(year - 1);
+        monthControl.setState(Month.December);
+        yearControl.setState(yearControl.state - 1);
       }
     }
   }
 
   function onPreviousYear(): void {
-    if (typeof year === 'number') {
-      yearControl.setState(year - 1);
+    if (itIsDefined(yearControl.state)) {
+      yearControl.setState(yearControl.state - 1);
     }
   }
 
@@ -59,19 +59,19 @@ export function RlsMonthTitlePicker({
   }
 
   function onNextMonth(): void {
-    if (typeof month === 'number' && typeof year === 'number') {
-      if (month < MONTH_MAX_VALUE) {
-        monthControl.setState(month + 1);
+    if (itIsDefined(monthControl.state) && itIsDefined(yearControl.state)) {
+      if (monthControl.state < Month.December) {
+        monthControl.setState(monthControl.state + 1);
       } else {
-        monthControl.setState(MONTH_MIN_VALUE);
-        yearControl.setState(year + 1);
+        monthControl.setState(Month.January);
+        yearControl.setState(yearControl.state + 1);
       }
     }
   }
 
   function onNextYear(): void {
-    if (typeof year === 'number') {
-      yearControl.setState(year + 1);
+    if (itIsDefined(yearControl.state)) {
+      yearControl.setState(yearControl.state + 1);
     }
   }
 
@@ -84,7 +84,7 @@ export function RlsMonthTitlePicker({
       <RlsButtonAction
         icon="arrow-ios-left"
         onClick={onPrevious}
-        disabled={isMinLimitMonth(month, date, minDate) || disabled}
+        disabled={limitPrevious || disabled}
       />
 
       <span onClick={onClick}>{monthName}</span>
@@ -92,7 +92,7 @@ export function RlsMonthTitlePicker({
       <RlsButtonAction
         icon="arrow-ios-right"
         onClick={onNext}
-        disabled={isMaxLimitMonth(month, date, maxDate) || disabled}
+        disabled={limitNext || disabled}
       />
     </div>
   );

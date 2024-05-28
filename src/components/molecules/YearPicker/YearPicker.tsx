@@ -1,7 +1,8 @@
+import { itIsDefined } from '@rolster/helpers-advanced';
+import { checkYearPicker, createYearPicker } from '@rolster/helpers-components';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { createYearPicker } from '../../../helpers/year-picker';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './YearPicker.css';
@@ -16,51 +17,74 @@ interface YearPickerProps extends RlsComponent {
 }
 
 export function RlsYearPicker({
-  formControl,
   date,
   disabled: disabledPicker,
+  formControl,
   maxDate,
   minDate,
-  rlsTheme,
-  onValue
+  onValue,
+  rlsTheme
 }: YearPickerProps) {
-  const initialDate = date || new Date();
-  const initialYear = formControl?.state || initialDate.getFullYear();
+  const currentDate = date || new Date();
 
-  const [value, setValue] = useState(initialYear);
-  const [year, setYear] = useState(initialYear);
+  const [value, setValue] = useState(
+    formControl?.state || currentDate.getFullYear()
+  );
+  const [year, setYear] = useState(
+    formControl?.state || currentDate.getFullYear()
+  );
   const [template, setTemplate] = useState(
     createYearPicker({
-      value: formControl?.state || value,
-      year: initialYear,
+      date: currentDate,
+      year: formControl?.state || year,
       minDate,
       maxDate
     })
   );
 
   useEffect(() => {
-    setTemplate(
-      createYearPicker({
-        value: formControl?.state || value,
-        year,
-        minDate,
-        maxDate
-      })
-    );
-  }, [value, year, minDate, maxDate]);
+    const props = createPickerProps(); // YearPickerProps
+
+    const year = checkYearPicker(props);
+
+    year
+      ? setYearValue(year)
+      : setTemplate(createYearPicker(createPickerProps()));
+  }, [value, minDate, maxDate]);
+
+  useEffect(() => {
+    const year = checkYearPicker(createPickerProps());
+
+    itIsDefined(year)
+      ? formControl?.setState(year)
+      : setValue(formControl?.state || currentDate.getFullYear());
+  }, [formControl?.state]);
+
+  function createPickerProps() {
+    return {
+      date: currentDate,
+      year: formControl?.state || year,
+      minDate,
+      maxDate
+    };
+  }
+
+  function setYearValue(value: number): void {
+    formControl ? formControl.setState(value) : setValue(value);
+
+    setYear(value);
+  }
 
   function onClickPrev(): void {
-    setYear(year - 8);
+    setYear(value - 8);
   }
 
   function onClickNext(): void {
-    setYear(year + 8);
+    setYear(value + 8);
   }
 
   function onChange(value: number): void {
-    formControl?.setState(value);
-    setYear(value);
-    setValue(value);
+    setYearValue(value);
 
     if (onValue) {
       onValue(value);
@@ -72,7 +96,7 @@ export function RlsYearPicker({
       <div className="rls-year-picker__header">
         <div className="rls-year-picker__action rls-year-picker__action--prev">
           <button
-            disabled={!template.hasPrevious || disabledPicker}
+            disabled={!template.canPrevious || disabledPicker}
             onClick={onClickPrev}
           >
             <RlsIcon value="arrow-ios-left" />
@@ -85,7 +109,7 @@ export function RlsYearPicker({
 
         <div className="rls-year-picker__action rls-year-picker__action--next">
           <button
-            disabled={!template.hasNext || disabledPicker}
+            disabled={!template.canNext || disabledPicker}
             onClick={onClickNext}
           >
             <RlsIcon value="arrow-ios-right" />
@@ -101,11 +125,9 @@ export function RlsYearPicker({
               disabled: disabled || disabledPicker,
               selected
             })}
-            onClick={() => {
-              if (value && !disabled) {
-                onChange(value);
-              }
-            }}
+            onClick={
+              value && !disabledPicker ? () => onChange(value) : undefined
+            }
           >
             <span className="rls-year-picker__year__span body1-medium">
               {value || '????'}

@@ -1,9 +1,13 @@
+import { itIsDefined } from '@rolster/helpers-advanced';
+import {
+  WeekState,
+  checkDayPicker,
+  createDayPicker
+} from '@rolster/helpers-components';
 import { DAY_LABELS } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { createDayPicker } from '../../../helpers/day-picker';
-import { WeekState } from '../../../models';
 import { RlsComponent } from '../../definitions';
 import './DayPicker.css';
 
@@ -12,8 +16,10 @@ interface DayPickerProps extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, number>;
   maxDate?: Date;
+  month?: Nulleable<number>;
   minDate?: Date;
   onValue?: (value: number) => void;
+  year?: Nulleable<number>;
 }
 
 export function RlsDayPicker({
@@ -21,36 +27,52 @@ export function RlsDayPicker({
   disabled: disabledPicker,
   formControl,
   maxDate,
+  month,
   minDate,
+  onValue,
   rlsTheme,
-  onValue
+  year
 }: DayPickerProps) {
-  const initialDate = date || new Date();
-  const initialDay = formControl?.state || initialDate.getDate();
+  const currentDate = date || new Date(); // Initial date
 
   const [weeks, setWeeks] = useState<WeekState[]>([]);
-  const [value, setValue] = useState(initialDay);
+  const [value, setValue] = useState(
+    formControl?.state || currentDate.getDate()
+  );
 
   useEffect(() => {
-    setWeeks(
-      createDayPicker({
-        date: initialDate,
-        value: formControl?.state || value,
-        minDate,
-        maxDate
-      })
-    );
-  }, [value, date, minDate, maxDate]);
+    const props = createPickerProps(); // DayPickerProps
+
+    const day = checkDayPicker(props);
+
+    day ? setDayValue(day) : setWeeks(createDayPicker(props));
+  }, [month, year, value, minDate, maxDate]);
 
   useEffect(() => {
-    if (date && date.getDate() !== value) {
-      onChange(date.getDate());
-    }
-  }, [date]);
+    const day = checkDayPicker(createPickerProps());
+
+    day
+      ? formControl?.setState(day)
+      : setValue(formControl?.state || currentDate.getDate());
+  }, [formControl?.state]);
+
+  function setDayValue(value: number): void {
+    formControl ? formControl.setState(value) : setValue(value);
+  }
+
+  function createPickerProps() {
+    return {
+      date: currentDate,
+      month: itIsDefined(month) ? month : currentDate.getMonth(),
+      year: year || currentDate.getFullYear(),
+      day: formControl?.state || value,
+      minDate,
+      maxDate
+    };
+  }
 
   function onChange(value: number): void {
-    setValue(value);
-    formControl?.setState(value);
+    setDayValue(value);
 
     if (onValue) {
       onValue(value);
@@ -78,11 +100,9 @@ export function RlsDayPicker({
                   forbidden,
                   selected
                 })}
-                onClick={() => {
-                  if (value && !disabled) {
-                    onChange(value);
-                  }
-                }}
+                onClick={
+                  value && !disabledPicker ? () => onChange(value) : undefined
+                }
               >
                 <span className="rls-day-picker__day__span">
                   {value || '??'}
