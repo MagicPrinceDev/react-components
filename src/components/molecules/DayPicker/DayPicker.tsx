@@ -41,7 +41,14 @@ export function RlsDayPicker({
   );
 
   useEffect(() => {
-    const props = createPickerProps(); // DayPickerProps
+    const props = {
+      date: currentDate,
+      month: itIsDefined(month) ? month : currentDate.getMonth(),
+      year: year || currentDate.getFullYear(),
+      day: formControl?.state || value,
+      minDate,
+      maxDate
+    };
 
     const day = checkDayPicker(props);
 
@@ -49,7 +56,14 @@ export function RlsDayPicker({
   }, [month, year, value, minDate, maxDate]);
 
   useEffect(() => {
-    const day = checkDayPicker(createPickerProps());
+    const day = checkDayPicker({
+      date: currentDate,
+      month: currentDate.getMonth(),
+      year: currentDate.getFullYear(),
+      day: formControl?.state || value,
+      minDate,
+      maxDate
+    });
 
     day
       ? formControl?.setState(day)
@@ -58,17 +72,6 @@ export function RlsDayPicker({
 
   function setDayValue(value: number): void {
     formControl ? formControl.setState(value) : setValue(value);
-  }
-
-  function createPickerProps() {
-    return {
-      date: currentDate,
-      month: itIsDefined(month) ? month : currentDate.getMonth(),
-      year: year || currentDate.getFullYear(),
-      day: formControl?.state || value,
-      minDate,
-      maxDate
-    };
   }
 
   function onChange(value: number): void {

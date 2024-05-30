@@ -1,3 +1,7 @@
+import {
+  AbstractListElement as Element,
+  ListCollection
+} from '@rolster/helpers-components';
 import { FormState } from '@rolster/helpers-forms';
 import { ReactControl } from '@rolster/react-forms';
 import {
@@ -5,13 +9,9 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
   useEffect,
-  useState
+  useRef
 } from 'react';
 import { ListControl, useListControl } from '../../../hooks';
-import {
-  AbstractListElement as Element,
-  ListCollection
-} from '../../../models';
 
 export interface SelectControl<T = unknown, E extends Element<T> = Element<T>> {
   listControl: ListControl<T>;
@@ -52,10 +52,14 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
     setVisible
   } = listControl;
 
-  const [changeInternal, setChangeInternal] = useState(false);
+  const changeInternal = useRef(false);
 
   useEffect(() => {
-    changeInternal ? setChangeInternal(false) : resetState(formControl?.state);
+    if (changeInternal.current) {
+      changeInternal.current = false;
+    } else {
+      resetState(formControl?.state);
+    }
   }, [formControl?.state]);
 
   useEffect(
@@ -64,29 +68,21 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
   );
 
   function setFormState(value: Undefined<T>): void {
-    setChangeInternal(true);
-    formControl?.setState(value);
+    if (formControl) {
+      changeInternal.current = true;
+      formControl.setState(value);
+    }
   }
 
   function resetCollection(
     collection: ListCollection<T>,
     state: FormState<T>
   ): void {
-    if (state) {
-      const element = collection.find(state);
-
-      if (element) {
-        setValue(element.description);
-      } else {
-        setValue('');
-      }
-    } else {
-      setValue('');
-    }
+    setValue(state ? collection.find(state)?.description || '' : '');
   }
 
   function resetState(state: FormState<T>): void {
-    setValue(state ? collection.find(state)?.description || '' : '');
+    resetCollection(collection, state);
   }
 
   function onFocusInput(): void {
@@ -97,24 +93,18 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
     setFocused(false);
   }
 
-  function onClickControl(): void {
+  function onClickInput(): void {
     setVisible(true);
   }
 
   function onKeydownInput(event: KeyboardEvent): void {
     switch (event.code) {
       case 'Space':
-        setVisible(true);
-        break;
-
       case 'Enter':
         setVisible(true);
         break;
 
       case 'Escape':
-        setVisible(false);
-        break;
-
       case 'Tab':
         setVisible(false);
         break;
@@ -147,15 +137,7 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
 
   function onKeydownElement(element: Element<T>): KeyboardEventHandler {
     return (event) => {
-      switch (event.code) {
-        case 'Enter':
-          onChange(element);
-          break;
-
-        default:
-          navigationElement(event);
-          break;
-      }
+      event.code === 'Enter' ? onChange(element) : navigationElement(event);
     };
   }
 
@@ -167,10 +149,7 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
     if (onSelect) {
       onSelect(value);
     } else {
-      if (formControl) {
-        setFormState(value);
-      }
-
+      setFormState(value);
       setValue(description);
     }
 
@@ -184,7 +163,7 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
     onBlurInput,
     onClickAction,
     onClickBackdrop,
-    onClickInput: onClickControl,
+    onClickInput,
     onClickElement,
     onFocusInput,
     onKeydownElement,

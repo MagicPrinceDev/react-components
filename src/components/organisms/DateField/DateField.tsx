@@ -1,9 +1,9 @@
+import { PickerListenerType } from '@rolster/helpers-components';
 import { dateFormatTemplate } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
-import { DATE_RANGE_FORMAT } from '../../../helpers/date-range-picker';
-import { PickerListenerType } from '../../../types';
+import { DATE_RANGE_FORMAT } from '../../../constants';
+import { renderClassStatus } from '../../../helpers';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsDatePicker } from '../DatePicker/DatePicker';
@@ -16,8 +16,8 @@ interface DateFieldProps extends RlsComponent {
   formControl?: ReactControl<HTMLElement, Date>;
   maxDate?: Date;
   minDate?: Date;
-  placeholder?: string;
   onValue?: (value?: Date) => void;
+  placeholder?: string;
 }
 
 export function RlsDateField({
@@ -27,9 +27,9 @@ export function RlsDateField({
   formControl,
   maxDate,
   minDate,
+  onValue,
   placeholder,
-  rlsTheme,
-  onValue
+  rlsTheme
 }: DateFieldProps) {
   const dateInitial = formControl?.state || date || new Date();
 
@@ -119,8 +119,8 @@ export function RlsDateField({
 
             setShow(false);
 
-            if (formControl && !formControl.touched) {
-              formControl.touch();
+            if (!formControl?.touched) {
+              formControl?.touch();
             }
           }}
         />

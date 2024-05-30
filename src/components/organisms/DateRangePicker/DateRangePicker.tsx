@@ -1,4 +1,8 @@
 import {
+  PickerListener,
+  PickerListenerType
+} from '@rolster/helpers-components';
+import {
   DateRange,
   assignMonthInDate,
   assignYearInDate,
@@ -6,10 +10,8 @@ import {
 } from '@rolster/helpers-date';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
+import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
 import reactI18n from '../../../i18n';
-import { renderClassStatus } from '../../../helpers/css';
-import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
-import { PickerListener, PickerListenerType } from '../../../types';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import {
@@ -30,34 +32,7 @@ interface DateRangePickerProps extends RlsComponent {
   onListener?: (listener: PickerListener<DateRange>) => void;
 }
 
-interface VisibilityState {
-  month: boolean;
-  day: boolean;
-  year: boolean;
-}
-
-const VISIBILITY_STATE: VisibilityState = {
-  month: false,
-  day: false,
-  year: false
-};
-
-type Visibility = Record<'DAY' | 'MONTH' | 'YEAR', VisibilityState>;
-
-const VISIBILITY: Visibility = {
-  DAY: {
-    ...VISIBILITY_STATE,
-    day: true
-  },
-  MONTH: {
-    ...VISIBILITY_STATE,
-    month: true
-  },
-  YEAR: {
-    ...VISIBILITY_STATE,
-    year: true
-  }
-};
+type Visibility = 'DAY' | 'MONTH' | 'YEAR';
 
 export function RlsDateRangePicker({
   automatic,
@@ -66,8 +41,8 @@ export function RlsDateRangePicker({
   formControl,
   maxDate,
   minDate,
-  rlsTheme,
-  onListener
+  onListener,
+  rlsTheme
 }: DateRangePickerProps) {
   const dateInitial = normalizeMinTime(datePicker || new Date());
   const rangeInitial = formControl?.state || DateRange.now();
@@ -78,7 +53,7 @@ export function RlsDateRangePicker({
 
   const [value, setValue] = useState(rangeInitial);
   const [date, setDate] = useState(dateInitial);
-  const [{ day, month, year }, setVisibility] = useState(VISIBILITY.DAY);
+  const [visibility, setVisibility] = useState<Visibility>('DAY');
 
   useEffect(() => {
     setDate((prevValue) => {
@@ -101,19 +76,19 @@ export function RlsDateRangePicker({
       setValue(dayControl.state);
     }
 
-    setVisibility(VISIBILITY.DAY);
+    setVisibility('DAY');
   }, [dayControl.state]);
 
   function onVisibilityDay(): void {
-    setVisibility(VISIBILITY.DAY);
+    setVisibility('DAY');
   }
 
   function onVisibilityMonth(): void {
-    setVisibility(VISIBILITY.MONTH);
+    setVisibility('MONTH');
   }
 
   function onVisibilityYear(): void {
-    setVisibility(VISIBILITY.YEAR);
+    setVisibility('YEAR');
   }
 
   function onCancel(): void {
@@ -147,17 +122,17 @@ export function RlsDateRangePicker({
           date={date}
           maxDate={maxDate}
           minDate={minDate}
-          disabled={year}
-          type={month ? 'year' : 'month'}
+          disabled={visibility === 'YEAR'}
+          type={visibility === 'MONTH' ? 'year' : 'month'}
           onClick={onVisibilityMonth}
         />
       </div>
 
       <div
         className={renderClassStatus('rls-date-range-picker__component', {
-          year,
-          day,
-          month
+          day: visibility === 'DAY',
+          month: visibility === 'MONTH',
+          year: visibility === 'YEAR'
         })}
       >
         <RlsDayRangePicker

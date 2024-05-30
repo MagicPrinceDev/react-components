@@ -1,7 +1,7 @@
 import { DateRange } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
+import { rangeFormatTemplate } from '../../../helpers';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsDateRangePicker } from '../DateRangePicker/DateRangePicker';

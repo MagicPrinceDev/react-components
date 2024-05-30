@@ -1,10 +1,10 @@
-import { ReactControl } from '@rolster/react-forms';
-import { ReactNode } from 'react';
-import reactI18n from '../../../i18n';
 import {
   AbstractAutocompleteElement as Element,
   AutocompleteElement
-} from '../../../models';
+} from '@rolster/helpers-components';
+import { ReactControl } from '@rolster/react-forms';
+import { ReactNode } from 'react';
+import reactI18n from '../../../i18n';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';

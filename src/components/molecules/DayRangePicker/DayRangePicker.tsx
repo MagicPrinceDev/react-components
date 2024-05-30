@@ -1,4 +1,8 @@
 import {
+  WeekRangeState,
+  createDayRangePicker
+} from '@rolster/helpers-components';
+import {
   DAY_LABELS,
   DateRange,
   assignDayInDate,
@@ -8,12 +12,8 @@ import {
 } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useRef, useState } from 'react';
-import { WeekRangeState } from '../../../models';
+import { DATE_RANGE_FORMAT } from '../../../constants';
 import { renderClassStatus } from '../../../helpers/css';
-import {
-  DATE_RANGE_FORMAT,
-  createRangePicker
-} from '../../../helpers/date-range-picker';
 import { RlsComponent } from '../../definitions';
 import './DayRangePicker.css';
 
@@ -33,18 +33,18 @@ export function RlsDayRangePicker({
   minDate,
   rlsTheme
 }: DayRangePickerProps) {
-  const initialRange = formControl?.state || DateRange.now();
-  const initialDate = normalizeMinTime(date || initialRange.minDate);
+  const currentRange = formControl?.state || DateRange.now();
+  const currentDate = normalizeMinTime(date || currentRange.minDate);
 
-  const sourceDate = useRef(initialRange.minDate);
+  const sourceDate = useRef(currentRange.minDate);
 
   const [weeks, setWeeks] = useState<WeekRangeState[]>([]);
-  const [range, setRange] = useState(initialRange);
+  const [range, setRange] = useState(currentRange);
 
   useEffect(() => {
     setWeeks(
-      createRangePicker({
-        date: initialDate,
+      createDayRangePicker({
+        date: currentDate,
         range,
         sourceDate: sourceDate.current,
         minDate,
@@ -54,16 +54,16 @@ export function RlsDayRangePicker({
   }, [range, date, minDate, maxDate]);
 
   function onChange(value: number): void {
-    const newDate = assignDayInDate(initialDate, value);
+    const date = assignDayInDate(currentDate, value);
 
-    const newRange = dateIsBefore(newDate, sourceDate.current)
-      ? new DateRange(sourceDate.current, newDate)
-      : new DateRange(newDate, sourceDate.current);
+    const range = dateIsBefore(date, sourceDate.current)
+      ? new DateRange(sourceDate.current, date)
+      : new DateRange(date, sourceDate.current);
 
-    sourceDate.current = newDate;
+    sourceDate.current = date;
 
-    setRange(newRange);
-    formControl?.setState(newRange);
+    setRange(range);
+    formControl?.setState(range);
   }
 
   return (
@@ -94,11 +94,9 @@ export function RlsDayRangePicker({
                     ranged,
                     source
                   })}
-                  onClick={() => {
-                    if (value && !disabled) {
-                      onChange(value);
-                    }
-                  }}
+                  onClick={
+                    value && !disabledPicker ? () => onChange(value) : undefined
+                  }
                 >
                   <span className="rls-day-range-picker__day__span">
                     {value || '??'}

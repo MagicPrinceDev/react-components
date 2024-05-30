@@ -1,29 +1,23 @@
+import {
+  AbstractAutocompleteElement as Element,
+  ListCollection,
+  StoreAutocomplete,
+  createStoreAutocomplete
+} from '@rolster/helpers-components';
 import { FormState } from '@rolster/helpers-forms';
-import { hasPattern } from '@rolster/helpers-string';
 import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
   KeyboardEventHandler,
   MouseEventHandler,
   useEffect,
+  useRef,
   useState
 } from 'react';
 import { ListControl, useListControl } from '../../../hooks';
-import {
-  AbstractAutocompleteElement as Element,
-  ListCollection
-} from '../../../models';
 
 const DURATION_ANIMATION = 240;
 const MAX_ELEMENTS = 6;
-
-interface Store<T, E extends Element<T> = Element<T>> {
-  coincidences?: E[];
-  pattern: string;
-  previous: Store<T, E> | null;
-}
-
-type StoreNulleable<T, E extends Element<T> = Element<T>> = Store<T, E> | null;
 
 export interface AutocompleteControl<
   T = unknown,
@@ -63,17 +57,13 @@ export function useAutocompleteField<
 }: AutocompleteProps<T, E>): AutocompleteControl<T, E> {
   const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<E[]>([]);
-  const [store, setStore] = useState<Store<T, E>>({
+  const [store, setStore] = useState<StoreAutocomplete<T, E>>({
     pattern: '',
     coincidences: [],
     previous: null
   });
 
-  const listControl = useListControl({
-    suggestions,
-    formControl,
-    higher: true
-  });
+  const listControl = useListControl({ suggestions, formControl });
 
   const {
     collection,
@@ -85,14 +75,18 @@ export function useAutocompleteField<
     setVisible
   } = listControl;
 
-  const [changeInternal, setChangeInternal] = useState(false);
+  const changeInternal = useRef(false);
 
   useEffect(() => filterSuggestions(pattern, true), [suggestions]);
 
   useEffect(() => filterSuggestions(pattern), [pattern]);
 
   useEffect(() => {
-    changeInternal ? setChangeInternal(false) : resetState(formControl?.state);
+    if (changeInternal.current) {
+      changeInternal.current = false;
+    } else {
+      resetState(formControl?.state);
+    }
   }, [formControl?.state]);
 
   useEffect(
@@ -101,29 +95,21 @@ export function useAutocompleteField<
   );
 
   function setFormState(value: Undefined<T>): void {
-    setChangeInternal(true);
-    formControl?.setState(value);
+    if (formControl) {
+      changeInternal.current = true;
+      formControl.setState(value);
+    }
   }
 
   function resetCollection(
     collection: ListCollection<T>,
     state: FormState<T>
   ): void {
-    if (state) {
-      const element = collection.find(state);
-
-      if (element) {
-        setValue(element.description);
-      } else {
-        setValue('');
-      }
-    } else {
-      setValue('');
-    }
+    setValue(state ? collection.find(state)?.description || '' : '');
   }
 
   function resetState(state: FormState<T>): void {
-    setValue(state ? collection.find(state)?.description || '' : '');
+    resetCollection(collection, state);
   }
 
   function onClickControl(): void {
@@ -145,9 +131,6 @@ export function useAutocompleteField<
   function onKeydownInput(event: KeyboardEvent): void {
     switch (event.code) {
       case 'Escape':
-        setVisible(false);
-        break;
-
       case 'Tab':
         setVisible(false);
         break;
@@ -161,10 +144,7 @@ export function useAutocompleteField<
   function onClickAction(): void {
     setVisible(false);
     setValue('');
-
-    if (formControl) {
-      setFormState(undefined);
-    }
+    setFormState(undefined);
 
     if (onValue) {
       onValue(undefined);
@@ -183,15 +163,7 @@ export function useAutocompleteField<
 
   function onKeydownElement(element: Element<T>): KeyboardEventHandler {
     return (event) => {
-      switch (event.code) {
-        case 'Enter':
-          onChange(element);
-          break;
-
-        default:
-          navigationElement(event);
-          break;
-      }
+      event.code === 'Enter' ? onChange(element) : navigationElement(event);
     };
   }
 
@@ -201,10 +173,7 @@ export function useAutocompleteField<
     if (onSelect) {
       onSelect(value);
     } else {
-      if (formControl) {
-        setFormState(value);
-      }
-
+      setFormState(value);
       setValue(description);
     }
 
@@ -214,61 +183,15 @@ export function useAutocompleteField<
   }
 
   function filterSuggestions(pattern: string | null, reboot = false): void {
-    if (pattern) {
-      const store = reboot ? createStoreEmpty() : searchForPattern(pattern);
+    const result = createStoreAutocomplete({
+      pattern,
+      suggestions,
+      reboot,
+      store
+    });
 
-      const elements = store?.coincidences || suggestions;
-
-      const coincidences = elements.filter((element) =>
-        element.hasCoincidence(pattern)
-      );
-
-      setCoincidences(coincidences.slice(0, MAX_ELEMENTS));
-
-      setStore({
-        coincidences,
-        pattern,
-        previous: store
-      });
-    } else {
-      setCoincidences(suggestions.slice(0, MAX_ELEMENTS));
-      rebootStore();
-    }
-  }
-
-  function searchForPattern(value: string): StoreNulleable<T, E> {
-    if (!store.pattern) {
-      return null;
-    }
-
-    let newStore: StoreNulleable<T, E> = store;
-    let search = false;
-
-    while (!search && newStore) {
-      search = hasPattern(value, newStore.pattern, true);
-
-      if (!search) {
-        newStore = newStore.previous;
-      }
-    }
-
-    return newStore || rebootStore();
-  }
-
-  function rebootStore(): Store<T, E> {
-    const store = createStoreEmpty();
-
-    setStore(store);
-
-    return store;
-  }
-
-  function createStoreEmpty(): Store<T, E> {
-    return {
-      coincidences: undefined,
-      pattern: '',
-      previous: null
-    };
+    setCoincidences(result.collection.slice(0, MAX_ELEMENTS));
+    setStore(result.store);
   }
 
   return {
