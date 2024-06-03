@@ -1,7 +1,10 @@
-import { PickerListenerType } from '@rolster/helpers-components';
+import {
+  PickerListenerType,
+  checkDateRange
+} from '@rolster/helpers-components';
 import { dateFormatTemplate } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DATE_RANGE_FORMAT } from '../../../constants';
 import { renderClassStatus } from '../../../helpers';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
@@ -31,18 +34,32 @@ export function RlsDateField({
   placeholder,
   rlsTheme
 }: DateFieldProps) {
-  const dateInitial = formControl?.state || date || new Date();
+  const today = new Date(); // Initial current date in component
 
-  const [value, setValue] = useState<Date | undefined>(dateInitial);
-  const [show, setShow] = useState(false);
-  const [description, setDescription] = useState('');
+  const [value, setValue] = useState<Undefined<Date>>();
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+
+  const description = useRef('');
 
   useEffect(() => {
-    setDescription(value ? dateFormatTemplate(value, DATE_RANGE_FORMAT) : '');
+    const dateCheck = checkDateRange({
+      date: formControl?.state || date || today,
+      minDate,
+      maxDate
+    });
+
+    setValue(dateCheck);
+    formControl?.setState(dateCheck);
+  }, []);
+
+  useEffect(() => {
+    description.current = value
+      ? dateFormatTemplate(value, DATE_RANGE_FORMAT)
+      : '';
   }, [value]);
 
   function onClickInput(): void {
-    setShow(true);
+    setModalIsVisible(true);
   }
 
   function onChange(value?: Date, ignoreControl = false): void {
@@ -65,7 +82,7 @@ export function RlsDateField({
         formControl.touch();
       }
     } else {
-      setShow(true);
+      setModalIsVisible(true);
     }
   }
 
@@ -79,7 +96,7 @@ export function RlsDateField({
             <input
               className="rls-date-field__control"
               type="text"
-              value={description}
+              value={description.current}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
@@ -105,7 +122,7 @@ export function RlsDateField({
         )}
       </div>
 
-      <RlsModal visible={show} rlsTheme={rlsTheme}>
+      <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>
         <RlsDatePicker
           formControl={formControl}
           date={date}
@@ -117,7 +134,7 @@ export function RlsDateField({
               onChange(value, true);
             }
 
-            setShow(false);
+            setModalIsVisible(false);
 
             if (!formControl?.touched) {
               formControl?.touch();

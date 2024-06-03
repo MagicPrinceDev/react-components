@@ -41,34 +41,31 @@ export function RlsDayPicker({
   );
 
   useEffect(() => {
-    const props = {
-      date: currentDate,
-      month: itIsDefined(month) ? month : currentDate.getMonth(),
-      year: year || currentDate.getFullYear(),
-      day: formControl?.state || value,
-      minDate,
-      maxDate
-    };
+    const props = createPickerProps();
 
     const day = checkDayPicker(props);
 
     day ? setDayValue(day) : setWeeks(createDayPicker(props));
-  }, [month, year, value, minDate, maxDate]);
+  }, [date, month, year, value, minDate, maxDate]);
 
   useEffect(() => {
-    const day = checkDayPicker({
-      date: currentDate,
-      month: currentDate.getMonth(),
-      year: currentDate.getFullYear(),
-      day: formControl?.state || value,
-      minDate,
-      maxDate
-    });
+    const day = checkDayPicker(createPickerProps());
 
     day
       ? formControl?.setState(day)
       : setValue(formControl?.state || currentDate.getDate());
   }, [formControl?.state]);
+
+  function createPickerProps() {
+    return {
+      date: currentDate,
+      day: formControl?.state || value,
+      month: itIsDefined(month) ? month : currentDate.getMonth(),
+      year: year || currentDate.getFullYear(),
+      minDate,
+      maxDate
+    };
+  }
 
   function setDayValue(value: number): void {
     formControl ? formControl.setState(value) : setValue(value);
@@ -95,23 +92,30 @@ export function RlsDayPicker({
       <div className="rls-day-picker__component">
         {weeks.map(({ days }, index) => (
           <div key={index} className="rls-day-picker__week">
-            {days.map(({ value, disabled, forbidden, selected }, index) => (
-              <div
-                key={index}
-                className={renderClassStatus('rls-day-picker__day', {
-                  disabled: disabled || disabledPicker,
-                  forbidden,
-                  selected
-                })}
-                onClick={
-                  value && !disabledPicker ? () => onChange(value) : undefined
-                }
-              >
-                <span className="rls-day-picker__day__span">
-                  {value || '??'}
-                </span>
-              </div>
-            ))}
+            {days.map(
+              (
+                { value, disabled, focused, forbidden, selected, today },
+                index
+              ) => (
+                <div
+                  key={index}
+                  className={renderClassStatus('rls-day-picker__day', {
+                    disabled: disabled || disabledPicker,
+                    focused,
+                    forbidden,
+                    selected,
+                    today
+                  })}
+                  onClick={
+                    value && !disabledPicker ? () => onChange(value) : undefined
+                  }
+                >
+                  <span className="rls-day-picker__day__span">
+                    {value || '??'}
+                  </span>
+                </div>
+              )
+            )}
           </div>
         ))}
       </div>

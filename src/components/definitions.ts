@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 
 export type RlsTheme =
-  | 'primary'
+  | 'standard'
   | 'success'
   | 'info'
-  | 'happy'
   | 'warning'
   | 'danger'
-  | 'coffee'
+  | 'amaizing'
+  | 'smartness'
   | 'obsidian';
 
 export interface RlsComponent {

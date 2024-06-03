@@ -1,6 +1,6 @@
 import { DateRange } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { rangeFormatTemplate } from '../../../helpers';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
@@ -30,13 +30,14 @@ export function RlsDateRangeField({
   const rangeInitial = formControl?.state || DateRange.now();
   const dateInitial = datePicker || new Date();
 
-  const [value, setValue] = useState<DateRange | undefined>(rangeInitial);
-  const [date] = useState<Date | undefined>(dateInitial);
+  const [value, setValue] = useState<Undefined<DateRange>>(rangeInitial);
+  const [date] = useState<Undefined<Date>>(dateInitial);
   const [show, setShow] = useState(false);
-  const [description, setDescription] = useState('');
+
+  const description = useRef('');
 
   useEffect(() => {
-    setDescription(value ? rangeFormatTemplate(value) : '');
+    description.current = value ? rangeFormatTemplate(value) : '';
   }, [value]);
 
   function onClickInput(): void {
@@ -62,7 +63,7 @@ export function RlsDateRangeField({
             <input
               className="rls-date-field__control"
               type="text"
-              value={description}
+              value={description.current}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}

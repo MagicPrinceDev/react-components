@@ -3,7 +3,7 @@ import { checkYearPicker, createYearPicker } from '@rolster/helpers-components';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsIcon } from '../../atoms';
+import { RlsButtonAction } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './YearPicker.css';
 
@@ -34,12 +34,7 @@ export function RlsYearPicker({
     formControl?.state || currentDate.getFullYear()
   );
   const [template, setTemplate] = useState(
-    createYearPicker({
-      date: currentDate,
-      year: formControl?.state || year,
-      minDate,
-      maxDate
-    })
+    createYearPicker(createPickerProps())
   );
 
   useEffect(() => {
@@ -50,7 +45,7 @@ export function RlsYearPicker({
     year
       ? setYearValue(year)
       : setTemplate(createYearPicker(createPickerProps()));
-  }, [value, minDate, maxDate]);
+  }, [date, year, value, minDate, maxDate]);
 
   useEffect(() => {
     const year = checkYearPicker(createPickerProps());
@@ -63,7 +58,7 @@ export function RlsYearPicker({
   function createPickerProps() {
     return {
       date: currentDate,
-      year: formControl?.state || year,
+      year,
       minDate,
       maxDate
     };
@@ -76,11 +71,11 @@ export function RlsYearPicker({
   }
 
   function onClickPrev(): void {
-    setYear(value - 8);
+    setYear(year - 8);
   }
 
   function onClickNext(): void {
-    setYear(value + 8);
+    setYear(year + 8);
   }
 
   function onChange(value: number): void {
@@ -95,41 +90,40 @@ export function RlsYearPicker({
     <div className="rls-year-picker" rls-theme={rlsTheme}>
       <div className="rls-year-picker__header">
         <div className="rls-year-picker__action rls-year-picker__action--prev">
-          <button
-            disabled={!template.canPrevious || disabledPicker}
+          <RlsButtonAction
+            icon="arrow-ios-left"
             onClick={onClickPrev}
-          >
-            <RlsIcon value="arrow-ios-left" />
-          </button>
+            disabled={!template.canPrevious || disabledPicker}
+          />
         </div>
 
-        <label className="title-bold">
+        <label className="rls-title-bold">
           {template.minRange} - {template.maxRange}
         </label>
 
         <div className="rls-year-picker__action rls-year-picker__action--next">
-          <button
-            disabled={!template.canNext || disabledPicker}
+          <RlsButtonAction
+            icon="arrow-ios-right"
             onClick={onClickNext}
-          >
-            <RlsIcon value="arrow-ios-right" />
-          </button>
+            disabled={!template.canNext || disabledPicker}
+          />
         </div>
       </div>
 
       <div className="rls-year-picker__component">
-        {template.years.map(({ value, disabled, selected }, index) => (
+        {template.years.map(({ value, disabled, focused, selected }, index) => (
           <div
             key={index}
             className={renderClassStatus('rls-year-picker__year', {
               disabled: disabled || disabledPicker,
+              focused,
               selected
             })}
             onClick={
               value && !disabledPicker ? () => onChange(value) : undefined
             }
           >
-            <span className="rls-year-picker__year__span body1-medium">
+            <span className="rls-year-picker__year__span rls-body1-medium">
               {value || '????'}
             </span>
           </div>

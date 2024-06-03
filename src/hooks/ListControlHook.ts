@@ -1,3 +1,4 @@
+import { itIsDefined } from '@rolster/helpers-advanced';
 import {
   AbstractListElement,
   ListCollection,
@@ -86,10 +87,13 @@ export function useListControl<T = unknown>({
 
   function navigationInput(event: KeyboardEvent): void {
     if (visible) {
-      position.current = listNavigationInput({
+      const newPosition = listNavigationInput({
+        contentElement: boxContentRef.current,
         event: event as any,
         listElement: listRef.current
       });
+
+      position.current = itIsDefined(newPosition) ? newPosition : 0;
     }
   }
 

@@ -1,5 +1,5 @@
 // Rolster Technology DatePicker Component
-// v1.1.1
+// v2.0.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
@@ -9,14 +9,22 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   max-width: 150rem;
+  overflow: hidden;
+  row-gap: var(--rls-sizing-x4);
 
   &__header {
-    background: var(--rls-theme-color-100);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x4);
     padding: var(--rls-sizing-x4);
     box-sizing: border-box;
-    margin-bottom: var(--rls-sizing-x8);
+    background: var(--rls-theme-color-100);
+
+    .rls-month-title-picker {
+      padding: 0rem var(--rls-sizing-x6);
+      box-sizing: border-box;
+    }
   }
 
   &__title {
@@ -36,7 +44,6 @@
     }
 
     &--year {
-      margin: var(--rls-sizing-x4) 0rem var(--rls-sizing-x2) 0rem;
       height: var(--rls-sizing-x16);
       line-height: var(--rls-sizing-x16);
       font-size: var(--rls-sizing-x12);
@@ -46,13 +53,12 @@
 
   &__component {
     display: flex;
+    justify-content: center;
     width: 150rem;
     padding: 0rem var(--rls-sizing-x2);
     box-sizing: border-box;
-    margin-bottom: var(--rls-sizing-x4);
 
     & > * {
-      margin: 0rem auto;
       display: none;
     }
 
@@ -72,12 +78,6 @@
       .rls-year-picker {
         display: block;
       }
-    }
-  }
-
-  &__footer {
-    &--hidden {
-      display: none;
     }
   }
 

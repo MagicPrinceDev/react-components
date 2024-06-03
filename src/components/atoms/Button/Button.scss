@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v1.0.5
+// v2.0.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 27/Oct/2023
+// Updated: 02/Jun/2024
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -13,18 +13,21 @@
   --pvt-button-content-visibility: hidden;
   --pvt-button-ripple-background: var(--rls-theme-color-700);
 
-  --pvt-ghost-background: none;
-  --pvt-ghost-font-color: var(--rls-theme-color-500);
-  --pvt-ghost-border: none;
-  --pvt-flat-background: var(--rls-theme-color-100);
+  --pvt-raised-background: var(--rls-theme-gradient-500);
+  --pvt-raised-font-color: var(--rls-theme-font-500);
+  --pvt-raised-border: none;
+  --pvt-flat-background: var(--rls-theme-color-200);
   --pvt-flat-font-color: var(--rls-theme-color-500);
   --pvt-flat-border: none;
+  --pvt-stroked-background: transparent;
+  --pvt-stroked-font-color: var(--rls-theme-color-500);
+  --pvt-stroked-border: var(--rls-theme-border-1-500);
   --pvt-outline-background: transparent;
   --pvt-outline-font-color: var(--rls-app-color-300);
   --pvt-outline-border: var(--rls-app-border-1-300);
-  --pvt-raised-background: var(--rls-theme-gradient-500);
-  --pvt-raised-font-color: var(--rls-light-color-500);
-  --pvt-raised-border: none;
+  --pvt-ghost-background: none;
+  --pvt-ghost-font-color: var(--rls-theme-color-500);
+  --pvt-ghost-border: none;
 
   position: relative;
   padding: 0rem;
@@ -42,28 +45,47 @@
   }
 
   &:not(:disabled):hover {
-    --pvt-ghost-background: var(--rls-theme-color-100);
-    --pvt-ghost-font-color: var(--rls-theme-color-500);
-    --pvt-ghost-border: none;
-    --pvt-flat-background: var(--rls-theme-color-100);
-    --pvt-flat-font-color: var(--rls-theme-color-700);
+    --pvt-raised-background: var(--rls-theme-color-700);
+    --pvt-raised-font-color: var(--rls-theme-font-900);
+    --pvt-raised-border: none;
+    --pvt-flat-background: var(--rls-theme-color-500);
+    --pvt-flat-font-color: var(--rls-theme-font-500);
     --pvt-flat-border: none;
+    --pvt-stroked-background: var(--rls-theme-color-100);
+    --pvt-stroked-font-color: var(--rls-theme-color-700);
+    --pvt-stroked-border: var(--rls-theme-border-1-700);
     --pvt-outline-background: transparent;
     --pvt-outline-font-color: var(--rls-theme-color-500);
     --pvt-outline-border: var(--rls-theme-border-1-500);
-    --pvt-raised-background: var(--rls-theme-color-700);
-    --pvt-raised-font-color: var(--rls-light-color-500);
-    --pvt-raised-border: none;
+    --pvt-ghost-background: var(--rls-theme-color-200);
+    --pvt-ghost-font-color: var(--rls-theme-font-100);
+    --pvt-ghost-border: none;
   }
 
   &:disabled {
-    opacity: 0.5;
+    --pvt-raised-background: var(--rls-theme-color-200);
+    --pvt-raised-font-color: var(--rls-theme-color-400);
+    --pvt-raised-border: none;
+    --pvt-flat-background: var(--rls-theme-color-100);
+    --pvt-flat-font-color: var(--rls-theme-color-300);
+    --pvt-flat-border: none;
+    --pvt-stroked-background: transparent;
+    --pvt-stroked-font-color: var(--rls-theme-color-300);
+    --pvt-stroked-border: var(--rls-theme-border-1-300);
+    --pvt-outline-background: transparent;
+    --pvt-outline-font-color: var(--rls-app-color-100);
+    --pvt-outline-border: var(--rls-app-border-1-100);
+    --pvt-ghost-background: transparent;
+    --pvt-ghost-font-color: var(--rls-theme-color-300);
+    --pvt-ghost-border: none;
+    
     pointer-events: none;
   }
 
   &__content {
     display: flex;
     justify-content: center;
+    align-items: center;
     overflow: hidden;
     line-height: var(--rls-sizing-x20);
     height: var(--rls-sizing-x20);
@@ -93,17 +115,24 @@
       visibility: var(--pvt-button-content-visibility);
     }
 
-    &--ghost {
-      --pvt-button-content-font-color: var(--pvt-ghost-font-color);
-      --pvt-button-content-background: var(--pvt-ghost-background);
-      --pvt-button-content-border: var(--pvt-ghost-border);
+    &--raised {
+      --pvt-button-content-background: var(--pvt-raised-background);
+      --pvt-button-content-font-color: var(--pvt-raised-font-color);
+      --pvt-button-content-border: var(--pvt-raised-border);
+      --pvt-button-ripple-background: var(--rls-theme-font-900);
     }
 
     &--flat {
       --pvt-button-content-font-color: var(--pvt-flat-font-color);
       --pvt-button-content-background: var(--pvt-flat-background);
       --pvt-button-content-border: var(--pvt-flat-border);
-      --pvt-button-ripple-background: var(--rls-theme-color-500);
+      --pvt-button-ripple-background: var(--rls-theme-font-900);
+    }
+
+    &--stroked {
+      --pvt-button-content-font-color: var(--pvt-stroked-font-color);
+      --pvt-button-content-background: var(--pvt-stroked-background);
+      --pvt-button-content-border: var(--pvt-stroked-border);
     }
 
     &--outline {
@@ -112,23 +141,17 @@
       --pvt-button-content-border: var(--pvt-outline-border);
     }
 
-    &--raised {
-      --pvt-button-content-background: var(--pvt-raised-background);
-      --pvt-button-content-font-color: var(--pvt-raised-font-color);
-      --pvt-button-content-border: var(--pvt-raised-border);
-      --pvt-button-ripple-background: var(--rls-light-color-500);
+    &--ghost {
+      --pvt-button-content-font-color: var(--pvt-ghost-font-color);
+      --pvt-button-content-background: var(--pvt-ghost-background);
+      --pvt-button-content-border: var(--pvt-ghost-border);
     }
-  }
-
-  .rls-icon {
-    margin: auto var(--rls-sizing-x2);
   }
 
   &__label {
     padding: 0rem var(--rls-sizing-x2);
     line-height: initial;
     width: auto;
-    margin: auto 0rem;
     font-size: var(--rls-button-font-size);
     font-weight: var(--rls-font-weight-bold);
     letter-spacing: var(--rls-button-letter-spacing);

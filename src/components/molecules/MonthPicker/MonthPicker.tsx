@@ -43,7 +43,7 @@ export function RlsMonthPicker({
     const month = checkMonthPicker(props);
 
     month ? setMonthValue(month) : setMonths(createMonthPicker(props));
-  }, [year, value, minDate, maxDate]);
+  }, [date, year, value, minDate, maxDate]);
 
   useEffect(() => {
     const month = checkMonthPicker(createPickerProps());
@@ -56,8 +56,8 @@ export function RlsMonthPicker({
   function createPickerProps() {
     return {
       date: currentDate,
-      year: year || currentDate.getFullYear(),
       month: itIsDefined(formControl?.state) ? formControl?.state : value,
+      year: year || currentDate.getFullYear(),
       minDate,
       maxDate
     };
@@ -77,11 +77,12 @@ export function RlsMonthPicker({
 
   return (
     <div className="rls-month-picker" rls-theme={rlsTheme}>
-      {months.map(({ label, value, disabled, selected }, index) => (
+      {months.map(({ label, value, disabled, focused, selected }, index) => (
         <div
           key={index}
           className={renderClassStatus('rls-month-picker__component', {
             disabled: disabled || disabledPicker,
+            focused,
             selected
           })}
           onClick={

@@ -1,7 +1,9 @@
 import { itIsDefined } from '@rolster/helpers-advanced';
 import {
   PickerListener,
-  PickerListenerType
+  PickerListenerType,
+  checkDateRange,
+  dateOutRange
 } from '@rolster/helpers-components';
 import {
   assignDayInDate,
@@ -47,7 +49,9 @@ export function RlsDatePicker({
   onListener,
   rlsTheme
 }: DatePickerProps) {
-  const dateInitial = formControl?.state || date || new Date();
+  const today = new Date(); // Initial current date in component
+
+  const dateInitial = formControl?.state || date || today;
 
   const yearControl = useReactControl(dateInitial.getFullYear());
   const dayControl = useReactControl(dateInitial.getDate());
@@ -55,6 +59,17 @@ export function RlsDatePicker({
 
   const [value, setValue] = useState(dateInitial);
   const [visibility, setVisibility] = useState<Visibility>('DAY');
+
+  useEffect(() => {
+    const dateCheck = checkDateRange({
+      date: formControl?.state || date || today,
+      minDate,
+      maxDate
+    });
+
+    setValue(dateCheck);
+    formControl?.setState(dateCheck);
+  }, []);
 
   useEffect(() => {
     setValue((prevValue) =>
@@ -99,16 +114,13 @@ export function RlsDatePicker({
   }
 
   function onToday(): void {
-    const value = new Date(); // Today date
-
-    formControl?.setState(value);
-    setValue(value);
-    yearControl.setState(value.getFullYear());
-    dayControl.setState(value.getDate());
-    monthControl.setState(value.getMonth());
+    yearControl.setState(today.getFullYear());
+    dayControl.setState(today.getDate());
+    monthControl.setState(today.getMonth());
+    formControl?.setState(today);
 
     if (onListener) {
-      onListener({ type: PickerListenerType.Now, value });
+      onListener({ type: PickerListenerType.Now, value: today });
     }
   }
 
@@ -154,7 +166,7 @@ export function RlsDatePicker({
       >
         <RlsDayPicker
           formControl={dayControl}
-          date={value}
+          date={dateInitial}
           month={monthControl.state}
           year={yearControl.state}
           maxDate={maxDate}
@@ -164,7 +176,7 @@ export function RlsDatePicker({
 
         <RlsMonthPicker
           formControl={monthControl}
-          date={value}
+          date={dateInitial}
           year={yearControl.state}
           maxDate={maxDate}
           minDate={minDate}
@@ -174,7 +186,7 @@ export function RlsDatePicker({
 
         <RlsYearPicker
           formControl={yearControl}
-          date={value}
+          date={dateInitial}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}
@@ -193,7 +205,11 @@ export function RlsDatePicker({
           </div>
 
           <div className="rls-date-picker__actions--today">
-            <RlsButton type="ghost" onClick={onToday}>
+            <RlsButton
+              type="ghost"
+              onClick={onToday}
+              disabled={dateOutRange({ date: today, maxDate, minDate })}
+            >
               {reactI18n('dateActionToday')}
             </RlsButton>
           </div>

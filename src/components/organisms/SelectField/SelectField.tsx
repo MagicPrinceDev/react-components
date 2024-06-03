@@ -131,10 +131,10 @@ export function RlsSelectFieldTemplate<
             {!suggestions.length && (
               <li className="rls-list-field__empty">
                 <div className="rls-list-field__empty__description">
-                  <label className="label-bold truncate">
+                  <label className="rls-label-bold truncate">
                     {reactI18n('listEmptyTitle')}
                   </label>
-                  <p className="caption-regular">
+                  <p className="rls-caption-regular">
                     {reactI18n('listEmptyDescription')}
                   </p>
                 </div>
