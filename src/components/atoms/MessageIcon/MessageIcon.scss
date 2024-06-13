@@ -1,9 +1,9 @@
 // Rolster Technology MessageIcon Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 17/Nov/2023
-// Updated: 17/Nov/2023
+// Updated: 13/Jun/2024
 
 .rls-message-icon {
   --rlc-icon-color: var(--rls-theme-color-500);
@@ -16,6 +16,8 @@
   column-gap: var(--rls-sizing-x2);
 
   span {
+    font-size: var(--rls-caption-font-size);
+    letter-spacing: var(--rls-caption-letter-spacing);
     color: var(--rls-app-color-300);
   }
 }

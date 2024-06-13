@@ -10,7 +10,7 @@ export function RlsMessageIcon({ icon, children, rlsTheme }: MessageIconProps) {
   return (
     <div className="rls-message-icon" rls-theme={rlsTheme}>
       {icon && <RlsIcon value={icon} />}
-      <span className="caption-regular truncate">{children}</span>
+      <span className="truncate">{children}</span>
     </div>
   );
 }
