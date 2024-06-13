@@ -1,7 +1,7 @@
 import { DateRange } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useRef, useState } from 'react';
-import { rangeFormatTemplate } from '../../../helpers';
+import { useState } from 'react';
+import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsDateRangePicker } from '../DateRangePicker/DateRangePicker';
@@ -27,21 +27,14 @@ export function RlsDateRangeField({
   placeholder,
   rlsTheme
 }: DateRangeFieldProps) {
-  const rangeInitial = formControl?.state || DateRange.now();
-  const dateInitial = datePicker || new Date();
+  const currentRange = formControl?.state || DateRange.now();
+  const currentDate = datePicker || new Date();
 
-  const [value, setValue] = useState<Undefined<DateRange>>(rangeInitial);
-  const [date] = useState<Undefined<Date>>(dateInitial);
-  const [show, setShow] = useState(false);
-
-  const description = useRef('');
-
-  useEffect(() => {
-    description.current = value ? rangeFormatTemplate(value) : '';
-  }, [value]);
+  const [value, setValue] = useState<Undefined<DateRange>>(currentRange);
+  const [modalIsVisible, setModalIsVisible] = useState(false);
 
   function onClickInput(): void {
-    setShow(true);
+    setModalIsVisible(true);
   }
 
   function onClickAction(): void {
@@ -49,13 +42,13 @@ export function RlsDateRangeField({
       formControl?.setState(undefined);
       setValue(undefined);
     } else {
-      setShow(true);
+      setModalIsVisible(true);
     }
   }
 
   return (
     <div className="rls-date-field" rls-theme={rlsTheme}>
-      <div className="rls-box-field">
+      <div className={renderClassStatus('rls-box-field', { disabled })}>
         {children && <label className="rls-box-field__label">{children}</label>}
 
         <div className="rls-box-field__component">
@@ -63,23 +56,28 @@ export function RlsDateRangeField({
             <input
               className="rls-date-field__control"
               type="text"
-              value={description.current}
+              value={value ? rangeFormatTemplate(value) : ''}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
+              disabled={disabled}
             />
 
-            <button className="rls-date-field__action" onClick={onClickAction}>
+            <button
+              className="rls-date-field__action"
+              onClick={onClickAction}
+              disabled={disabled}
+            >
               <RlsIcon value={value ? 'trash-2' : 'calendar'} />
             </button>
           </div>
         </div>
       </div>
 
-      <RlsModal visible={show} rlsTheme={rlsTheme}>
+      <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>
         <RlsDateRangePicker
           formControl={formControl}
-          date={date}
+          date={currentDate}
           disabled={disabled}
           maxDate={maxDate}
           minDate={minDate}
@@ -88,7 +86,7 @@ export function RlsDateRangeField({
               setValue(value);
             }
 
-            setShow(false);
+            setModalIsVisible(false);
           }}
         />
       </RlsModal>

@@ -4,7 +4,7 @@ import {
 } from '@rolster/helpers-components';
 import { dateFormatTemplate } from '@rolster/helpers-date';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DATE_RANGE_FORMAT } from '../../../constants';
 import { renderClassStatus } from '../../../helpers';
 import { RlsMessageIcon, RlsIcon } from '../../atoms';
@@ -39,8 +39,6 @@ export function RlsDateField({
   const [value, setValue] = useState<Undefined<Date>>();
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  const description = useRef('');
-
   useEffect(() => {
     const dateCheck = checkDateRange({
       date: formControl?.state || date || today,
@@ -51,12 +49,6 @@ export function RlsDateField({
     setValue(dateCheck);
     formControl?.setState(dateCheck);
   }, []);
-
-  useEffect(() => {
-    description.current = value
-      ? dateFormatTemplate(value, DATE_RANGE_FORMAT)
-      : '';
-  }, [value]);
 
   function onClickInput(): void {
     setModalIsVisible(true);
@@ -96,7 +88,7 @@ export function RlsDateField({
             <input
               className="rls-date-field__control"
               type="text"
-              value={description.current}
+              value={value ? dateFormatTemplate(value, DATE_RANGE_FORMAT) : ''}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
