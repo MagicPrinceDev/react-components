@@ -57,7 +57,7 @@ export function useAutocompleteField<
 }: AutocompleteProps<T, E>): AutocompleteControl<T, E> {
   const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<E[]>([]);
-  const [store, setStore] = useState<StoreAutocomplete<T, E>>({
+  const currentStore = useRef<StoreAutocomplete<T, E>>({
     pattern: '',
     coincidences: [],
     previous: null
@@ -75,24 +75,55 @@ export function useAutocompleteField<
     setVisible
   } = listControl;
 
+  const initializedState = useRef(false);
+  const initializedCollection = useRef(false);
   const changeInternal = useRef(false);
 
-  useEffect(() => filterSuggestions(pattern, true), [suggestions]);
-
-  useEffect(() => filterSuggestions(pattern), [pattern]);
+  useEffect(() => {
+    refreshCoincidences(pattern, true);
+  }, [suggestions]);
 
   useEffect(() => {
+    refreshCoincidences(pattern);
+  }, [pattern]);
+
+  useEffect(() => {
+    if (!initializedState.current || !initializedCollection.current) {
+      initializedState.current = true;
+      return;
+    }
+
     if (changeInternal.current) {
       changeInternal.current = false;
-    } else {
-      resetState(formControl?.state);
+      return;
     }
+
+    refresh(collection, formControl?.state);
   }, [formControl?.state]);
 
-  useEffect(
-    () => resetCollection(collection, formControl?.state),
-    [collection]
-  );
+  useEffect(() => {
+    if (!initializedCollection.current || !initializedState.current) {
+      initializedCollection.current = true;
+      return;
+    }
+
+    refresh(collection, formControl?.state);
+  }, [collection]);
+
+  function refresh(collection: ListCollection<T>, state: FormState<T>): void {
+    if (!state) {
+      return setValue('');
+    }
+
+    const element = collection.find(state);
+
+    if (element) {
+      return setValue(element.description);
+    }
+
+    setValue('');
+    setFormState(undefined);
+  }
 
   function setFormState(value: Undefined<T>): void {
     if (formControl) {
@@ -101,22 +132,13 @@ export function useAutocompleteField<
     }
   }
 
-  function resetCollection(
-    collection: ListCollection<T>,
-    state: FormState<T>
-  ): void {
-    setValue(state ? collection.find(state)?.description || '' : '');
-  }
-
-  function resetState(state: FormState<T>): void {
-    resetCollection(collection, state);
-  }
-
   function onClickControl(): void {
     if (!disabled) {
       setVisible(true);
 
-      setTimeout(() => inputRef?.current?.focus(), DURATION_ANIMATION);
+      setTimeout(() => {
+        inputRef?.current?.focus();
+      }, DURATION_ANIMATION);
     }
   }
 
@@ -182,16 +204,16 @@ export function useAutocompleteField<
     }
   }
 
-  function filterSuggestions(pattern: string | null, reboot = false): void {
-    const result = createStoreAutocomplete({
+  function refreshCoincidences(pattern: string | null, reboot = false): void {
+    const { collection, store } = createStoreAutocomplete({
       pattern,
       suggestions,
       reboot,
-      store
+      store: currentStore.current
     });
 
-    setCoincidences(result.collection.slice(0, MAX_ELEMENTS));
-    setStore(result.store);
+    currentStore.current = store;
+    setCoincidences(collection.slice(0, MAX_ELEMENTS));
   }
 
   return {

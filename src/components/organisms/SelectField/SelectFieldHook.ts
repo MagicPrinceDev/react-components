@@ -52,37 +52,53 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
     setVisible
   } = listControl;
 
+  const initializedState = useRef(false);
+  const initializedCollection = useRef(false);
   const changeInternal = useRef(false);
 
   useEffect(() => {
+    if (!initializedState.current || !initializedCollection.current) {
+      initializedState.current = true;
+      return;
+    }
+
     if (changeInternal.current) {
       changeInternal.current = false;
-    } else {
-      resetState(formControl?.state);
+      return;
     }
+
+    refresh(collection, formControl?.state);
   }, [formControl?.state]);
 
-  useEffect(
-    () => resetCollection(collection, formControl?.state),
-    [collection]
-  );
+  useEffect(() => {
+    if (!initializedCollection.current || !initializedState.current) {
+      initializedCollection.current = true;
+      return;
+    }
+
+    refresh(collection, formControl?.state);
+  }, [collection]);
+
+  function refresh(collection: ListCollection<T>, state: FormState<T>): void {
+    if (!state) {
+      return setValue('');
+    }
+
+    const element = collection.find(state);
+
+    if (element) {
+      return setValue(element.description);
+    }
+
+    setValue('');
+    setFormState(undefined);
+  }
 
   function setFormState(value: Undefined<T>): void {
     if (formControl) {
       changeInternal.current = true;
       formControl.setState(value);
     }
-  }
-
-  function resetCollection(
-    collection: ListCollection<T>,
-    state: FormState<T>
-  ): void {
-    setValue(state ? collection.find(state)?.description || '' : '');
-  }
-
-  function resetState(state: FormState<T>): void {
-    resetCollection(collection, state);
   }
 
   function onFocusInput(): void {
@@ -116,11 +132,9 @@ export function useSelectField<T = unknown, E extends Element<T> = Element<T>>({
   }
 
   function onClickAction(): void {
-    const newVisible = !visible;
+    setVisible(!visible);
 
-    setVisible(newVisible);
-
-    if (newVisible) {
+    if (!visible) {
       inputRef?.current?.focus();
     }
   }
