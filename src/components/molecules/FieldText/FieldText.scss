@@ -1,0 +1,14 @@
+// Rolster Technology TextField Component
+// v1.0.1
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 24/Jun/2024
+
+.rls-field-text {
+  --rlc-fieldbox-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
+
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}

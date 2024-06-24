@@ -1,0 +1,54 @@
+// Rolster Technology DateField Component
+// v1.0.4
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 13/Jun/2024
+
+.rls-field-date {
+  --rlc-fieldbox-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
+
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+
+  .rls-field-box__body {
+    column-gap: var(--rls-sizing-x2);
+  }
+
+  &__control {
+    position: relative;
+    width: calc(100% - var(--rls-sizing-x14));
+    height: var(--rls-sizing-x12);
+    line-height: var(--rls-sizing-x12);
+    padding: 0rem;
+    cursor: default;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--rls-app-color-500);
+    font-weight: var(--rls-font-weight-medium);
+    font-size: var(--rlc-input-font-size);
+    letter-spacing: var(--rlc-input-letter-spacing);
+
+    &::placeholder {
+      color: var(--rls-app-color-100);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__action {
+    color: var(--rls-app-color-300);
+    width: var(--rls-sizing-x12);
+    height: var(--rls-sizing-x12);
+    padding: 0rem;
+    background: transparent;
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+}

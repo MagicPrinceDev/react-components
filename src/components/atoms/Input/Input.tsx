@@ -25,14 +25,7 @@ export function RlsInput({
   const [focused, setFocused] = useState(false);
 
   function onChange(event: any): void {
-    switch (type) {
-      case 'number':
-        setState(+event.target.value);
-        break;
-      default:
-        setState(event.target.value);
-        break;
-    }
+    setState(type === 'number' ? +event.target.value : event.target.value);
   }
 
   function setState(value: string | number): void {

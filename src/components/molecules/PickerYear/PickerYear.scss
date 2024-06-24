@@ -1,0 +1,112 @@
+// Rolster Technology YearPicker Component
+// v2.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 02/Jun/2024
+
+.rls-picker-year {
+  --pvt-component-background: transparent;
+  --pvt-component-font-color: var(--rls-app-color-500);
+  --pvt-component-border: var(--rls-border-1) solid transparent;
+
+  position: relative;
+  width: 100%;
+  max-width: 140rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: var(--rls-sizing-x4) var(--rls-sizing-x6);
+    color: var(--rls-app-color-500);
+    background: var(--rls-app-background-100);
+    border-radius: var(--rls-sizing-x4);
+  }
+
+  &__action {
+    width: var(--rls-sizing-x16);
+    height: var(--rls-sizing-x16);
+    line-height: var(--rls-sizing-x16);
+
+    button {
+      color: var(--rls-app-color-500);
+      background: transparent;
+      outline: none;
+      width: inherit;
+      height: inherit;
+
+      &:not(:disabled):hover {
+        color: var(--rls-theme-color-500);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__component {
+    position: relative;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    padding: var(--rls-sizing-x4);
+    box-sizing: border-box;
+    row-gap: var(--rls-sizing-x6);
+    column-gap: var(--rls-sizing-x8);
+  }
+
+  &__year {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+    height: var(--rls-sizing-x20);
+    border-radius: var(--rls-sizing-x4);
+
+    &:not(:hover) {
+      color: var(--pvt-component-font-color);
+      border: var(--pvt-component-border);
+      background: var(--pvt-component-background);
+    }
+
+    &:hover {
+      background: var(--rls-theme-color-900);
+      color: var(--rls-theme-font-900);
+      border: var(--rls-theme-border-1-900);
+    }
+
+    &--selected {
+      --pvt-component-border: var(--rls-app-border-1-300);
+    }
+
+    &--focused {
+      --pvt-component-background: var(--rls-theme-color-500);
+      --pvt-component-font-color: var(--rls-theme-font-500);
+      --pvt-component-border: var(--rls-theme-border-1-500);
+    }
+
+    &--disabled {
+      --pvt-span-background: var(--rls-app-background-300);
+      --pvt-component-font-color: var(--rls-app-color-100);
+      --pvt-span-border: var(--rls-border-1) solid var(--rls-app-background-300);
+
+      pointer-events: none;
+    }
+
+    &__span {
+      font-weight: var(--rls-font-weight-semibold);
+      font-size: var(--rls-sizing-x8);
+      cursor: default;
+      pointer-events: none;
+      letter-spacing: 0.325rem;
+    }
+  }
+}
