@@ -1,8 +1,9 @@
 import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsButtonAction, RlsMessageIcon, RlsInputPassword } from '../../atoms';
+import { RlsButtonAction, RlsInputPassword } from '../../atoms';
 import { RlsComponent } from '../../definitions';
+import { RlsMessageFormError } from '../MessageFormError/MesageFormError';
 import './FieldPassword.css';
 
 interface FieldPasswordProps extends RlsComponent {
@@ -55,13 +56,10 @@ export function RlsFieldPassword({
         </div>
       </div>
 
-      {formControl?.touched && formControl?.error && (
-        <div className="rls-field-box__error">
-          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
-            {formControl.error.message}
-          </RlsMessageIcon>
-        </div>
-      )}
+      <RlsMessageFormError
+        className="rls-field-box__error"
+        formControl={formControl}
+      />
     </div>
   );
 }

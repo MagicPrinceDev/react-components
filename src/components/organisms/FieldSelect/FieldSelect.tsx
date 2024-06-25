@@ -6,9 +6,9 @@ import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
 import reactI18n from '../../../i18n';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsMessageIcon, RlsIcon } from '../../atoms';
+import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
-import { RlsBallot } from '../../molecules';
+import { RlsBallot, RlsMessageFormError } from '../../molecules';
 import { useFieldSelect } from './FieldSelectHook';
 import './FieldSelect.css';
 
@@ -99,13 +99,10 @@ export function RlsFieldSelectTemplate<
         </div>
       </div>
 
-      {formControl?.wrong && (
-        <div className="rls-field-box__error">
-          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
-            {formControl?.error?.message}
-          </RlsMessageIcon>
-        </div>
-      )}
+      <RlsMessageFormError
+        className="rls-field-box__error"
+        formControl={formControl}
+      />
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {

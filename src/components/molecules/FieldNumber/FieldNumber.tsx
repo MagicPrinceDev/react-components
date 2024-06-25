@@ -1,7 +1,8 @@
 import { ReactControl } from '@rolster/react-forms';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsMessageIcon, RlsInputNumber } from '../../atoms';
+import { RlsInputNumber } from '../../atoms';
 import { RlsComponent } from '../../definitions';
+import { RlsMessageFormError } from '../MessageFormError/MesageFormError';
 import './FieldNumber.css';
 
 interface FieldNumberProps extends RlsComponent {
@@ -48,13 +49,10 @@ export function RlsFieldNumber({
         </div>
       </div>
 
-      {formControl?.touched && formControl?.error && (
-        <div className="rls-field-box__error">
-          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
-            {formControl.error.message}
-          </RlsMessageIcon>
-        </div>
-      )}
+      <RlsMessageFormError
+        className="rls-field-box__error"
+        formControl={formControl}
+      />
     </div>
   );
 }

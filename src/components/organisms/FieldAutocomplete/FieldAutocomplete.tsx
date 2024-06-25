@@ -6,9 +6,9 @@ import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
 import reactI18n from '../../../i18n';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsMessageIcon, RlsIcon, RlsProgressBar } from '../../atoms';
+import { RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
-import { RlsBallot } from '../../molecules';
+import { RlsBallot, RlsMessageFormError } from '../../molecules';
 import { useFieldAutocomplete } from './FieldAutocompleteHook';
 import './FieldAutocomplete.css';
 
@@ -112,13 +112,10 @@ export function RlsFieldAutocompleteTemplate<
         </div>
       </div>
 
-      {formControl?.touched && formControl?.error && (
-        <div className="rls-field-box__error">
-          <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
-            {formControl.error.message}
-          </RlsMessageIcon>
-        </div>
-      )}
+      <RlsMessageFormError
+        className="rls-field-box__error"
+        formControl={formControl}
+      />
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {

@@ -8,6 +8,7 @@ export * from './FieldText/FieldText';
 export * from './LabelCheckBox/LabelCheckBox';
 export * from './LabelRadioButton/LabelRadioButton';
 export * from './LabelSwitch/LabelSwitch';
+export * from './MessageFormError/MesageFormError';
 export * from './Pagination/Pagination';
 export * from './PickerDay/PickerDay';
 export * from './PickerDayRange/PickerDayRange';

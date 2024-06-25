@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
-import { RlsPickerDateRange } from '../PickerDateRange/PickerDateRange';
+import { RlsMessageFormError } from '../../molecules';
 import { RlsModal } from '../Modal/Modal';
+import { RlsPickerDateRange } from '../PickerDateRange/PickerDateRange';
 import './FieldDateRange.css';
 
 interface FieldDateRangeProps extends RlsComponent {
@@ -72,6 +73,11 @@ export function RlsFieldDateRange({
             </button>
           </div>
         </div>
+
+        <RlsMessageFormError
+          className="rls-field-box__error"
+          formControl={formControl}
+        />
       </div>
 
       <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>

@@ -7,10 +7,11 @@ import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { DATE_RANGE_FORMAT } from '../../../constants';
 import { renderClassStatus } from '../../../helpers';
-import { RlsMessageIcon, RlsIcon } from '../../atoms';
+import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
-import { RlsPickerDate } from '../PickerDate/PickerDate';
+import { RlsMessageFormError } from '../../molecules';
 import { RlsModal } from '../Modal/Modal';
+import { RlsPickerDate } from '../PickerDate/PickerDate';
 import './FieldDate.css';
 
 interface FieldDateProps extends RlsComponent {
@@ -105,13 +106,10 @@ export function RlsFieldDate({
           </div>
         </div>
 
-        {formControl?.touched && formControl?.error && (
-          <div className="rls-field-box__error">
-            <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
-              {formControl.error.message}
-            </RlsMessageIcon>
-          </div>
-        )}
+        <RlsMessageFormError
+          className="rls-field-box__error"
+          formControl={formControl}
+        />
       </div>
 
       <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>
