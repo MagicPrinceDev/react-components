@@ -4,10 +4,10 @@ import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import './Button.css';
 
-export type ButtonType = 'raised' | 'flat' | 'stroked' | 'outline' | 'ghost';
+export type RlsButtonType = 'raised' | 'flat' | 'stroked' | 'outline' | 'ghost';
 
 interface ButtonProps extends RlsComponent {
-  type: ButtonType;
+  type: RlsButtonType;
   disabled?: boolean;
   prefixIcon?: string;
   suffixIcon?: string;

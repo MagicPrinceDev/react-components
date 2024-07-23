@@ -2,7 +2,7 @@ import { ReactControl } from '@rolster/react-forms';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputText } from '../../atoms';
 import { RlsComponent } from '../../definitions';
-import { RlsMessageFormError } from '../MessageFormError/MesageFormError';
+import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldText.css';
 
 interface FieldTextProps extends RlsComponent {

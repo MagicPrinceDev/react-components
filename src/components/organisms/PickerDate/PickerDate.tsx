@@ -1,16 +1,16 @@
-import { itIsDefined } from '@rolster/helpers-advanced';
+import { itIsDefined } from '@rolster/commons';
 import {
   PickerListener,
   PickerListenerType,
   checkDateRange,
   dateOutRange
-} from '@rolster/helpers-components';
+} from '@rolster/components';
 import {
   assignDayInDate,
   assignMonthInDate,
   assignYearInDate,
   dateFormatTemplate
-} from '@rolster/helpers-date';
+} from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
@@ -31,7 +31,7 @@ interface PickerDateProps extends RlsComponent {
   automatic?: boolean;
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, Date>;
+  formControl?: ReactControl<HTMLElement, Date | undefined>;
   maxDate?: Date;
   minDate?: Date;
   onListener?: (listener: PickerListener<Date>) => void;
@@ -142,7 +142,7 @@ export function RlsPickerDate({
         </div>
 
         <div className="rls-picker-date__title rls-picker-date__title--year">
-          <span onClick={onVisibilityYear}>{yearControl.value}</span>
+          <span onClick={onVisibilityYear}>{yearControl.state}</span>
         </div>
 
         <RlsPickerMonthTitle

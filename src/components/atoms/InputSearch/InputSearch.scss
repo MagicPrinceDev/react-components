@@ -1,15 +1,14 @@
-// Rolster Technology SearchInput Component
+// Rolster Technology InputSearch Component
 // v1.0.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 12/May/2023
 // Updated: 12/May/2023
 
-.rls-search-input {
+.rls-input-search {
   --rlc-input-height: var(--rls-sizing-x14);
 
   position: relative;
-  float: left;
   display: flex;
   align-items: center;
   padding: var(--rls-sizing-x4) var(--rls-sizing-x6);

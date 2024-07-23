@@ -20,7 +20,7 @@ export function RlsLabelRadioButton({
   rlsTheme,
   value
 }: LabelRadioButtonProps) {
-  const [checked, setChecked] = useState(formControl?.state || false);
+  const [checked, setChecked] = useState(formControl?.state === value);
 
   useEffect(() => {
     setChecked(formControl?.state === value);

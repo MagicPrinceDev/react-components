@@ -1,4 +1,4 @@
-import { DateRange } from '@rolster/helpers-date';
+import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
 import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
@@ -12,7 +12,7 @@ import './FieldDateRange.css';
 interface FieldDateRangeProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, DateRange>;
+  formControl?: ReactControl<HTMLElement, DateRange | undefined>;
   maxDate?: Date;
   minDate?: Date;
   placeholder?: string;

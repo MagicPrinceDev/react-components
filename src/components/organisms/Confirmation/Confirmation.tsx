@@ -1,4 +1,4 @@
-import { PartialSealed } from '@rolster/helpers-advanced';
+import { PartialSealed } from '@rolster/commons';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import reactI18n from '../../../i18n';
@@ -72,43 +72,28 @@ export function RlsConfirmation({
     >
       <div className="rls-confirmation__component">
         <div className="rls-confirmation__header">
-          {title && (
-            <div className="rls-confirmation__header__title">{title}</div>
-          )}
+          {title && <div className="rls-confirmation__title">{title}</div>}
           {subtitle && (
-            <div className="rls-confirmation__header__subtitle">{subtitle}</div>
+            <div className="rls-confirmation__subtitle">{subtitle}</div>
           )}
         </div>
 
         <div className="rls-confirmation__body">
           {content && (
-            <div className="rls-confirmation__body__content">{content}</div>
+            <div className="rls-confirmation__message">{content}</div>
           )}
         </div>
+
         {(approved || reject) && (
           <div className="rls-confirmation__footer">
-            <div className="rls-confirmation__footer__actions">
+            <div className="rls-confirmation__actions">
               {approved && (
-                <RlsButton
-                  type="raised"
-                  onClick={() => {
-                    if (approved.onClick) {
-                      approved.onClick();
-                    }
-                  }}
-                >
+                <RlsButton type="raised" onClick={approved.onClick}>
                   {approved.label}
                 </RlsButton>
               )}
               {reject && (
-                <RlsButton
-                  type="outline"
-                  onClick={() => {
-                    if (reject.onClick) {
-                      reject.onClick();
-                    }
-                  }}
-                >
+                <RlsButton type="outline" onClick={reject.onClick}>
                   {reject.label}
                 </RlsButton>
               )}

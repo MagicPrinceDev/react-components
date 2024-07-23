@@ -1,23 +1,27 @@
 // Rolster Technology TabularText Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 05/Jun/2023
-// Updated: 05/Jun/2023
+// Updated: 10/Jul/2024
 
 .rls-tabular-text {
+  display: flex;
   width: auto;
+  justify-content: var(--rlc-tabulartext-text-align);
+
+  span {
+    font-size: var(--rlc-tabulartext-font-size);
+  }
 
   &__char {
     display: block;
-    float: left;
     text-align: center;
     width: var(--rlc-tabulartext-char-width);
   }
 
   &__pointer {
     display: block;
-    float: left;
     text-align: center;
     width: var(--rlc-tabulartext-pointer-width);
   }

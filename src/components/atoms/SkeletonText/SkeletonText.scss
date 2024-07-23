@@ -1,70 +1,26 @@
 // Rolster Technology SkeletonText Component
-// v1.0.1
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 17/Jun/2022
-// Updated: 12/Sep/2023
+// Updated: 14/Jul/2024
 
 .rls-skeleton-text {
-  --pvt-value-visibility: visible;
+  --rlc-skeleton-height: var(--rlc-skeleton-text-height);
 
   position: relative;
-  width: 100%;
-  max-height: inherit;
-  min-height: inherit;
-  height: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  overflow: hidden;
-
-  &--active {
-    --pvt-value-visibility: hidden;
-
-    background: var(--rls-theme-color-100);
-    border-radius: var(--rls-sizing-x2);
-
-    &::after {
-      animation: skeleton-text-animation 1600ms infinite;
-    }
-  }
-
-  &::after {
-    position: absolute;
-    content: '';
-    top: 0rem;
-    right: 0rem;
-    bottom: 0rem;
-    left: 0rem;
-    transform: translateX(-100%);
-    background-image: linear-gradient(
-      90deg,
-      var(--rls-theme-skeleton-100) 0%,
-      var(--rls-theme-skeleton-100) 20%,
-      var(--rls-theme-skeleton-300) 60%,
-      var(--rls-theme-skeleton-100)
-    );
-  }
+  display: block;
+  font-size: var(--rlc-skeleton-text-font-size);
+  letter-spacing: var(--rlc-skeleton-text-letter-spacing);
+  line-height: var(--rlc-skeleton-text-height);
+  font-weight: inherit;
 
   &__value {
-    position: relative;
     display: block;
-    width: 100%;
-    height: inherit;
-    max-height: inherit;
-    min-height: inherit;
+    font-weight: inherit;
+    font-size: inherit;
     line-height: inherit;
-    color: inherit;
-    text-align: inherit;
     letter-spacing: inherit;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    visibility: var(--pvt-value-visibility);
-  }
-}
-
-@keyframes skeleton-text-animation {
-  100% {
-    transform: translateX(100%);
   }
 }

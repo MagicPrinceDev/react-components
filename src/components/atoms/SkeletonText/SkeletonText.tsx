@@ -1,5 +1,5 @@
-import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
+import { RlsSkeleton } from '../Skeleton/Skeleton';
 import './SkeletonText.css';
 
 interface SkeletonTextProps extends RlsComponent {
@@ -12,11 +12,12 @@ export function RlsSkeletonText({
   rlsTheme
 }: SkeletonTextProps) {
   return (
-    <div
-      className={renderClassStatus('rls-skeleton-text', { active })}
-      rls-theme={rlsTheme}
-    >
-      <span className="rls-skeleton-text__value">{children}</span>
+    <div className="rls-skeleton-text" rls-theme={rlsTheme}>
+      {active ? (
+        <RlsSkeleton />
+      ) : (
+        <span className="rls-skeleton-text__value">{children}</span>
+      )}
     </div>
   );
 }

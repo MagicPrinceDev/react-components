@@ -27,7 +27,8 @@
     stroke-dasharray: 65;
     stroke-dashoffset: 65;
     opacity: 1;
-    animation: progress-circular-circle 1750ms var(--rls-standard-curve) infinite;
+    animation: progress-circular-circle 1750ms var(--rls-standard-curve)
+      infinite;
   }
 }
 

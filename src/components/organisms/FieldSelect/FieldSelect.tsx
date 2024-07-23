@@ -1,7 +1,7 @@
 import {
   AbstractListElement as Element,
   ListElement
-} from '@rolster/helpers-components';
+} from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
 import reactI18n from '../../../i18n';
@@ -16,7 +16,7 @@ interface FieldSelectProps<T = unknown, E extends Element<T> = Element<T>>
   extends RlsComponent {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?: ReactControl<HTMLElement, T | undefined>;
   placeholder?: string;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;

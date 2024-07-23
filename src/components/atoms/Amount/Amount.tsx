@@ -1,4 +1,4 @@
-import { currencyFormat } from '@rolster/helpers-advanced';
+import { currencyFormat } from '@rolster/commons';
 import { RlsTheme } from '../../definitions';
 import { RlsTabularText } from '../TabularText/TabularText';
 import './Amount.css';

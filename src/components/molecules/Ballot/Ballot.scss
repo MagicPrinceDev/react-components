@@ -1,9 +1,9 @@
 // Rolster Technology Ballot Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 12/Sep/2023
+// Updated: 14/Jul/2024
 
 .rls-ballot {
   --rlc-avatar-width: var(--rls-sizing-x20);
@@ -20,7 +20,7 @@
 
   &--bordered {
     border-radius: var(--rls-sizing-x4);
-    border: var(--rls-app-border-1-300);
+    border: var(--rls-app-border-1-100);
   }
 
   &--skeleton {

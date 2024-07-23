@@ -3,8 +3,7 @@ import {
   ListCollection,
   StoreAutocomplete,
   createStoreAutocomplete
-} from '@rolster/helpers-components';
-import { FormState } from '@rolster/helpers-forms';
+} from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
@@ -37,19 +36,16 @@ export interface FieldAutocompleteControl<
   setPattern: (value: string) => void;
 }
 
-interface FieldAutocompleteProps<
-  T = unknown,
-  E extends Element<T> = Element<T>
-> {
+interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>> {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?: ReactControl<HTMLElement, T | undefined>;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
 }
 
 export function useFieldAutocomplete<
-  T = unknown,
+  T = any,
   E extends Element<T> = Element<T>
 >({
   disabled,
@@ -113,7 +109,7 @@ export function useFieldAutocomplete<
     refresh(collection, formControl?.state);
   }, [collection]);
 
-  function refresh(collection: ListCollection<T>, state: FormState<T>): void {
+  function refresh(collection: ListCollection<T>, state?: T): void {
     if (!state) {
       return setValue('');
     }

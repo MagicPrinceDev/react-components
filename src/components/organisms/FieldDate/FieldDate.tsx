@@ -1,8 +1,5 @@
-import {
-  PickerListenerType,
-  checkDateRange
-} from '@rolster/helpers-components';
-import { dateFormatTemplate } from '@rolster/helpers-date';
+import { PickerListenerType, checkDateRange } from '@rolster/components';
+import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { DATE_RANGE_FORMAT } from '../../../constants';
@@ -17,7 +14,7 @@ import './FieldDate.css';
 interface FieldDateProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, Date>;
+  formControl?: ReactControl<HTMLElement, Date | undefined>;
   maxDate?: Date;
   minDate?: Date;
   onValue?: (value?: Date) => void;

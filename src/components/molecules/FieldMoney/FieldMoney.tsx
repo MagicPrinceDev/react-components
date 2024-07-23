@@ -2,7 +2,7 @@ import { ReactControl } from '@rolster/react-forms';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputMoney } from '../../atoms';
 import { RlsComponent } from '../../definitions';
-import { RlsMessageFormError } from '../MessageFormError/MesageFormError';
+import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldMoney.css';
 
 interface FieldMoneyProps extends RlsComponent {

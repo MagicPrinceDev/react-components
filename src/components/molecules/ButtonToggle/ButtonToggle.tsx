@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { ButtonType, RlsButton } from '../../atoms';
+import { RlsButtonType, RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './ButtonToggle.css';
 
@@ -12,7 +12,7 @@ export interface ButtonToggleOption {
 interface ButtonToggleProps extends RlsComponent {
   onAction: (value: string) => void;
   options: ButtonToggleOption[];
-  type: ButtonType;
+  type: RlsButtonType;
   automatic?: boolean;
   disabled?: boolean;
 }

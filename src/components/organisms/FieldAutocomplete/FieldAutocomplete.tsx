@@ -1,7 +1,7 @@
 import {
   AbstractAutocompleteElement as Element,
   AutocompleteElement
-} from '@rolster/helpers-components';
+} from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
 import reactI18n from '../../../i18n';
@@ -16,7 +16,7 @@ interface FieldAutocompleteProps<T = unknown, E extends Element<T> = Element<T>>
   extends RlsComponent {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?: ReactControl<HTMLElement, T | undefined>;
   hiddenIcon?: boolean;
   placeholder?: string;
   searching?: boolean;
@@ -26,14 +26,14 @@ interface FieldAutocompleteProps<T = unknown, E extends Element<T> = Element<T>>
 }
 
 interface FieldAutocompleteTemplateProps<
-  T = unknown,
+  T = any,
   E extends Element<T> = Element<T>
 > extends FieldAutocompleteProps<T, E> {
   render: (element: E) => ReactNode;
 }
 
 export function RlsFieldAutocompleteTemplate<
-  T = unknown,
+  T = any,
   E extends Element<T> = Element<T>
 >({
   suggestions,

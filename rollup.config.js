@@ -13,7 +13,7 @@ const plugins = [
     tsconfig: './tsconfig.json',
     declaration: true,
     declarationDir: 'dist',
-    include: ['node_modules/@rolster/typescript-types/index.d.ts']
+    include: ['node_modules/@rolster/types/index.d.ts']
   })
 ];
 

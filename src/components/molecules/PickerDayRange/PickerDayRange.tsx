@@ -1,7 +1,4 @@
-import {
-  WeekRangeState,
-  createDayRangePicker
-} from '@rolster/helpers-components';
+import { WeekRangeState, createDayRangePicker } from '@rolster/components';
 import {
   DAY_LABELS,
   DateRange,
@@ -9,7 +6,7 @@ import {
   dateFormatTemplate,
   dateIsBefore,
   normalizeMinTime
-} from '@rolster/helpers-date';
+} from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useRef, useState } from 'react';
 import { DATE_RANGE_FORMAT } from '../../../constants';

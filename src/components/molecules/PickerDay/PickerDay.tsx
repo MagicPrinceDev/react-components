@@ -1,10 +1,10 @@
-import { itIsDefined } from '@rolster/helpers-advanced';
+import { itIsDefined } from '@rolster/commons';
 import {
   WeekState,
   checkDayPicker,
   createDayPicker
-} from '@rolster/helpers-components';
-import { DAY_LABELS } from '@rolster/helpers-date';
+} from '@rolster/components';
+import { DAY_LABELS } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';

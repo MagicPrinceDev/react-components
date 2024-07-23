@@ -1,8 +1,7 @@
 import {
   AbstractListElement as Element,
   ListCollection
-} from '@rolster/helpers-components';
-import { FormState } from '@rolster/helpers-forms';
+} from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
@@ -31,7 +30,7 @@ export interface FieldSelectControl<
 interface FieldSelectProps<T = unknown, E extends Element<T> = Element<T>> {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?: ReactControl<HTMLElement, T | undefined>;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
 }
@@ -82,7 +81,7 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
     refresh(collection, formControl?.state);
   }, [collection]);
 
-  function refresh(collection: ListCollection<T>, state: FormState<T>): void {
+  function refresh(collection: ListCollection<T>, state?: T): void {
     if (!state) {
       return setValue('');
     }

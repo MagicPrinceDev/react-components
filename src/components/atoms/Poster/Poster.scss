@@ -1,18 +1,19 @@
 // Rolster Technology Poster Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 20/Abr/2023
+// Updated: 13/Jul/2024
 
 .rls-poster {
   position: relative;
-  float: left;
   width: auto;
-  height: var(--rlc-poster-height);
+  font-weight: inherit;
+  font-size: var(--rlc-poster-font-size);
+  letter-spacing: var(--rlc-poster-letter-spacing);
   line-height: var(--rlc-poster-height);
   padding: var(--rlc-poster-padding);
-  box-sizing: border-box;
+  text-align: var(--rlc-poster-text-align);
   border-radius: var(--rls-sizing-x2);
   color: var(--rls-light-color-500);
   background: var(--rls-theme-gradient-500);

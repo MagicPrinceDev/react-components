@@ -2,7 +2,7 @@ import { ReactControl } from '@rolster/react-forms';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputNumber } from '../../atoms';
 import { RlsComponent } from '../../definitions';
-import { RlsMessageFormError } from '../MessageFormError/MesageFormError';
+import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldNumber.css';
 
 interface FieldNumberProps extends RlsComponent {

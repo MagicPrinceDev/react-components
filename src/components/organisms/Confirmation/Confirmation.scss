@@ -1,9 +1,9 @@
 // Rolster Technology Confirmation Component
-// v1.2.0
+// v1.3.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 04/Abr/2018
-// Updated: 27/Ene/2024
+// Updated: 19/Jul/2024
 
 .rls-confirmation {
   --pvt-component-transform: translateY(150px) scale(0.6);
@@ -30,12 +30,12 @@
 
   position: fixed;
   display: flex;
-  justify-content: center;
-  align-items: center;
   top: 0rem;
   left: 0rem;
   width: 100vw;
   height: 100vh;
+  justify-content: center;
+  align-items: center;
   z-index: var(--rls-z-index-24);
   visibility: hidden;
 
@@ -53,11 +53,11 @@
   &__component {
     position: absolute;
     display: flex;
-    flex-direction: column;
-    row-gap: var(--rls-sizing-x8);
     width: calc(100% - var(--rls-sizing-x16));
     max-width: 280rem;
     height: var(--pvt-component-height);
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x8);
     opacity: var(--pvt-component-opacity);
     visibility: var(--pvt-component-visibility);
     padding: var(--rls-sizing-x8) 0rem;
@@ -76,31 +76,31 @@
   &__header {
     position: relative;
     display: flex;
-    flex-direction: column;
-    row-gap: var(--rls-sizing-x2);
     width: 100%;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x4);
     padding: 0rem var(--rls-sizing-x8);
     box-sizing: border-box;
+  }
 
-    &__title {
-      text-align: center;
-      color: var(--rls-app-color-500);
-      font-weight: var(--rls-font-weight-bold);
-      font-size: var(--pvt-title-font-size);
-      line-height: var(--pvt-title-line-height);
-      letter-spacing: var(--pvt-title-letter-spacing);
-      text-transform: var(--pvt-title-text-transform);
-    }
+  &__title {
+    text-align: center;
+    color: var(--rls-app-color-500);
+    font-weight: var(--rls-font-weight-bold);
+    font-size: var(--pvt-title-font-size);
+    line-height: var(--pvt-title-line-height);
+    letter-spacing: var(--pvt-title-letter-spacing);
+    text-transform: var(--pvt-title-text-transform);
+  }
 
-    &__subtitle {
-      text-align: center;
-      color: var(--rls-theme-color-300);
-      font-weight: var(--rls-font-weight-bold);
-      font-size: var(--pvt-subtitle-font-size);
-      line-height: var(--pvt-subtitle-line-height);
-      letter-spacing: var(--pvt-subtitle-letter-spacing);
-      text-transform: var(--pvt-subtitle-text-transform);
-    }
+  &__subtitle {
+    text-align: center;
+    color: var(--rls-theme-color-300);
+    font-weight: var(--rls-font-weight-bold);
+    font-size: var(--pvt-subtitle-font-size);
+    line-height: var(--pvt-subtitle-line-height);
+    letter-spacing: var(--pvt-subtitle-letter-spacing);
+    text-transform: var(--pvt-subtitle-text-transform);
   }
 
   &__body {
@@ -108,17 +108,17 @@
     width: 100%;
     padding: 0rem var(--rls-sizing-x8);
     box-sizing: border-box;
+  }
 
-    &__content {
-      color: var(--rls-app-color-300);
-      text-align: center;
+  &__message {
+    color: var(--rls-app-color-300);
+    text-align: center;
 
-      p {
-        font-weight: var(--rls-font-weight-medium);
-        font-size: var(--pvt-content-font-size);
-        line-height: var(--pvt-content-line-height);
-        letter-spacing: var(--pvt-content-letter-spacing);
-      }
+    p {
+      font-weight: var(--rls-font-weight-medium);
+      font-size: var(--pvt-content-font-size);
+      line-height: var(--pvt-content-line-height);
+      letter-spacing: var(--pvt-content-letter-spacing);
     }
   }
 
@@ -127,15 +127,15 @@
     width: 100%;
     padding: var(--rls-sizing-x4) var(--rls-sizing-x8) 0rem var(--rls-sizing-x8);
     box-sizing: border-box;
+  }
 
-    &__actions {
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: center;
-      column-gap: var(--rls-sizing-x8);
-    }
+  &__actions {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    column-gap: var(--rls-sizing-x8);
   }
 
   &__backdrop {
@@ -166,13 +166,15 @@
     --pvt-subtitle-line-height: var(--rls-smalltext-line-height);
 
     --pvt-content-font-size: 7.325rem;
+    
+    &__header {
+      row-gap: var(--rls-sizing-x2);
+    }
 
-    &__footer {
-      &__actions {
-        flex-direction: column-reverse;
-        column-gap: 0rem;
-        row-gap: var(--rls-sizing-x8);
-      }
+    &__actions {
+      flex-direction: column-reverse;
+      column-gap: 0rem;
+      row-gap: var(--rls-sizing-x8);
     }
   }
 }

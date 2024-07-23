@@ -1,11 +1,11 @@
-import { itIsDefined } from '@rolster/helpers-advanced';
+import { itIsDefined } from '@rolster/commons';
 import {
   AbstractListElement,
   ListCollection,
   listNavigationElement,
   listNavigationInput,
   locationListIsBottom
-} from '@rolster/helpers-components';
+} from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import {
   Dispatch,
@@ -17,7 +17,7 @@ import {
   useState
 } from 'react';
 
-export interface ListControl<T = unknown> {
+export interface ListControl<T = any> {
   boxContentRef: RefObject<HTMLDivElement>;
   collection: ListCollection<T>;
   focused: boolean;
@@ -33,12 +33,12 @@ export interface ListControl<T = unknown> {
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-interface ListControlProps<T = unknown> {
+interface ListControlProps<T = any> {
   suggestions: AbstractListElement<T>[];
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?: ReactControl<HTMLElement, T | undefined>;
 }
 
-export function useListControl<T = unknown>({
+export function useListControl<T = any>({
   suggestions,
   formControl
 }: ListControlProps<T>): ListControl<T> {

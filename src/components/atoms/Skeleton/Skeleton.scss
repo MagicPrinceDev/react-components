@@ -1,13 +1,12 @@
 // Rolster Technology Skeleton Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 14/May/2022
-// Updated: 14/May/2023
+// Updated: 14/Jul/2024
 
 .rls-skeleton {
   position: relative;
-  float: left;
   width: 100%;
   max-height: inherit;
   min-height: inherit;
@@ -28,10 +27,10 @@
     transform: translateX(-100%);
     background-image: linear-gradient(
       90deg,
-      var(--rls-theme-skeleton-100) 0%,
-      var(--rls-theme-skeleton-100) 20%,
+      var(--rls-theme-skeleton-200) 0%,
+      var(--rls-theme-skeleton-200) 20%,
       var(--rls-theme-skeleton-300) 60%,
-      var(--rls-theme-skeleton-100)
+      var(--rls-theme-skeleton-200)
     );
     animation: skeleton-animation 1600ms infinite;
   }

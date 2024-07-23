@@ -1,21 +1,21 @@
 import { ReactInputControl } from '@rolster/react-forms';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
 import { RlsInput } from '../Input/Input';
-import './SearchInput.css';
+import './InputSearch.css';
 
-interface SearchInputProps {
+interface InputSearchProps {
   formControl?: ReactInputControl<string>;
-  placeholder?: string;
   onSearch?: () => void;
+  placeholder?: string;
 }
 
-export function RlsSearchInput({
+export function RlsInputSearch({
   formControl,
   placeholder,
   onSearch
-}: SearchInputProps) {
+}: InputSearchProps) {
   return (
-    <div className="rls-search-input">
+    <div className="rls-input-search">
       <RlsInput formControl={formControl} placeholder={placeholder} />
       {onSearch && <RlsButtonAction icon="search" onClick={onSearch} />}
     </div>

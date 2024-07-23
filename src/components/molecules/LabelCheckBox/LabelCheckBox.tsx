@@ -18,10 +18,10 @@ export function RlsLabelCheckBox({
   formControl,
   rlsTheme
 }: LabelCheckBoxProps) {
-  const [checked, setChecked] = useState(formControl?.value || false);
+  const [checked, setChecked] = useState(!!formControl?.state);
 
   useEffect(() => {
-    setChecked(formControl?.state || false);
+    setChecked(!!formControl?.state);
   }, [formControl?.state]);
 
   function onToggle(): void {

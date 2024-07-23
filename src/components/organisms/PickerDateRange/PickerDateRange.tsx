@@ -1,13 +1,10 @@
-import {
-  PickerListener,
-  PickerListenerType
-} from '@rolster/helpers-components';
+import { PickerListener, PickerListenerType } from '@rolster/components';
 import {
   DateRange,
   assignMonthInDate,
   assignYearInDate,
   normalizeMinTime
-} from '@rolster/helpers-date';
+} from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
@@ -26,7 +23,7 @@ interface PickerDateRangeProps extends RlsComponent {
   automatic?: boolean;
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, DateRange>;
+  formControl?: ReactControl<HTMLElement, DateRange | undefined>;
   maxDate?: Date;
   minDate?: Date;
   onListener?: (listener: PickerListener<DateRange>) => void;
