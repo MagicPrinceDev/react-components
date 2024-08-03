@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "18.15.0",
+  "version": "18.15.1",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
@@ -40,7 +40,7 @@
     "@rolster/forms": "^2.3.0",
     "@rolster/strings": "^2.0.0",
     "@rolster/i18n": "^2.0.0",
-    "@rolster/react-forms": "^18.3.0",
+    "@rolster/react-forms": "^18.4.1",
     "@rolster/validators": "^1.0.5",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.1",

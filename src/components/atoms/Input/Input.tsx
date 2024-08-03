@@ -42,10 +42,6 @@ export function RlsInput({
   }
 
   function onBlur(): void {
-    if (formControl && !formControl.touched) {
-      formControl.touch();
-    }
-
     formControl?.blur();
     setFocused(false);
   }

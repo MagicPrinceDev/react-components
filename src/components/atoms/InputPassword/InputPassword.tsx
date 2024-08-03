@@ -37,10 +37,6 @@ export function RlsInputPassword({
   }
 
   function onBlur() {
-    if (formControl && !formControl.touched) {
-      formControl.touch();
-    }
-
     formControl?.blur();
     setFocused(false);
   }

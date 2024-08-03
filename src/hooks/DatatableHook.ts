@@ -12,10 +12,12 @@ export function useDatatable(): DatatableHook {
   useEffect(() => {
     let observer: ResizeObserver;
 
-    if (bodyRef?.current) {
+    const body = bodyRef?.current;
+
+    if (body) {
       observer = new ResizeObserver(() => {
-        const scrollHeight = bodyRef?.current?.scrollHeight || 0;
-        const clientHeight = bodyRef?.current?.clientHeight || 0;
+        const scrollHeight = body.scrollHeight || 0;
+        const clientHeight = body.clientHeight || 0;
 
         setScrolleable(scrollHeight > clientHeight);
       });
@@ -23,7 +25,9 @@ export function useDatatable(): DatatableHook {
       observer.observe(bodyRef?.current);
     }
 
-    return () => observer?.disconnect();
+    return () => {
+      observer?.disconnect();
+    };
   }, []);
 
   return { bodyRef, scrolleable };

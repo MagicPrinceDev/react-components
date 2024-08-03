@@ -1,4 +1,3 @@
-import { itIsDefined } from '@rolster/commons';
 import {
   AbstractListElement,
   ListCollection,
@@ -7,30 +6,25 @@ import {
   locationListIsBottom
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import {
-  Dispatch,
-  KeyboardEvent,
-  RefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState
-} from 'react';
+import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
 
-export interface ListControl<T = any> {
-  boxContentRef: RefObject<HTMLDivElement>;
+interface ListControlState<T> {
   collection: ListCollection<T>;
   focused: boolean;
   higher: boolean;
-  inputRef: RefObject<HTMLInputElement>;
-  listRef: RefObject<HTMLUListElement>;
   value: string;
   visible: boolean;
+}
+
+export interface ListControl<T = any> extends ListControlState<T> {
+  boxContentRef: RefObject<HTMLDivElement>;
+  inputRef: RefObject<HTMLInputElement>;
+  listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
-  setFocused: Dispatch<SetStateAction<boolean>>;
-  setValue: Dispatch<SetStateAction<string>>;
-  setVisible: Dispatch<SetStateAction<boolean>>;
+  setFocused: (focused: boolean) => void;
+  setValue: (value: string) => void;
+  setVisible: (visible: boolean) => void;
 }
 
 interface ListControlProps<T = any> {
@@ -46,19 +40,20 @@ export function useListControl<T = any>({
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [collection, setCollection] = useState(new ListCollection<T>([]));
-  const [value, setValue] = useState('');
-  const [opened, setOpened] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [higher, setHigher] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const [listState, setListState] = useState<ListControlState<T>>({
+    collection: new ListCollection<T>([]),
+    focused: false,
+    higher: false,
+    value: '',
+    visible: false
+  });
 
   const position = useRef(0);
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
       if (!boxContentRef?.current?.contains(target as any)) {
-        setVisible(false);
+        setListState((state) => ({ ...state, visible: false }));
       }
     }
 
@@ -70,30 +65,45 @@ export function useListControl<T = any>({
   }, []);
 
   useEffect(() => {
-    if (visible && !opened) {
-      setOpened(true);
-    }
+    const boxContent = boxContentRef.current;
+    const list = listRef.current;
 
-    if (!visible && opened && !!formControl?.touched) {
-      formControl.touch();
-    }
+    formControl?.touch();
 
-    setHigher(!locationListIsBottom(boxContentRef.current, listRef.current));
-  }, [visible]);
+    setListState((state) => ({
+      ...state,
+      higher: !locationListIsBottom(boxContent, list)
+    }));
+  }, [listState.visible]);
 
   useEffect(() => {
-    setCollection(new ListCollection(suggestions));
+    setListState((state) => ({
+      ...state,
+      collection: new ListCollection(suggestions)
+    }));
   }, [suggestions]);
 
+  function setFocused(focused: boolean): void {
+    setListState((state) => ({ ...state, focused }));
+  }
+
+  function setValue(value: string): void {
+    setListState((state) => ({ ...state, value }));
+  }
+
+  function setVisible(visible: boolean): void {
+    setListState((state) => ({ ...state, visible }));
+  }
+
   function navigationInput(event: KeyboardEvent): void {
-    if (visible) {
+    if (listState.visible) {
       const newPosition = listNavigationInput({
         contentElement: boxContentRef.current,
         event: event as any,
         listElement: listRef.current
       });
 
-      position.current = itIsDefined(newPosition) ? newPosition : 0;
+      position.current = newPosition || 0;
     }
   }
 
@@ -108,18 +118,14 @@ export function useListControl<T = any>({
   }
 
   return {
+    ...listState,
     boxContentRef,
-    collection,
-    focused,
-    higher,
     inputRef,
     listRef,
     navigationElement,
     navigationInput,
     setFocused,
     setValue,
-    setVisible,
-    value,
-    visible
+    setVisible
   };
 }

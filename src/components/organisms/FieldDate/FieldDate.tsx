@@ -66,11 +66,8 @@ export function RlsFieldDate({
 
   function onClean(): void {
     if (value) {
+      formControl?.touch();
       onChange(undefined);
-
-      if (formControl && !formControl.touched) {
-        formControl.touch();
-      }
     } else {
       setModalIsVisible(true);
     }
@@ -121,11 +118,8 @@ export function RlsFieldDate({
               onChange(value, true);
             }
 
+            formControl?.touch();
             setModalIsVisible(false);
-
-            if (!formControl?.touched) {
-              formControl?.touch();
-            }
           }}
         />
       </RlsModal>
