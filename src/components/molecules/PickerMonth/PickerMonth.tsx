@@ -34,7 +34,7 @@ export function RlsPickerMonth({
 
   const [months, setMonths] = useState<MonthState[]>([]);
   const [value, setValue] = useState(
-    formControl?.state || currentDate.getMonth()
+    formControl?.value || currentDate.getMonth()
   );
 
   useEffect(() => {
@@ -49,14 +49,14 @@ export function RlsPickerMonth({
     const month = checkMonthPicker(createPickerProps());
 
     itIsDefined(month)
-      ? formControl?.setState(month)
-      : setValue(formControl?.state || currentDate.getMonth());
-  }, [formControl?.state]);
+      ? formControl?.setValue(month)
+      : setValue(formControl?.value || currentDate.getMonth());
+  }, [formControl?.value]);
 
   function createPickerProps() {
     return {
       date: currentDate,
-      month: itIsDefined(formControl?.state) ? formControl?.state : value,
+      month: itIsDefined(formControl?.value) ? formControl?.value : value,
       year: year || currentDate.getFullYear(),
       minDate,
       maxDate
@@ -64,7 +64,7 @@ export function RlsPickerMonth({
   }
 
   function setMonthValue(value: number): void {
-    formControl ? formControl.setState(value) : setValue(value);
+    formControl ? formControl.setValue(value) : setValue(value);
   }
 
   function onChange(value: number): void {

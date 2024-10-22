@@ -1,18 +1,18 @@
 // Rolster Technology DatePicker Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
-// Created: 20/Mar/2018
-// Updated: 04/May/2023
+// Created: 04/May/2023
+// Updated: 05/Ago/2024
 
 .rls-picker-month-title {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   span {
     color: var(--rls-app-color-300);
     cursor: default;
-    margin: auto 0rem;
     height: var(--rls-sizing-x14);
     line-height: var(--rls-sizing-x14);
     font-size: var(--rls-sizing-x10);

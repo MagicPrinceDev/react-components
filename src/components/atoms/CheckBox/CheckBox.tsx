@@ -38,10 +38,10 @@ export function RlsCheckBoxControl({
 }: CheckBoxControlProps) {
   return (
     <RlsCheckBox
-      checked={formControl.state || false}
+      checked={!!formControl.value}
       disabled={disabled}
       onClick={() => {
-        formControl.setState(!formControl.state);
+        formControl.setValue(!formControl.value);
       }}
       rlsTheme={rlsTheme}
     />

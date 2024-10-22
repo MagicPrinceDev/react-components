@@ -25,7 +25,7 @@ import {
 } from '../../molecules';
 import './PickerDate.css';
 
-const FORMAT_DESCRIPTION = '{dw}, {mx} {dd} de {aa}';
+const FORMAT_TITLE = '{dw}, {mx} {dd} de {aa}';
 
 interface PickerDateProps extends RlsComponent {
   automatic?: boolean;
@@ -51,7 +51,7 @@ export function RlsPickerDate({
 }: PickerDateProps) {
   const today = new Date(); // Initial current date in component
 
-  const dateInitial = formControl?.state || date || today;
+  const dateInitial = formControl?.value || date || today;
 
   const yearControl = useReactControl(dateInitial.getFullYear());
   const dayControl = useReactControl(dateInitial.getDate());
@@ -62,38 +62,32 @@ export function RlsPickerDate({
 
   useEffect(() => {
     const dateCheck = checkDateRange({
-      date: formControl?.state || date || today,
+      date: formControl?.value || date || today,
       minDate,
       maxDate
     });
 
     setValue(dateCheck);
-    formControl?.setState(dateCheck);
+    formControl?.setValue(dateCheck);
   }, []);
 
   useEffect(() => {
-    setValue((prevValue) =>
-      itIsDefined(yearControl.state)
-        ? assignYearInDate(prevValue, yearControl.state)
-        : prevValue
-    );
-  }, [yearControl.state]);
+    if (itIsDefined(yearControl.value)) {
+      setValue(assignYearInDate(value, yearControl.value));
+    }
+  }, [yearControl.value]);
 
   useEffect(() => {
-    setValue((prevValue) =>
-      itIsDefined(monthControl.state)
-        ? assignMonthInDate(prevValue, monthControl.state)
-        : prevValue
-    );
-  }, [monthControl.state]);
+    if (itIsDefined(monthControl.value)) {
+      setValue(assignMonthInDate(value, monthControl.value));
+    }
+  }, [monthControl.value]);
 
   useEffect(() => {
-    setValue((prevValue) =>
-      itIsDefined(dayControl.state)
-        ? assignDayInDate(prevValue, dayControl.state)
-        : prevValue
-    );
-  }, [dayControl.state]);
+    if (itIsDefined(dayControl.value)) {
+      setValue(assignDayInDate(value, dayControl.value));
+    }
+  }, [dayControl.value]);
 
   function onVisibilityDay(): void {
     setVisibility('DAY');
@@ -114,10 +108,10 @@ export function RlsPickerDate({
   }
 
   function onToday(): void {
-    yearControl.setState(today.getFullYear());
-    dayControl.setState(today.getDate());
-    monthControl.setState(today.getMonth());
-    formControl?.setState(today);
+    yearControl.setValue(today.getFullYear());
+    dayControl.setValue(today.getDate());
+    monthControl.setValue(today.getMonth());
+    formControl?.setValue(today);
 
     if (onListener) {
       onListener({ type: PickerListenerType.Now, value: today });
@@ -125,7 +119,7 @@ export function RlsPickerDate({
   }
 
   function onSelect(): void {
-    formControl?.setState(value);
+    formControl?.setValue(value);
 
     if (onListener) {
       onListener({ type: PickerListenerType.Select, value });
@@ -137,12 +131,12 @@ export function RlsPickerDate({
       <div className="rls-picker-date__header">
         <div className="rls-picker-date__title rls-picker-date__title--description">
           <span onClick={onVisibilityDay}>
-            {dateFormatTemplate(dateInitial, FORMAT_DESCRIPTION)}
+            {dateFormatTemplate(dateInitial, FORMAT_TITLE)}
           </span>
         </div>
 
         <div className="rls-picker-date__title rls-picker-date__title--year">
-          <span onClick={onVisibilityYear}>{yearControl.state}</span>
+          <span onClick={onVisibilityYear}>{yearControl.value}</span>
         </div>
 
         <RlsPickerMonthTitle
@@ -167,8 +161,8 @@ export function RlsPickerDate({
         <RlsPickerDay
           formControl={dayControl}
           date={dateInitial}
-          month={monthControl.state}
-          year={yearControl.state}
+          month={monthControl.value}
+          year={yearControl.value}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}
@@ -177,7 +171,7 @@ export function RlsPickerDate({
         <RlsPickerMonth
           formControl={monthControl}
           date={dateInitial}
-          year={yearControl.state}
+          year={yearControl.value}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}
@@ -194,33 +188,33 @@ export function RlsPickerDate({
         />
       </div>
 
-      <div
-        className={renderClassStatus('rls-picker-date__footer', { automatic })}
-      >
-        <div className="rls-picker-date__actions">
-          <div className="rls-picker-date__actions--cancel">
-            <RlsButton type="ghost" onClick={onCancel}>
-              {reactI18n('dateActionCancel')}
-            </RlsButton>
-          </div>
+      {!automatic && (
+        <div className="rls-picker-date__footer">
+          <div className="rls-picker-date__actions">
+            <div className="rls-picker-date__actions--cancel">
+              <RlsButton type="ghost" onClick={onCancel}>
+                {reactI18n('dateActionCancel')}
+              </RlsButton>
+            </div>
 
-          <div className="rls-picker-date__actions--today">
-            <RlsButton
-              type="ghost"
-              onClick={onToday}
-              disabled={dateOutRange({ date: today, maxDate, minDate })}
-            >
-              {reactI18n('dateActionToday')}
-            </RlsButton>
-          </div>
+            <div className="rls-picker-date__actions--today">
+              <RlsButton
+                type="ghost"
+                onClick={onToday}
+                disabled={dateOutRange({ date: today, maxDate, minDate })}
+              >
+                {reactI18n('dateActionToday')}
+              </RlsButton>
+            </div>
 
-          <div className="rls-picker-date__actions--ok">
-            <RlsButton type="raised" onClick={onSelect}>
-              {reactI18n('dateActionSelect')}
-            </RlsButton>
+            <div className="rls-picker-date__actions--ok">
+              <RlsButton type="raised" onClick={onSelect}>
+                {reactI18n('dateActionSelect')}
+              </RlsButton>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

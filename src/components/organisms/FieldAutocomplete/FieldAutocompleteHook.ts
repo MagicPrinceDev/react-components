@@ -1,7 +1,7 @@
 import {
   AbstractAutocompleteElement as Element,
+  AutocompleteStore,
   ListCollection,
-  StoreAutocomplete,
   createStoreAutocomplete
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
@@ -56,7 +56,7 @@ export function useFieldAutocomplete<
 }: FieldAutocompleteProps<T, E>): FieldAutocompleteControl<T, E> {
   const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<E[]>([]);
-  const currentStore = useRef<StoreAutocomplete<T, E>>({
+  const currentStore = useRef<AutocompleteStore<T, E>>({
     pattern: '',
     coincidences: [],
     previous: null
@@ -97,8 +97,8 @@ export function useFieldAutocomplete<
       return;
     }
 
-    refresh(collection, formControl?.state);
-  }, [formControl?.state]);
+    refresh(collection, formControl?.value);
+  }, [formControl?.value]);
 
   useEffect(() => {
     if (!initializedCollection.current || !initializedState.current) {
@@ -106,7 +106,7 @@ export function useFieldAutocomplete<
       return;
     }
 
-    refresh(collection, formControl?.state);
+    refresh(collection, formControl?.value);
   }, [collection]);
 
   function refresh(collection: ListCollection<T>, state?: T): void {
@@ -127,7 +127,7 @@ export function useFieldAutocomplete<
   function setFormState(value: Undefined<T>): void {
     if (formControl) {
       changeInternal.current = true;
-      formControl.setState(value);
+      formControl.setValue(value);
     }
   }
 

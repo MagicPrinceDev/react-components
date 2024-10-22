@@ -25,11 +25,11 @@ export function RlsInput({
   const [focused, setFocused] = useState(false);
 
   function onChange(event: any): void {
-    setState(type === 'number' ? +event.target.value : event.target.value);
+    setValue(type === 'number' ? +event.target.value : event.target.value);
   }
 
-  function setState(value: string | number): void {
-    formControl?.setState(value);
+  function setValue(value: string | number): void {
+    formControl?.setValue(value);
 
     if (onValue) {
       onValue(value);
@@ -63,7 +63,7 @@ export function RlsInput({
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}
-        value={formControl?.state || value || ''}
+        value={formControl?.value || value || ''}
       />
       <span className="rls-input__value">{children}</span>
     </div>

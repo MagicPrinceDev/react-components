@@ -37,10 +37,10 @@ export function RlsSwitch({
 export function RlsSwitchControl({ formControl, disabled, rlsTheme }: Props) {
   return (
     <RlsSwitch
-      checked={formControl.state || false}
+      checked={formControl.value || false}
       disabled={disabled}
       onClick={() => {
-        formControl.setState(!formControl.state);
+        formControl.setValue(!formControl.value);
       }}
       rlsTheme={rlsTheme}
     />

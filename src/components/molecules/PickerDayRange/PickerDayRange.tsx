@@ -9,10 +9,11 @@ import {
 } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useRef, useState } from 'react';
-import { DATE_RANGE_FORMAT } from '../../../constants';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './PickerDayRange.css';
+
+const FORMAT_RANGE = '{dd}/{mx}/{aa}';
 
 interface PickerDayRangeProps extends RlsComponent {
   date?: Date;
@@ -30,7 +31,7 @@ export function RlsPickerDayRange({
   minDate,
   rlsTheme
 }: PickerDayRangeProps) {
-  const currentRange = formControl?.state || DateRange.now();
+  const currentRange = formControl?.value || DateRange.now();
   const currentDate = normalizeMinTime(date || currentRange.minDate);
 
   const sourceDate = useRef(currentRange.minDate);
@@ -60,13 +61,13 @@ export function RlsPickerDayRange({
     sourceDate.current = date;
 
     setRange(range);
-    formControl?.setState(range);
+    formControl?.setValue(range);
   }
 
   return (
     <div className="rls-picker-day-range" rls-theme={rlsTheme}>
       <div className="rls-picker-day-range__title">
-        {dateFormatTemplate(sourceDate.current, DATE_RANGE_FORMAT)}
+        {dateFormatTemplate(sourceDate.current, FORMAT_RANGE)}
       </div>
 
       <div className="rls-picker-day-range__header">

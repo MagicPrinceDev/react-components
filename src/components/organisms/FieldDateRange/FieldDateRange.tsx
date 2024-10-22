@@ -28,7 +28,7 @@ export function RlsFieldDateRange({
   placeholder,
   rlsTheme
 }: FieldDateRangeProps) {
-  const currentRange = formControl?.state || DateRange.now();
+  const currentRange = formControl?.value || DateRange.now();
   const currentDate = datePicker || new Date();
 
   const [value, setValue] = useState<Undefined<DateRange>>(currentRange);
@@ -40,7 +40,7 @@ export function RlsFieldDateRange({
 
   function onClickAction(): void {
     if (value) {
-      formControl?.setState(undefined);
+      formControl?.setValue(undefined);
       setValue(undefined);
     } else {
       setModalIsVisible(true);

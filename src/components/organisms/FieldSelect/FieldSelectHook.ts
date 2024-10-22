@@ -69,8 +69,8 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
       return;
     }
 
-    refresh(collection, formControl?.state);
-  }, [formControl?.state]);
+    refresh(collection, formControl?.value);
+  }, [formControl?.value]);
 
   useEffect(() => {
     if (!initializedCollection.current || !initializedState.current) {
@@ -78,7 +78,7 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
       return;
     }
 
-    refresh(collection, formControl?.state);
+    refresh(collection, formControl?.value);
   }, [collection]);
 
   function refresh(collection: ListCollection<T>, state?: T): void {
@@ -99,7 +99,7 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
   function setFormState(value: Undefined<T>): void {
     if (formControl) {
       changeInternal.current = true;
-      formControl.setState(value);
+      formControl.setValue(value);
     }
   }
 

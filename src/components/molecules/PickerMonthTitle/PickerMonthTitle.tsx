@@ -32,25 +32,25 @@ export function RlsPickerMonthTitle({
     date,
     maxDate,
     minDate,
-    month: monthControl.state
+    month: monthControl.value
   });
 
-  const monthName = MONTH_NAMES()[monthControl.state || 0];
+  const monthName = MONTH_NAMES()[monthControl.value || 0];
 
   function onPreviousMonth(): void {
-    if (itIsDefined(monthControl.state) && itIsDefined(yearControl.state)) {
-      if (monthControl.state > Month.January) {
-        monthControl.setState(monthControl.state - 1);
+    if (itIsDefined(monthControl.value) && itIsDefined(yearControl.value)) {
+      if (monthControl.value > Month.January) {
+        monthControl.setValue(monthControl.value - 1);
       } else {
-        monthControl.setState(Month.December);
-        yearControl.setState(yearControl.state - 1);
+        monthControl.setValue(Month.December);
+        yearControl.setValue(yearControl.value - 1);
       }
     }
   }
 
   function onPreviousYear(): void {
-    if (itIsDefined(yearControl.state)) {
-      yearControl.setState(yearControl.state - 1);
+    if (itIsDefined(yearControl.value)) {
+      yearControl.setValue(yearControl.value - 1);
     }
   }
 
@@ -59,19 +59,19 @@ export function RlsPickerMonthTitle({
   }
 
   function onNextMonth(): void {
-    if (itIsDefined(monthControl.state) && itIsDefined(yearControl.state)) {
-      if (monthControl.state < Month.December) {
-        monthControl.setState(monthControl.state + 1);
+    if (itIsDefined(monthControl.value) && itIsDefined(yearControl.value)) {
+      if (monthControl.value < Month.December) {
+        monthControl.setValue(monthControl.value + 1);
       } else {
-        monthControl.setState(Month.January);
-        yearControl.setState(yearControl.state + 1);
+        monthControl.setValue(Month.January);
+        yearControl.setValue(yearControl.value + 1);
       }
     }
   }
 
   function onNextYear(): void {
-    if (itIsDefined(yearControl.state)) {
-      yearControl.setState(yearControl.state + 1);
+    if (itIsDefined(yearControl.value)) {
+      yearControl.setValue(yearControl.value + 1);
     }
   }
 

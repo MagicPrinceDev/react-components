@@ -40,7 +40,7 @@ export function useListControl<T = any>({
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [listState, setListState] = useState<ListControlState<T>>({
+  const [state, setState] = useState<ListControlState<T>>({
     collection: new ListCollection<T>([]),
     focused: false,
     higher: false,
@@ -53,7 +53,7 @@ export function useListControl<T = any>({
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
       if (!boxContentRef?.current?.contains(target as any)) {
-        setListState((state) => ({ ...state, visible: false }));
+        setState((state) => ({ ...state, visible: false }));
       }
     }
 
@@ -70,33 +70,33 @@ export function useListControl<T = any>({
 
     formControl?.touch();
 
-    setListState((state) => ({
+    setState((state) => ({
       ...state,
       higher: !locationListIsBottom(boxContent, list)
     }));
-  }, [listState.visible]);
+  }, [state.visible]);
 
   useEffect(() => {
-    setListState((state) => ({
+    setState((state) => ({
       ...state,
       collection: new ListCollection(suggestions)
     }));
   }, [suggestions]);
 
   function setFocused(focused: boolean): void {
-    setListState((state) => ({ ...state, focused }));
+    setState((state) => ({ ...state, focused }));
   }
 
   function setValue(value: string): void {
-    setListState((state) => ({ ...state, value }));
+    setState((state) => ({ ...state, value }));
   }
 
   function setVisible(visible: boolean): void {
-    setListState((state) => ({ ...state, visible }));
+    setState((state) => ({ ...state, visible }));
   }
 
   function navigationInput(event: KeyboardEvent): void {
-    if (listState.visible) {
+    if (state.visible) {
       const newPosition = listNavigationInput({
         contentElement: boxContentRef.current,
         event: event as any,
@@ -118,7 +118,7 @@ export function useListControl<T = any>({
   }
 
   return {
-    ...listState,
+    ...state,
     boxContentRef,
     inputRef,
     listRef,

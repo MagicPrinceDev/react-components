@@ -24,7 +24,7 @@ export function RlsInputPassword({
   const [focused, setFocused] = useState(false);
 
   function onChange(event: any): void {
-    formControl?.setState(event.target.value);
+    formControl?.setValue(event.target.value);
 
     if (onValue) {
       onValue(event.target.value);

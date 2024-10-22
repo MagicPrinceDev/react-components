@@ -18,15 +18,15 @@ export function RlsLabelSwitch({
   formControl,
   rlsTheme
 }: LabelSwitchProps) {
-  const [checked, setChecked] = useState(!!formControl?.state);
+  const [checked, setChecked] = useState(!!formControl?.value);
 
   useEffect(() => {
-    setChecked(!!formControl?.state);
-  }, [formControl?.state]);
+    setChecked(!!formControl?.value);
+  }, [formControl?.value]);
 
   function onToggle(): void {
     if (formControl) {
-      formControl?.setState(!formControl.state);
+      formControl?.setValue(!formControl.value);
     } else {
       setChecked(!checked);
     }

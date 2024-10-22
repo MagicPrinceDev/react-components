@@ -42,7 +42,7 @@ export function RlsPickerDateRange({
   rlsTheme
 }: PickerDateRangeProps) {
   const dateInitial = normalizeMinTime(datePicker || new Date());
-  const rangeInitial = formControl?.state || DateRange.now();
+  const rangeInitial = formControl?.value || DateRange.now();
 
   const yearControl = useReactControl(dateInitial.getFullYear());
   const monthControl = useReactControl(dateInitial.getMonth());
@@ -54,27 +54,27 @@ export function RlsPickerDateRange({
 
   useEffect(() => {
     setDate((prevValue) => {
-      return typeof yearControl.state === 'number'
-        ? assignYearInDate(prevValue, yearControl.state)
+      return typeof yearControl.value === 'number'
+        ? assignYearInDate(prevValue, yearControl.value)
         : prevValue;
     });
-  }, [yearControl.state]);
+  }, [yearControl.value]);
 
   useEffect(() => {
     setDate((prevValue) => {
-      return typeof monthControl.state === 'number'
-        ? assignMonthInDate(prevValue, monthControl.state)
+      return typeof monthControl.value === 'number'
+        ? assignMonthInDate(prevValue, monthControl.value)
         : prevValue;
     });
-  }, [monthControl.state]);
+  }, [monthControl.value]);
 
   useEffect(() => {
-    if (dayControl.state) {
-      setValue(dayControl.state);
+    if (dayControl.value) {
+      setValue(dayControl.value);
     }
 
     setVisibility('DAY');
-  }, [dayControl.state]);
+  }, [dayControl.value]);
 
   function onVisibilityDay(): void {
     setVisibility('DAY');
@@ -95,7 +95,7 @@ export function RlsPickerDateRange({
   }
 
   function onSelect(): void {
-    formControl?.setState(value);
+    formControl?.setValue(value);
 
     if (onListener) {
       onListener({ type: PickerListenerType.Select, value });
@@ -110,7 +110,7 @@ export function RlsPickerDateRange({
         </div>
 
         <div className="rls-picker-date-range__title rls-picker-date-range__title--year">
-          <span onClick={onVisibilityYear}>{yearControl.state}</span>
+          <span onClick={onVisibilityYear}>{yearControl.value}</span>
         </div>
 
         <RlsPickerMonthTitle
@@ -142,7 +142,7 @@ export function RlsPickerDateRange({
 
         <RlsPickerMonth
           formControl={monthControl}
-          year={yearControl.state}
+          year={yearControl.value}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}

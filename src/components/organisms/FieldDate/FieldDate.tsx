@@ -2,7 +2,6 @@ import { PickerListenerType, checkDateRange } from '@rolster/components';
 import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { DATE_RANGE_FORMAT } from '../../../constants';
 import { renderClassStatus } from '../../../helpers';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
@@ -11,10 +10,13 @@ import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDate } from '../PickerDate/PickerDate';
 import './FieldDate.css';
 
+const FORMAT_DATE = '{dd}/{mx}/{aa}';
+
 interface FieldDateProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, Date | undefined>;
+  formControl?: ReactControl<HTMLElement, Undefined<Date>>;
+  format?: string;
   maxDate?: Date;
   minDate?: Date;
   onValue?: (value?: Date) => void;
@@ -26,6 +28,7 @@ export function RlsFieldDate({
   date,
   disabled,
   formControl,
+  format,
   maxDate,
   minDate,
   onValue,
@@ -39,24 +42,16 @@ export function RlsFieldDate({
 
   useEffect(() => {
     const dateCheck = checkDateRange({
-      date: formControl?.state || date || today,
+      date: formControl?.value || date || today,
       minDate,
       maxDate
     });
 
     setValue(dateCheck);
-    formControl?.setState(dateCheck);
+    formControl?.setValue(dateCheck);
   }, []);
 
-  function onClickInput(): void {
-    setModalIsVisible(true);
-  }
-
-  function onChange(value?: Date, ignoreControl = false): void {
-    if (!ignoreControl) {
-      formControl?.setState(value);
-    }
-
+  function onChange(value?: Date): void {
     setValue(value);
 
     if (onValue) {
@@ -64,14 +59,23 @@ export function RlsFieldDate({
     }
   }
 
-  function onClean(): void {
+  function onClickInput(): void {
+    setModalIsVisible(true);
+  }
+
+  function onClickAction(): void {
     if (value) {
+      formControl?.setValue(undefined);
       formControl?.touch();
       onChange(undefined);
     } else {
       setModalIsVisible(true);
     }
   }
+
+  const valueInput = value
+    ? dateFormatTemplate(value, format || FORMAT_DATE)
+    : '';
 
   return (
     <div className="rls-field-date" rls-theme={rlsTheme}>
@@ -83,7 +87,7 @@ export function RlsFieldDate({
             <input
               className="rls-field-date__control"
               type="text"
-              value={value ? dateFormatTemplate(value, DATE_RANGE_FORMAT) : ''}
+              value={valueInput}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
@@ -92,7 +96,7 @@ export function RlsFieldDate({
 
             <button
               className="rls-field-date__action"
-              onClick={onClean}
+              onClick={onClickAction}
               disabled={disabled}
             >
               <RlsIcon value={value ? 'trash-2' : 'calendar'} />
@@ -115,7 +119,7 @@ export function RlsFieldDate({
           minDate={minDate}
           onListener={({ value, type }) => {
             if (type !== PickerListenerType.Cancel) {
-              onChange(value, true);
+              onChange(value);
             }
 
             formControl?.touch();

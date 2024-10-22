@@ -28,10 +28,10 @@ export function RlsPickerYear({
   const currentDate = date || new Date();
 
   const [value, setValue] = useState(
-    formControl?.state || currentDate.getFullYear()
+    formControl?.value || currentDate.getFullYear()
   );
   const [year, setYear] = useState(
-    formControl?.state || currentDate.getFullYear()
+    formControl?.value || currentDate.getFullYear()
   );
   const [template, setTemplate] = useState(
     createYearPicker(createPickerProps())
@@ -51,9 +51,9 @@ export function RlsPickerYear({
     const year = checkYearPicker(createPickerProps());
 
     itIsDefined(year)
-      ? formControl?.setState(year)
-      : setValue(formControl?.state || currentDate.getFullYear());
-  }, [formControl?.state]);
+      ? formControl?.setValue(year)
+      : setValue(formControl?.value || currentDate.getFullYear());
+  }, [formControl?.value]);
 
   function createPickerProps() {
     return {
@@ -65,7 +65,7 @@ export function RlsPickerYear({
   }
 
   function setYearValue(value: number): void {
-    formControl ? formControl.setState(value) : setValue(value);
+    formControl ? formControl.setValue(value) : setValue(value);
 
     setYear(value);
   }

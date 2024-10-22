@@ -37,7 +37,7 @@ export function RlsPickerDay({
 
   const [weeks, setWeeks] = useState<WeekState[]>([]);
   const [value, setValue] = useState(
-    formControl?.state || currentDate.getDate()
+    formControl?.value || currentDate.getDate()
   );
 
   useEffect(() => {
@@ -52,14 +52,14 @@ export function RlsPickerDay({
     const day = checkDayPicker(createPickerProps());
 
     day
-      ? formControl?.setState(day)
-      : setValue(formControl?.state || currentDate.getDate());
-  }, [formControl?.state]);
+      ? formControl?.setValue(day)
+      : setValue(formControl?.value || currentDate.getDate());
+  }, [formControl?.value]);
 
   function createPickerProps() {
     return {
       date: currentDate,
-      day: formControl?.state || value,
+      day: formControl?.value || value,
       month: itIsDefined(month) ? month : currentDate.getMonth(),
       year: year || currentDate.getFullYear(),
       minDate,
@@ -68,7 +68,7 @@ export function RlsPickerDay({
   }
 
   function setDayValue(value: number): void {
-    formControl ? formControl.setState(value) : setValue(value);
+    formControl ? formControl.setValue(value) : setValue(value);
   }
 
   function onChange(value: number): void {
