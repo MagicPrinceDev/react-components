@@ -12,7 +12,7 @@ import { RlsBallot, RlsMessageFormError } from '../../molecules';
 import { useFieldSelect } from './FieldSelectHook';
 import './FieldSelect.css';
 
-interface FieldSelectProps<T = unknown, E extends Element<T> = Element<T>>
+interface FieldSelectProps<T = any, E extends Element<T> = Element<T>>
   extends RlsComponent {
   suggestions: E[];
   disabled?: boolean;
@@ -22,38 +22,26 @@ interface FieldSelectProps<T = unknown, E extends Element<T> = Element<T>>
   onValue?: (value?: T) => void;
 }
 
-interface FieldSelectTemplateProps<
-  T = unknown,
-  E extends Element<T> = Element<T>
-> extends FieldSelectProps<T, E> {
+interface FieldSelectTemplateProps<T = any, E extends Element<T> = Element<T>>
+  extends FieldSelectProps<T, E> {
   render: (element: E) => ReactNode;
 }
 
 export function RlsFieldSelectTemplate<
-  T = unknown,
+  T = any,
   E extends Element<T> = Element<T>
 >({
+  render,
   suggestions,
   children,
   disabled,
   formControl,
-  placeholder,
-  rlsTheme,
   onSelect,
   onValue,
-  render
+  placeholder,
+  rlsTheme
 }: FieldSelectTemplateProps<T, E>) {
-  const {
-    listControl,
-    onBlurInput,
-    onClickAction,
-    onClickBackdrop,
-    onClickElement,
-    onClickInput,
-    onFocusInput,
-    onKeydownElement,
-    onKeydownInput
-  } = useFieldSelect({
+  const fieldSelect = useFieldSelect({
     suggestions,
     disabled,
     formControl,
@@ -63,10 +51,10 @@ export function RlsFieldSelectTemplate<
 
   return (
     <div
-      ref={listControl.boxContentRef}
+      ref={fieldSelect.listControl.contentRef}
       className={renderClassStatus(
         'rls-field-box',
-        { focused: listControl.focused, disabled },
+        { focused: fieldSelect.listControl.focused, disabled },
         'rls-field-list rls-field-select'
       )}
       rls-theme={rlsTheme}
@@ -76,23 +64,23 @@ export function RlsFieldSelectTemplate<
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
           <input
-            ref={listControl.inputRef}
+            ref={fieldSelect.listControl.inputRef}
             className="rls-field-list__control"
             readOnly={true}
             disabled={disabled}
             placeholder={placeholder}
-            value={listControl.value}
-            onFocus={onFocusInput}
-            onBlur={onBlurInput}
-            onClick={onClickInput}
-            onKeyDown={onKeydownInput}
+            value={fieldSelect.listControl.value}
+            onFocus={fieldSelect.onFocusInput}
+            onBlur={fieldSelect.onBlurInput}
+            onClick={fieldSelect.onClickInput}
+            onKeyDown={fieldSelect.onKeydownInput}
           />
           <button
             className={renderClassStatus('rls-field-list__action', {
-              visible: listControl.visible
+              visible: fieldSelect.listControl.visible
             })}
             disabled={disabled}
-            onClick={onClickAction}
+            onClick={fieldSelect.onClickAction}
           >
             <RlsIcon value="arrow-ios-down" />
           </button>
@@ -106,20 +94,23 @@ export function RlsFieldSelectTemplate<
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {
-          visible: listControl.visible,
-          hide: !listControl.visible,
-          higher: listControl.higher
+          visible: fieldSelect.listControl.visible,
+          hide: !fieldSelect.listControl.visible,
+          higher: fieldSelect.listControl.higher
         })}
       >
         <div className="rls-field-list__suggestions__body">
-          <ul ref={listControl.listRef} className="rls-field-list__ul">
+          <ul
+            ref={fieldSelect.listControl.listRef}
+            className="rls-field-list__ul"
+          >
             {suggestions.map((element, index) => (
               <li
                 key={index}
                 className="rls-field-list__element"
                 tabIndex={-1}
-                onClick={onClickElement(element)}
-                onKeyDown={onKeydownElement(element)}
+                onClick={fieldSelect.onClickElement(element)}
+                onKeyDown={fieldSelect.onKeydownElement(element)}
               >
                 {render(element)}
               </li>
@@ -142,14 +133,14 @@ export function RlsFieldSelectTemplate<
 
         <div
           className="rls-field-list__backdrop"
-          onClick={onClickBackdrop}
+          onClick={fieldSelect.onClickBackdrop}
         ></div>
       </div>
     </div>
   );
 }
 
-export function RlsFieldSelect<T = unknown>(
+export function RlsFieldSelect<T = any>(
   props: FieldSelectProps<T, ListElement<T>>
 ) {
   return (

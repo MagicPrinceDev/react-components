@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@rolster/commons": "^2.0.5",
-    "@rolster/components": "^0.3.6",
+    "@rolster/components": "^0.3.8",
     "@rolster/dates": "^2.0.0",
     "@rolster/forms": "^2.5.0",
     "@rolster/i18n": "^2.0.0",

@@ -1,9 +1,9 @@
 import {
   AbstractListElement,
   ListCollection,
-  listNavigationElement,
-  listNavigationInput,
-  locationListIsBottom
+  navigationListFromElement,
+  navigationListFromInput,
+  locationListCanTop
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
@@ -17,7 +17,7 @@ interface ListControlState<T> {
 }
 
 export interface ListControl<T = any> extends ListControlState<T> {
-  boxContentRef: RefObject<HTMLDivElement>;
+  contentRef: RefObject<HTMLDivElement>;
   inputRef: RefObject<HTMLInputElement>;
   listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
@@ -36,7 +36,7 @@ export function useListControl<T = any>({
   suggestions,
   formControl
 }: ListControlProps<T>): ListControl<T> {
-  const boxContentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,7 +52,7 @@ export function useListControl<T = any>({
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
-      if (!boxContentRef?.current?.contains(target as any)) {
+      if (!contentRef?.current?.contains(target as any)) {
         setState((state) => ({ ...state, visible: false }));
       }
     }
@@ -65,14 +65,14 @@ export function useListControl<T = any>({
   }, []);
 
   useEffect(() => {
-    const boxContent = boxContentRef.current;
+    const content = contentRef.current;
     const list = listRef.current;
 
     formControl?.touch();
 
     setState((state) => ({
       ...state,
-      higher: !locationListIsBottom(boxContent, list)
+      higher: locationListCanTop(content, list)
     }));
   }, [state.visible]);
 
@@ -97,10 +97,10 @@ export function useListControl<T = any>({
 
   function navigationInput(event: KeyboardEvent): void {
     if (state.visible) {
-      const newPosition = listNavigationInput({
-        contentElement: boxContentRef.current,
+      const newPosition = navigationListFromInput({
+        content: contentRef.current,
         event: event as any,
-        listElement: listRef.current
+        list: listRef.current
       });
 
       position.current = newPosition || 0;
@@ -108,18 +108,18 @@ export function useListControl<T = any>({
   }
 
   function navigationElement(event: KeyboardEvent): void {
-    position.current = listNavigationElement({
-      contentElement: boxContentRef.current,
+    position.current = navigationListFromElement({
+      content: contentRef.current,
       event: event as any,
-      inputElement: inputRef.current,
-      listElement: listRef.current,
+      input: inputRef.current,
+      list: listRef.current,
       position: position.current
     });
   }
 
   return {
     ...state,
-    boxContentRef,
+    contentRef,
     inputRef,
     listRef,
     navigationElement,

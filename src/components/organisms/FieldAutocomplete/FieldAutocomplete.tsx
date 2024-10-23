@@ -12,17 +12,17 @@ import { RlsBallot, RlsMessageFormError } from '../../molecules';
 import { useFieldAutocomplete } from './FieldAutocompleteHook';
 import './FieldAutocomplete.css';
 
-interface FieldAutocompleteProps<T = unknown, E extends Element<T> = Element<T>>
+interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>>
   extends RlsComponent {
   suggestions: E[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T | undefined>;
   hiddenIcon?: boolean;
-  placeholder?: string;
-  searching?: boolean;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
+  placeholder?: string;
+  searching?: boolean;
 }
 
 interface FieldAutocompleteTemplateProps<
@@ -36,33 +36,20 @@ export function RlsFieldAutocompleteTemplate<
   T = any,
   E extends Element<T> = Element<T>
 >({
+  render,
   suggestions,
   children,
   disabled,
   formControl,
   hiddenIcon,
-  placeholder,
-  searching,
-  rlsTheme,
   onSearch,
   onSelect,
   onValue,
-  render
+  placeholder,
+  rlsTheme,
+  searching
 }: FieldAutocompleteTemplateProps<T, E>) {
-  const {
-    coincidences,
-    listControl,
-    pattern,
-    onBlurInput,
-    onClickAction,
-    onClickBackdrop,
-    onClickControl,
-    onClickElement,
-    onFocusInput,
-    onKeydownElement,
-    onKeydownInput,
-    setPattern
-  } = useFieldAutocomplete({
+  const fieldAutocomplete = useFieldAutocomplete({
     suggestions,
     disabled,
     formControl,
@@ -72,13 +59,13 @@ export function RlsFieldAutocompleteTemplate<
 
   return (
     <div
-      ref={listControl.boxContentRef}
+      ref={fieldAutocomplete.listControl.contentRef}
       className={renderClassStatus(
         'rls-field-box',
         {
           disabled,
-          focused: listControl.focused,
-          selected: !!listControl.value
+          focused: fieldAutocomplete.listControl.focused,
+          selected: !!fieldAutocomplete.listControl.value
         },
         'rls-field-list rls-field-autocomplete'
       )}
@@ -88,10 +75,13 @@ export function RlsFieldAutocompleteTemplate<
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <label className="rls-field-list__control" onClick={onClickControl}>
-            {listControl.value ? (
+          <label
+            className="rls-field-list__control"
+            onClick={fieldAutocomplete.onClickControl}
+          >
+            {fieldAutocomplete.listControl.value ? (
               <span className="rls-field-list__control__description">
-                {listControl.value}
+                {fieldAutocomplete.listControl.value}
               </span>
             ) : (
               <span className="rls-field-list__control__placeholder">
@@ -100,11 +90,11 @@ export function RlsFieldAutocompleteTemplate<
             )}
           </label>
 
-          {!hiddenIcon && listControl.value && (
+          {!hiddenIcon && fieldAutocomplete.listControl.value && (
             <button
               className="rls-field-list__action"
               disabled={disabled}
-              onClick={onClickAction}
+              onClick={fieldAutocomplete.onClickAction}
             >
               <RlsIcon value="trash-2" />
             </button>
@@ -119,34 +109,37 @@ export function RlsFieldAutocompleteTemplate<
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {
-          visible: listControl.visible,
-          hide: !listControl.visible,
-          higher: listControl.higher
+          visible: fieldAutocomplete.listControl.visible,
+          hide: !fieldAutocomplete.listControl.visible,
+          higher: fieldAutocomplete.listControl.higher
         })}
       >
         <div className="rls-field-list__suggestions__body">
-          <ul ref={listControl.listRef} className="rls-field-list__ul">
+          <ul
+            ref={fieldAutocomplete.listControl.listRef}
+            className="rls-field-list__ul"
+          >
             <div className="rls-field-list__ul__search">
               <input
-                ref={listControl.inputRef}
+                ref={fieldAutocomplete.listControl.inputRef}
                 className="rls-field-list__ul__control"
                 type="text"
                 placeholder={reactI18n('listInputPlaceholder')}
-                value={pattern}
+                value={fieldAutocomplete.pattern}
                 onChange={({ target: { value } }) => {
-                  setPattern(value);
+                  fieldAutocomplete.setPattern(value);
                 }}
                 disabled={disabled || searching}
-                onFocus={onFocusInput}
-                onBlur={onBlurInput}
-                onKeyDown={onKeydownInput}
+                onFocus={fieldAutocomplete.onFocusInput}
+                onBlur={fieldAutocomplete.onBlurInput}
+                onKeyDown={fieldAutocomplete.onKeydownInput}
               />
 
               {onSearch && (
                 <button
                   disabled={disabled || searching}
                   onClick={() => {
-                    onSearch(pattern);
+                    onSearch(fieldAutocomplete.pattern);
                   }}
                 >
                   <RlsIcon value="search" />
@@ -156,19 +149,19 @@ export function RlsFieldAutocompleteTemplate<
 
             {searching && <RlsProgressBar indeterminate={true} />}
 
-            {coincidences.map((element, index) => (
+            {fieldAutocomplete.coincidences.map((element, index) => (
               <li
                 key={index}
                 className="rls-field-list__element"
                 tabIndex={-1}
-                onClick={onClickElement(element)}
-                onKeyDown={onKeydownElement(element)}
+                onClick={fieldAutocomplete.onClickElement(element)}
+                onKeyDown={fieldAutocomplete.onKeydownElement(element)}
               >
                 {render(element)}
               </li>
             ))}
 
-            {!coincidences.length && (
+            {!fieldAutocomplete.coincidences.length && (
               <li className="rls-field-list__empty">
                 <div className="rls-field-list__empty__description">
                   <label className="rls-label-bold truncate">
@@ -185,14 +178,14 @@ export function RlsFieldAutocompleteTemplate<
 
         <div
           className="rls-field-list__backdrop"
-          onClick={onClickBackdrop}
+          onClick={fieldAutocomplete.onClickBackdrop}
         ></div>
       </div>
     </div>
   );
 }
 
-export function RlsFieldAutocomplete<T = unknown>(
+export function RlsFieldAutocomplete<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>
 ) {
   return (
